@@ -25,5 +25,6 @@ public class Menus {
 			case KITS -> new Kits().kits();
 			case SIMPLEDIMPLE -> new SimpleDimple().simpleDimple();
 		};
+
 	}
 }
