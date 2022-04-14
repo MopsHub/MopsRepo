@@ -20,9 +20,7 @@ jobs:
          java-version: '17'
          distribution: 'temurin'
          cache: maven
-      - run: mvn install
-      - name: Build
-        run: mvn clean package --projects :pvp
+      - run: mvn install --projects :pvp :mops-base
       - run: mkdir staging && cp apps/pvp/target/*.jar staging
       - name: 'Upload .jar artefact'
         uses: actions/upload-artifact@v2.3.1
