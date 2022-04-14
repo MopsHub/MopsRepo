@@ -27,4 +27,4 @@ jobs:
         uses: actions/upload-artifact@v3.0.0
         with:
           name: WoolBattle Plugin JAR
-          path: apps/pvp/target/woolbattle.jar
+          path: apps/woolbattle/target/woolbattle.jar
