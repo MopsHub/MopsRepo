@@ -2,7 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ml.mops.monorepo</groupId>
+    <artifactId>woolbattle</artifactId>
+    <name>Mops :: Apps [AKA Plugins] :: WoolBattle</name>
+    <version>1.0-SNAPSHOT</version>
 
     <parent>
         <groupId>ml.mops.monorepo</groupId>
@@ -10,8 +16,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>woolbattle</artifactId>
-    <name>Mops :: Apps [AKA Plugins] :: WoolBattle</name>
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
     <repositories>
         <repository>
@@ -22,6 +33,7 @@
             <id>sonatype-oss-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
+
     </repositories>
 
     <dependencies>
@@ -30,5 +42,14 @@
             <artifactId>purpur-api</artifactId>
             <version>1.18.2-R0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>ml.mops.monorepo</groupId>
+            <artifactId>mops-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <finalName>woolbattle</finalName>
+    </build>
 </project>
