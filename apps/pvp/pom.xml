@@ -28,6 +28,7 @@
             <id>sonatype-oss-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
+<!--        asddasfasdfasdfwdsaf меняем и деформиурлвыаешфыь хеш файла для тестаывафывоаыфва-->
     </repositories>
 
     <dependencies>
