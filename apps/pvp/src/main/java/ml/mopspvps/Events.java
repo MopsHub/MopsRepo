@@ -110,6 +110,7 @@ public class Events implements Listener {
 
 	}
 
+
 	@EventHandler
 	public void EntityDamageEvent(EntityDamageEvent event) {
 		if (event.getEntity() instanceof Player player) {
