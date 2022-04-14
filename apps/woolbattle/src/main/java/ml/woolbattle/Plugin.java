@@ -33,7 +33,6 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
-
 import java.util.*;
 
 public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
