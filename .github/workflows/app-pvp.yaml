@@ -21,7 +21,7 @@ jobs:
          java-version: '17'
          distribution: 'temurin'
          cache: maven
-      - run: mvn install --projects mops-monorepo:mops-base mops-monorepo:pvp
+      - run: mvn install --projects :mops-base
       - run: mkdir staging && cp apps/pvp/target/*.jar staging
       - name: 'Upload .jar artefact'
         uses: actions/upload-artifact@v3.0.0
