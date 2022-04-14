@@ -26,7 +26,7 @@ jobs:
         run: mvn clean package --projects :pvp
       - run: mkdir staging && cp apps/pvp/target/*.jar staging
       - name: 'Upload .jar artefact'
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v3.0.0
         with:
          name: MopsPVPPlugin JAR
          path: staging
