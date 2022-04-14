@@ -30,7 +30,6 @@ import org.bukkit.scoreboard.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacyAmpersand;
 
 /**
