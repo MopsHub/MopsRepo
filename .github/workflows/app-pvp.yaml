@@ -27,7 +27,7 @@ jobs:
 #      - run: mvn --batch-mode --update-snapshots verify
       - name: Build
         run: mvn clean package --projects :pvp #:bar --also-make --threads=2 --batch-mode
-      - run: mkdir staging && cp target/*.jar staging
+      - run: mkdir staging && cp apps/pvp/target/*.jar staging
       - name: 'Upload .jar'
         uses: actions/upload-artifact@v2.3.1
         with:
