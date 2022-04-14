@@ -8,8 +8,8 @@ on:
     paths:
       - 'apps/pvp/**'
 
-#env:
-#  IMAGE: docker.pkg.github.com/${{ github.repository }}/bar:${{ github.sha }}
+env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/foo:${{ github.sha }}
 
 
 jobs:
@@ -34,11 +34,19 @@ jobs:
       - name: Build
         run: mvn clean package --projects :pvp #:bar --also-make --threads=2 --batch-mode
       - run: mkdir staging && cp apps/pvp/target/*.jar staging
-      - name: 'Upload .jar'
+      - name: 'Upload .jar artefact'
         uses: actions/upload-artifact@v2.3.1
         with:
          name: MopsPVPPlugin JAR
          path: staging
+      - name: Build and publish Docker image
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls
+          docker build --tag ${IMAGE} --build-arg JAR_PATH=apps/foo/target/app.jar .
+          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+          docker push ${IMAGE}
   #  build-jar-docker:
 #    name: build-jar-docker
 #    runs-on: ubuntu-latest
