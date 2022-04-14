@@ -18,5 +18,4 @@ public class Commands {
 			return true;
 		} else return new PlayerEssentials().commandsExecutor(sender, command, label, args);
 	}
-
 }

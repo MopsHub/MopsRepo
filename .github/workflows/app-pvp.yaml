@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: downcase IMAGE
         run: |
-          echo "IMAGE=docker.pkg.github.com/${{ github.repository }}/foo:${{ github.sha }}" >>${GITHUB_ENV}
+          echo "IMAGE=docker.pkg.github.com/${{ github.repository,, }}/foo:${{ github.sha,, }}" >>${GITHUB_ENV}
       - uses: actions/checkout@v3.0.0
 #      - name: Cache Depdendencies
 #        uses: actions/cache@v2.1.5
