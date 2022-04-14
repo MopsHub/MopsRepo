@@ -48,6 +48,7 @@ public class Events implements Listener {
 	CityEvents cityEvents;
 	Logger logger;
 
+
 	public Events(Dependencies dependencies) {
 		this.dependencies = dependencies;
 		this.plugin = Dependencies.getPlugin();
