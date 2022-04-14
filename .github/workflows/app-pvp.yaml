@@ -42,14 +42,6 @@ jobs:
         with:
          name: MopsPVPPlugin JAR
          path: staging
-      - name: Build and publish Docker image
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ls
-          docker build --tag ${IMAGE} --build-arg JAR_PATH=apps/foo/target/pvp.jar .
-          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker push ${IMAGE}
   #  build-jar-docker:
 #    name: build-jar-docker
 #    runs-on: ubuntu-latest
