@@ -4,21 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ml.mops.monorepo</groupId>
-    <artifactId>mops-monprepo</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>Mops: MonoRepo</name>
+    <parent>
+        <groupId>ml.mops.monorepo</groupId>
+        <artifactId>apps</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-    <modules>
-        <module>apps</module> <!-- Правильнее назвать plugins но лучше не буду ничего менят окда-->
-<!--        <module>docs</module>-->
-        <module>libs</module>
-    </modules>
-
-    <properties>
-        <java.version>17</java.version>
-    </properties>
+    <artifactId>woolbattle</artifactId>
+    <name>Mops :: Apps [AKA Plugins] :: WoolBattle</name>
 
     <repositories>
         <repository>
@@ -36,7 +29,6 @@
             <groupId>org.purpurmc.purpur</groupId>
             <artifactId>purpur-api</artifactId>
             <version>1.18.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

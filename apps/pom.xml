@@ -10,13 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>apps</artifactId>
-    <name>Example :: Apps</name>
+    <name>Mops :: Apps [AKA Plugins]</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>bar</module>
-        <module>baz</module>
-        <module>foo</module>
+        <module>lobby</module>
+        <module>pvp</module>
+        <module>woolbattle</module>
     </modules>
 
 
