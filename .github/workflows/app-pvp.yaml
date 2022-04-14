@@ -20,6 +20,7 @@ jobs:
          java-version: '17'
          distribution: 'temurin'
          cache: maven
+      - run: mvn install
       - name: Build
         run: mvn clean package --projects :pvp
       - run: mkdir staging && cp apps/pvp/target/*.jar staging

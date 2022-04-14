@@ -21,24 +21,4 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>purpurmc-repo-snapshots</id>
-            <name>PurpurMC Repository</name>
-            <url>https://repo.purpurmc.org/snapshots</url>
-        </repository>
-        <repository>
-            <id>sonatype-oss-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </repository>
-    </repositories>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.purpurmc.purpur</groupId>
-            <artifactId>purpur-api</artifactId>
-            <version>1.18.2-R0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 </project>
