@@ -62,6 +62,7 @@ public class Events implements Listener {
 		event.joinMessage(Component.empty());
 		Player player = event.getPlayer();
 
+
 		//TODO: ранги нужно фиксить фиксить и фиксить
 		setRank(player);
 		Dependencies.getScoreboards().createScoreboard(player);
