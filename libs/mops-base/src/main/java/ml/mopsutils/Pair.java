@@ -27,7 +27,7 @@
   ВНИМАНИЕ КОД СПИЗЖЕН ИЗ JavaFX
  */
 
-package ml.mopspvps.utils;
+package ml.mopsutils;
 
 import java.io.Serializable;
 
