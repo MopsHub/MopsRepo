@@ -1,4 +1,4 @@
-name: Build, Deploy Bar
+name: Build PVP
 
 on:
   push:
