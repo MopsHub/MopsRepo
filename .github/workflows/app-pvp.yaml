@@ -3,7 +3,7 @@ name: Build, Deploy Bar
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
       - 'dev/*'
     paths:
       - 'apps/pvp/**'
