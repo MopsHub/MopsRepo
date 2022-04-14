@@ -1,0 +1,103 @@
+name: MopsPVP
+main: ml.mopspvps.Main
+version: 1.18.2
+api-version: 1.18
+author: SirCat07 (and MopsPVP dev team)
+description: Plugin for MopsPVP
+commands:
+  pog:
+    description:
+    usage: /poga
+  slimetest:
+    description:
+    usage: /slimetest
+  name:
+    description:
+    usage: /name
+  rank:
+    description:
+    usage: /rank
+  kickall:
+    description:
+    usage: /kickall
+  customgive:
+    description:
+    usage: /customgive
+  loreadd:
+    description:
+    usage: /loreadditem
+  loreclear:
+    description:
+    usage: /loreclearitem
+  nameitem:
+    description:
+    usage: /nameitem
+  fly:
+    description:
+    usage: /fly
+  whoiam:
+    description:
+    usage: /whoiam
+  announce:
+    description:
+    usage: /announce
+  enchantitem:
+    description:
+    usage: /enchantitem
+  enchantclear:
+    description:
+    usage: /enchantclear
+  hideflags:
+    description:
+    usage: /hideflags
+  kit:
+    description:
+    usage: /kit
+  lobby:
+    description:
+    usage: /lobby
+  hub:
+    description:
+    usage: /hub
+  l:
+    description:
+    usage: /l
+  test:
+    description:
+    usage: /test
+  vector:
+    description:
+    usage: /vector
+  calc:
+    description:
+    usage: /calc
+  unbreak:
+    description:
+    usage: /unbreak
+  food:
+    description:
+    usage: /food
+  coins:
+    description:
+    usage: /coins
+  crank:
+    description:
+    usage: "/crank me &6[&2COOL&6]&a"
+  cname:
+    description:
+    usage: "/crank me &aCoolGuy"
+  cnameitem:
+    description:
+    usage: "/crank &6<&2COOL_SWORD&6>&a"
+
+startgame:
+  description:
+  usage:
+
+stopame:
+  description:
+  usage:
+
+refil:
+  description:
+  usage:
