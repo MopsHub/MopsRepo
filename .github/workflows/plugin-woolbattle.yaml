@@ -1,0 +1,30 @@
+name: Build WoolBattle
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'dev/*'
+    paths:
+      - 'apps/woolbattle/**'
+
+jobs:
+  build-plugin:
+    name: build-plugin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.0.0
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3.1.1
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: 'Install libs and build WoolBattle'
+        run: mvn install --projects :mops-base,:woolbattle
+      - name: 'Upload .jar artefact of plugin'
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: WoolBattle Plugin JAR
+          path: apps/pvp/target/woolbattle.jar
