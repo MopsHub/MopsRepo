@@ -36,10 +36,10 @@
             <artifactId>purpur-api</artifactId>
             <version>1.18.2-R0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>ml.mops.monorepo</groupId>
-            <artifactId>mops-base</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>ml.mops.monorepo</groupId>-->
+<!--            <artifactId>mops-base</artifactId>-->
+<!--            <version>${project.version}</version>-->
+<!--        </dependency>-->
     </dependencies>
 </project>
