@@ -19,16 +19,16 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>purpur</id>-->
-<!--            <url>https://repo.purpurmc.org/snapshots</url>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>sonatype-oss-snapshots</id>-->
-<!--            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <repositories>
+        <repository>
+            <id>purpur</id>
+            <url>https://repo.purpurmc.org/snapshots</url>
+        </repository>
+        <repository>
+            <id>sonatype-oss-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
