@@ -1262,6 +1262,8 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			}
 		} catch (Exception | Error exception) {
 		}
+
+
 	}
 
 	public boolean woolRemove(int itemcount, Player player, String teamname) {
