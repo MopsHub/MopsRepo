@@ -79,6 +79,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>ml.mops.monorepo:*</include>
+                                    <include>com.fasterxml.jackson.core:jackson-dataformat-yaml</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
