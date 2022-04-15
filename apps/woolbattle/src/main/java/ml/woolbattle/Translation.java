@@ -3,7 +3,6 @@ package ml.woolbattle;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.ChatColor;
 
 public class Translation extends Plugin {
     private TextComponent invalidString = Component.text("Invalid String", NamedTextColor.RED);

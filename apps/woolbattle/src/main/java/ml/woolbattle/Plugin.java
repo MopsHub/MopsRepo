@@ -38,6 +38,7 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 import ml.woolbattle.Translation;
+import org.jetbrains.annotations.NotNull;
 
 public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
@@ -46,7 +47,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	// на все сервера, и скажите мне об этом
 	// спасибо
 
-	List<Block> ppbs = new ArrayList<Block>();
+	List<Block> ppbs = new ArrayList<>();
 	World mainworld = Bukkit.getServer().getWorlds().get(0);
 	boolean hardmode = false;
 	boolean gameactive = false;
@@ -71,17 +72,17 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	List<Block> genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
 	List<Block> genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 
-	private HashMap<Player, Integer> combo = new HashMap<Player, Integer>();
-	private HashMap<Player, BukkitTask> deathmsg = new HashMap<Player, BukkitTask>();
+	private HashMap<Player, Integer> combo = new HashMap<>();
+	private HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
 
 	ScoreboardManager manager = Bukkit.getScoreboardManager();
 	Scoreboard board = manager.getMainScoreboard();
 	Objective fakekills = board.getObjective("fakekills");
 
-	List<Player> redTeamPlayers = new ArrayList<Player>();
-	List<Player> yellowTeamPlayers = new ArrayList<Player>();
-	List<Player> greenTeamPlayers = new ArrayList<Player>();
-	List<Player> blueTeamPlayers = new ArrayList<Player>();
+	List<Player> redTeamPlayers = new ArrayList<>();
+	List<Player> yellowTeamPlayers = new ArrayList<>();
+	List<Player> greenTeamPlayers = new ArrayList<>();
+	List<Player> blueTeamPlayers = new ArrayList<>();
 
 	int generatorTask;
 
@@ -148,25 +149,23 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 						Objective lastdamage = board.getObjective("lastdamagedbyteam");
 
-						if (lastdamage.getScore(player.getName()).getScore() == 1) {
-							redkills = redkills + 1;
-							broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫМИ" + ChatColor.GRAY + ".");
-						}
-						if (lastdamage.getScore(player.getName()).getScore() == 2) {
-							yellowkills = yellowkills + 1;
-							broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫМИ" + ChatColor.GRAY + ".");
-						}
-						if (lastdamage.getScore(player.getName()).getScore() == 3) {
-							greenkills = greenkills + 1;
-							broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.GREEN + "" + ChatColor.BOLD + "ЗЕЛЁНЫМИ" + ChatColor.GRAY + ".");
-						}
-						if (lastdamage.getScore(player.getName()).getScore() == 4) {
-							bluekills = bluekills + 1;
-							broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИМИ" + ChatColor.GRAY + ".");
-						}
-
-						if(lastdamage.getScore(player.getName()).getScore() != 1 && lastdamage.getScore(player.getName()).getScore() != 2 && lastdamage.getScore(player.getName()).getScore() != 3 && lastdamage.getScore(player.getName()).getScore() != 4) {
-							broadcastDeath(player, "упал в пустоту.");
+						switch (lastdamage.getScore(player.getName()).getScore()) {
+							case 1 -> {
+								redkills = redkills + 1;
+								broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫМИ" + ChatColor.GRAY + ".");
+							}
+							case 2 -> {
+								yellowkills = yellowkills + 1;
+								broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫМИ" + ChatColor.GRAY + ".");
+							}
+							case 3 -> {
+								greenkills = greenkills + 1;
+								broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.GREEN + "" + ChatColor.BOLD + "ЗЕЛЁНЫМИ" + ChatColor.GRAY + ".");
+							}
+							case 4 -> {
+								bluekills = bluekills + 1;
+								broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИМИ" + ChatColor.GRAY + ".");
+							}
 						}
 
 						if(!hardmode) {
@@ -311,7 +310,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				ItemStack item6 = new ItemStack(Material.LEATHER_BOOTS);
 				LeatherArmorMeta meta6 = (LeatherArmorMeta) item6.getItemMeta();
 				meta6.setDisplayName(chatcolor + "Дабл-Джамп Ботинки");
-				List<String> lore6 = new ArrayList<String>();
+				List<String> lore6 = new ArrayList<>();
 				lore6.add(ChatColor.GRAY + "Позволяют прыгать в воздухе. ");
 				lore6.add(ChatColor.DARK_GRAY + "(Нужно нажать пробел дважды в падении)");
 				lore6.add(ChatColor.AQUA + "Стоимость: 16 шерсти");
@@ -363,7 +362,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	int scoreboardTask;
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+	public boolean onCommand(CommandSender sender, Command command, @NotNull String label, String[] args) {
 		boolean perms = sender.isOp();
 		Player player = (Player) sender;
 		String commandName = command.getName().toLowerCase(Locale.ROOT);
@@ -399,122 +398,119 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 				lootGenerator();
 
-				Bukkit.getScheduler().runTaskLater(this, () -> {
+				Bukkit.getScheduler().runTaskLater(this, () -> scoreboardTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 
-					scoreboardTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+					if (gameactive) {
 
-						if (gameactive) {
+						seconds[0] = seconds[0] + 1;
 
-							seconds[0] = seconds[0] + 1;
-
-							if (seconds[0] == 60) {
-								minutes[0] = minutes[0] + 1;
-								seconds[0] = 0;
-							}
-
-							seconds0[0] = seconds0[0] + 1;
-
-							if (seconds0[0] == 60) {
-								minutes0[0] = minutes0[0] + 1;
-								seconds0[0] = 0;
-							}
-
-							actualgametime[0] = actualgametime[0] + 1;
-							actualgametime0[0] = actualgametime0[0] + 1;
-
-
-							if (actualgametime[0] < 240) {
-								nextevent = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
-							}
-							if (actualgametime[0] == 240) {
-								lootGenerator();
-								for (Player player0 : mainworld.getPlayers()) {
-									player0.sendTitle(ChatColor.YELLOW + "Рефилл!", ChatColor.GRAY + "Лут восстановился", 1, 20, 20);
-									player0.playSound(player0.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
-								}
-							}
-							if (actualgametime[0] < 480 && actualgametime[0] > 240) {
-								nextevent = ChatColor.DARK_GRAY + " (Рефилл | 8:00)";
-							}
-							if (actualgametime[0] == 480) {
-								lootGenerator();
-								for (Player player0 : mainworld.getPlayers()) {
-									player0.sendTitle(ChatColor.YELLOW + "Рефилл!", ChatColor.GRAY + "Лут восстановился", 1, 20, 20);
-									player0.playSound(player0.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
-								}
-							}
-							if (actualgametime[0] < 720 && actualgametime[0] > 480) {
-								nextevent = ChatColor.DARK_GRAY + " (Рефилл | 12:00)";
-							}
-							if (actualgametime[0] == 720) {
-								lootGenerator();
-								for (Player player0 : mainworld.getPlayers()) {
-									player0.sendTitle(ChatColor.YELLOW + "Рефилл!", ChatColor.GRAY + "Лут восстановился", 1, 20, 20);
-									player0.playSound(player0.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
-								}
-							}
-							if (actualgametime[0] < 1200 && actualgametime[0] > 720) {
-								nextevent = ChatColor.DARK_GRAY + " (" + ChatColor.DARK_RED + "Хардмод" + ChatColor.DARK_GRAY + " | 20:00)";
-							}
-							if (actualgametime[0] == 1200) {
-								if (!hardmode) {
-									activateHardmode();
-								}
-								nextevent = ChatColor.DARK_GRAY + " (Сражение до конца)";
-							}
-
-
-							if (actualgametime0[0] < 240) {
-								nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
-							}
-							if (actualgametime0[0] < 480 && actualgametime0[0] > 240) {
-								nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 8:00)";
-							}
-							if (actualgametime0[0] < 720 && actualgametime0[0] > 480) {
-								nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 12:00)";
-							}
-							if (actualgametime0[0] < 1200 && actualgametime0[0] > 720) {
-								nextevent0 = ChatColor.DARK_GRAY + " (" + ChatColor.DARK_RED + "Хардмод" + ChatColor.DARK_GRAY + " | 20:00)";
-							}
-							if (actualgametime0[0] == 1200) {
-								nextevent0 = ChatColor.DARK_GRAY + " (Сражение до конца)";
-							}
-
-							fakekills.getScoreboard().resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1));
-							fakekills.getScoreboard().resetScores(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1));
-							fakekills.getScoreboard().resetScores(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills - 1));
-							fakekills.getScoreboard().resetScores(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1));
-
-							if (seconds0[0] < 10) {
-								fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
-							} else {
-								fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
-							}
-
-							fakekills.getScore(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + redkills).setScore(12);
-							fakekills.getScore(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills).setScore(11);
-							fakekills.getScore(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills).setScore(10);
-							fakekills.getScore(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills).setScore(9);
-							fakekills.getScore(ChatColor.RED + " ").setScore(8);
-							if (seconds[0] < 10) {
-								fakekills.getScore(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent).setScore(7);
-							} else {
-								fakekills.getScore(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent).setScore(7);
-							}
-							fakekills.getScore(ChatColor.GOLD + " ").setScore(6);
-
-							resetGeneratorText();
-
-							fakekills.getScore(ChatColor.WHITE + "Генератор A - " + genAstatus).setScore(5);
-							fakekills.getScore(ChatColor.WHITE + "Генератор B - " + genBstatus).setScore(4);
-							fakekills.getScore(ChatColor.WHITE + "Генератор C - " + genCstatus).setScore(3);
-							fakekills.getScore(ChatColor.WHITE + "Генератор D - " + genDstatus).setScore(2);
-
-							fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
-							fakekills.getScore(ChatColor.DARK_GRAY + Bukkit.getServer().getIp() + ":" + Bukkit.getPort()).setScore(0);
+						if (seconds[0] == 60) {
+							minutes[0] = minutes[0] + 1;
+							seconds[0] = 0;
 						}
-					}, 0L, 20L);
-				}, 160L);
+
+						seconds0[0] = seconds0[0] + 1;
+
+						if (seconds0[0] == 60) {
+							minutes0[0] = minutes0[0] + 1;
+							seconds0[0] = 0;
+						}
+
+						actualgametime[0] = actualgametime[0] + 1;
+						actualgametime0[0] = actualgametime0[0] + 1;
+
+
+						if (actualgametime[0] < 240) {
+							nextevent = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
+						}
+						if (actualgametime[0] == 240) {
+							lootGenerator();
+							for (Player player0 : mainworld.getPlayers()) {
+								player0.sendTitle(ChatColor.YELLOW + "Рефилл!", ChatColor.GRAY + "Лут восстановился", 1, 20, 20);
+								player0.playSound(player0.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
+							}
+						}
+						if (actualgametime[0] < 480 && actualgametime[0] > 240) {
+							nextevent = ChatColor.DARK_GRAY + " (Рефилл | 8:00)";
+						}
+						if (actualgametime[0] == 480) {
+							lootGenerator();
+							for (Player player0 : mainworld.getPlayers()) {
+								player0.sendTitle(ChatColor.YELLOW + "Рефилл!", ChatColor.GRAY + "Лут восстановился", 1, 20, 20);
+								player0.playSound(player0.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
+							}
+						}
+						if (actualgametime[0] < 720 && actualgametime[0] > 480) {
+							nextevent = ChatColor.DARK_GRAY + " (Рефилл | 12:00)";
+						}
+						if (actualgametime[0] == 720) {
+							lootGenerator();
+							for (Player player0 : mainworld.getPlayers()) {
+								player0.sendTitle(ChatColor.YELLOW + "Рефилл!", ChatColor.GRAY + "Лут восстановился", 1, 20, 20);
+								player0.playSound(player0.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
+							}
+						}
+						if (actualgametime[0] < 1200 && actualgametime[0] > 720) {
+							nextevent = ChatColor.DARK_GRAY + " (" + ChatColor.DARK_RED + "Хардмод" + ChatColor.DARK_GRAY + " | 20:00)";
+						}
+						if (actualgametime[0] == 1200) {
+							if (!hardmode) {
+								activateHardmode();
+							}
+							nextevent = ChatColor.DARK_GRAY + " (Сражение до конца)";
+						}
+
+
+						if (actualgametime0[0] < 240) {
+							nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
+						}
+						if (actualgametime0[0] < 480 && actualgametime0[0] > 240) {
+							nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 8:00)";
+						}
+						if (actualgametime0[0] < 720 && actualgametime0[0] > 480) {
+							nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 12:00)";
+						}
+						if (actualgametime0[0] < 1200 && actualgametime0[0] > 720) {
+							nextevent0 = ChatColor.DARK_GRAY + " (" + ChatColor.DARK_RED + "Хардмод" + ChatColor.DARK_GRAY + " | 20:00)";
+						}
+						if (actualgametime0[0] == 1200) {
+							nextevent0 = ChatColor.DARK_GRAY + " (Сражение до конца)";
+						}
+
+						fakekills.getScoreboard().resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1));
+						fakekills.getScoreboard().resetScores(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1));
+						fakekills.getScoreboard().resetScores(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills - 1));
+						fakekills.getScoreboard().resetScores(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1));
+
+						if (seconds0[0] < 10) {
+							fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
+						} else {
+							fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
+						}
+
+						fakekills.getScore(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + redkills).setScore(12);
+						fakekills.getScore(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills).setScore(11);
+						fakekills.getScore(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills).setScore(10);
+						fakekills.getScore(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills).setScore(9);
+						fakekills.getScore(ChatColor.RED + " ").setScore(8);
+						if (seconds[0] < 10) {
+							fakekills.getScore(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent).setScore(7);
+						} else {
+							fakekills.getScore(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent).setScore(7);
+						}
+						fakekills.getScore(ChatColor.GOLD + " ").setScore(6);
+
+						resetGeneratorText();
+
+						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + genAstatus).setScore(5);
+						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + genBstatus).setScore(4);
+						fakekills.getScore(ChatColor.WHITE + "Генератор C - " + genCstatus).setScore(3);
+						fakekills.getScore(ChatColor.WHITE + "Генератор D - " + genDstatus).setScore(2);
+
+						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
+						fakekills.getScore(ChatColor.DARK_GRAY + Bukkit.getServer().getIp() + ":" + Bukkit.getPort()).setScore(0);
+					}
+				}, 0L, 20L), 160L);
 
 				Bukkit.getScheduler().cancelTask(generatorTask);
 
@@ -663,8 +659,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	@EventHandler
 	public void onBlockHitArrow(ProjectileHitEvent event) {
 		try {
-			if (event.getEntity() instanceof Arrow) {
-				Arrow arrow = (Arrow) event.getEntity();
+			if (event.getEntity() instanceof Arrow arrow) {
 				Block block = event.getHitBlock();
 				if (block.getType() != Material.OAK_LEAVES) {
 					if (ppbs.contains(block)) {
@@ -677,7 +672,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		}
 	}
 
-	private HashMap<Player, BukkitTask> damagetask0 = new HashMap<Player, BukkitTask>();
+	private HashMap<Player, BukkitTask> damagetask0 = new HashMap<>();
 
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
@@ -687,12 +682,9 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 			Objective obj = board.getObjective("lastdamagedbyteam");
 
-			if (victim0 instanceof Player && attacker0 instanceof Player) {
+			if (victim0 instanceof Player victim && attacker0 instanceof Player attacker) {
 
-				Player attacker = (Player) attacker0;
-				Player victim = (Player) victim0;
-
-				if(board.getPlayerTeam(attacker).getName() != board.getPlayerTeam(victim).getName()) {
+				if(!board.getPlayerTeam(attacker).getName().equals(board.getPlayerTeam(victim).getName())) {
 
 					if(victim.getHealth()-1 <= 0) {
 						simulateHardmodeDeath(victim);
@@ -749,14 +741,12 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 					}.runTaskLater(this, 420L));
 				}
 
-			} else if(victim0 instanceof Player && attacker0 instanceof Projectile) {
+			} else if(victim0 instanceof Player victim && attacker0 instanceof Projectile projectile) {
 
 				//ELSE IF ARROW
-				Projectile projectile = (Projectile) attacker0;
 				Player attacker = (Player) projectile.getShooter();
-				Player victim = (Player) victim0;
 
-				if(board.getPlayerTeam(attacker).getName() != board.getPlayerTeam(victim).getName()) {
+				if(!board.getPlayerTeam(attacker).getName().equals(board.getPlayerTeam(victim).getName())) {
 
 					if(victim.getHealth()-1 <= 0) {
 						simulateHardmodeDeath(victim);
@@ -1120,9 +1110,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 								blocc.setType(Material.SLIME_BLOCK);
 								player.playSound(player.getLocation(), Sound.ENTITY_SLIME_ATTACK, 0.25F, 1);
 							}
-							Bukkit.getScheduler().runTaskLater(this, () -> {
-								blocc.setType(Material.AIR);
-							}, 120L);
+							Bukkit.getScheduler().runTaskLater(this, () -> blocc.setType(Material.AIR), 120L);
 
 							player.setVelocity(new Vector(0, -1, 0));
 						}
@@ -1324,7 +1312,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		List<String> loot1lore = new ArrayList<String>();
 
 		switch (loot1) {
-			case 1:
+			case 1 -> {
 				loot1item.setType(Material.SHIELD);
 				loot1meta.setDisplayName(ChatColor.GRAY + "Щит");
 				loot1lore.add(ChatColor.GRAY + "Щит для блокировки стрел.");
@@ -1332,17 +1320,16 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
 				loot1item.setDurability((short) 320);
-				break;
-			case 2:
+			}
+			case 2 -> {
 				loot1item.setType(Material.OAK_LEAVES);
 				loot1meta.setDisplayName(ChatColor.DARK_GREEN + "Листья");
 				loot1lore.add(ChatColor.GRAY + "Не ломаются стрелами.");
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
 				loot1item.setAmount(16);
-				break;
-			case 3:
-			case 11:
+			}
+			case 3, 11 -> {
 				loot1item.setType(Material.STONE_AXE);
 				loot1meta.setDisplayName(ChatColor.AQUA + "Топор");
 				loot1meta.addEnchant(Enchantment.KNOCKBACK, 3, true);
@@ -1351,9 +1338,8 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
 				loot1item.setDurability((short) 115);
-				break;
-			case 4:
-			case 13:
+			}
+			case 4, 13 -> {
 				ItemStack potion = new ItemStack(Material.POTION);
 				PotionMeta potionmeta = (PotionMeta) potion.getItemMeta();
 				potionmeta.addCustomEffect(new PotionEffect(PotionEffectType.JUMP, 1800, 1), true);
@@ -1362,17 +1348,16 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				potion.setItemMeta(potionmeta);
 				loot1item.setType(Material.POTION);
 				loot1item = potion;
-				break;
-			case 5:
+			}
+			case 5 -> {
 				loot1item.setType(Material.OAK_LEAVES);
 				loot1meta.setDisplayName(ChatColor.DARK_GREEN + "Листья");
 				loot1lore.add(ChatColor.GRAY + "Не ломаются стрелами.");
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
 				loot1item.setAmount(32);
-				break;
-			case 6:
-			case 10:
+			}
+			case 6, 10 -> {
 				loot1item.setType(Material.BRICK);
 				loot1meta.setDisplayName(ChatColor.RED + "Платформа!");
 				loot1lore.add(ChatColor.GRAY + "Ставит платформу из шерсти." + ChatColor.YELLOW + "" + ChatColor.BOLD + " ПКМ" + ChatColor.DARK_GRAY + " (Не пропадает)");
@@ -1381,8 +1366,8 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				loot1meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
-				break;
-			case 7:
+			}
+			case 7 -> {
 				loot1item.setType(Material.ENDER_PEARL);
 				loot1meta.setDisplayName(ChatColor.DARK_PURPLE + "Эндер Булочка");
 				loot1lore.add(ChatColor.GRAY + "Телепортирует.");
@@ -1391,9 +1376,8 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
 				loot1item.setAmount(2);
-				break;
-			case 8:
-			case 12:
+			}
+			case 8, 12 -> {
 				loot1item.setType(Material.ENDER_PEARL);
 				loot1meta.setDisplayName(ChatColor.DARK_PURPLE + "Эндер Булочка");
 				loot1lore.add(ChatColor.GRAY + "Телепортирует.");
@@ -1402,16 +1386,16 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
 				loot1item.setAmount(1);
-				break;
-			case 9:
+			}
+			case 9 -> {
 				loot1item.setType(Material.OAK_LEAVES);
 				loot1meta.setDisplayName(ChatColor.DARK_GREEN + "Листья");
 				loot1lore.add(ChatColor.GRAY + "Не ломаются стрелами.");
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
 				loot1item.setAmount(8);
-				break;
-			case 14:
+			}
+			case 14 -> {
 				loot1item.setType(Material.BLAZE_ROD);
 				loot1meta.setDisplayName(ChatColor.YELLOW + "Взрывная Палка (T2)");
 				loot1lore.add(ChatColor.GRAY + "Палка откидывающая тебя назад." + ChatColor.YELLOW + "" + ChatColor.BOLD + " ПКМ" + ChatColor.DARK_GRAY + " (Нужно наводится на блок)");
@@ -1421,7 +1405,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
 				loot1item.setAmount(1);
-				break;
+			}
 		}
 		return loot1item;
 	}
@@ -1435,9 +1419,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	public void activateHardmode() {
 		hardmode = true;
 		mainworld.getWorldBorder().setSize(90, 90);
-		Bukkit.getScheduler().runTaskLater(this, () -> {
-			mainworld.getWorldBorder().setSize(17, 70);
-		}, 2100L);
+		Bukkit.getScheduler().runTaskLater(this, () -> mainworld.getWorldBorder().setSize(17, 70), 2100L);
 		for (Player player1 : mainworld.getPlayers()) {
 			player1.sendTitle(ChatColor.RED + "Хардмод!", ChatColor.GRAY + "Постарайся выжить!", 5, 30, 15);
 			player1.playSound(player1.getLocation(), Sound.ENTITY_WITHER_DEATH, 1, 0);
@@ -1952,57 +1934,23 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		int fadeOut = 20;
 
 		switch (randomtitle) {
-			case 1 :
-				player1.sendTitle(ChatColor.WHITE + "виу виу", ChatColor.WHITE + "дурка приехала", fadeIn, hold, fadeOut);
-				break;
-			case 2 :
-				player1.sendTitle(ChatColor.WHITE + "ландер", ChatColor.WHITE + "привео", fadeIn, hold, fadeOut);
-				break;
-			case 3 :
-				player1.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "WoolBattle", ChatColor.WHITE + "Игра началась.", fadeIn, hold, fadeOut);
-				break;
-			case 4 :
-				player1.sendTitle(ChatColor.WHITE + "эта миниигра", ChatColor.WHITE + "спонсирована мопспвп", fadeIn, hold, fadeOut);
-				break;
-			case 5 :
-				player1.sendTitle(ChatColor.WHITE + "русский корабль", ChatColor.WHITE + "иди нахуй", fadeIn, hold, fadeOut);
-				break;
-			case 6 :
-				player1.sendTitle(ChatColor.WHITE + "не пускайте", ChatColor.WHITE + "сюда тапка", fadeIn, hold, fadeOut);
-				break;
-			case 7 :
-				player1.sendTitle(ChatColor.WHITE + "окей", ChatColor.WHITE + "летсгоу", fadeIn, hold, fadeOut);
-				break;
-			case 8 :
-				player1.sendTitle(ChatColor.WHITE + "кот", ChatColor.WHITE + "гей", fadeIn, hold, fadeOut);
-				break;
-			case 9 :
-				player1.sendTitle(ChatColor.WHITE + "инф ты нахуя", ChatColor.WHITE + "продал мои ресы", fadeIn, hold, fadeOut);
-				break;
-			case 10 :
-				player1.sendTitle(ChatColor.WHITE + "кот", ChatColor.WHITE + "скинь логи", fadeIn, hold, fadeOut);
-				break;
-			case 11 :
-				player1.sendTitle(ChatColor.WHITE + "тут нет", ChatColor.WHITE + "голубей", fadeIn, hold, fadeOut);
-				break;
-			case 12 :
-				player1.sendTitle(ChatColor.WHITE + "NO WAY", ChatColor.WHITE + "Крис фумо", fadeIn, hold, fadeOut);
-				break;
-			case 13 :
-				player1.sendTitle(ChatColor.WHITE + "Класс!", ChatColor.WHITE + "Я негр!", fadeIn, hold, fadeOut);
-				break;
-			case 14 :
-				player1.sendTitle(ChatColor.WHITE + "ео", ChatColor.WHITE + "плши", fadeIn, hold, fadeOut);
-				break;
-			case 15 :
-				player1.sendTitle(ChatColor.WHITE + "мяу, мяри мяри", ChatColor.WHITE + "мяу мяу мяу мяу", fadeIn, hold, fadeOut);
-				break;
-			case 16 :
-				player1.sendTitle(ChatColor.WHITE + "пустите торда", ChatColor.WHITE + "на КоИ", fadeIn, hold, fadeOut);
-				break;
-			case 17 :
-				player1.sendTitle(ChatColor.WHITE + "stay", ChatColor.WHITE + "safe", fadeIn, hold, fadeOut);
-				break;
+			case 1 -> player1.sendTitle(ChatColor.WHITE + "виу виу", ChatColor.WHITE + "дурка приехала", fadeIn, hold, fadeOut);
+			case 2 -> player1.sendTitle(ChatColor.WHITE + "ландер", ChatColor.WHITE + "привео", fadeIn, hold, fadeOut);
+			case 3 -> player1.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "WoolBattle", ChatColor.WHITE + "Игра началась.", fadeIn, hold, fadeOut);
+			case 4 -> player1.sendTitle(ChatColor.WHITE + "эта миниигра", ChatColor.WHITE + "спонсирована мопспвп", fadeIn, hold, fadeOut);
+			case 5 -> player1.sendTitle(ChatColor.WHITE + "русский корабль", ChatColor.WHITE + "иди нахуй", fadeIn, hold, fadeOut);
+			case 6 -> player1.sendTitle(ChatColor.WHITE + "не пускайте", ChatColor.WHITE + "сюда тапка", fadeIn, hold, fadeOut);
+			case 7 -> player1.sendTitle(ChatColor.WHITE + "окей", ChatColor.WHITE + "летсгоу", fadeIn, hold, fadeOut);
+			case 8 -> player1.sendTitle(ChatColor.WHITE + "кот", ChatColor.WHITE + "гей", fadeIn, hold, fadeOut);
+			case 9 -> player1.sendTitle(ChatColor.WHITE + "инф ты нахуя", ChatColor.WHITE + "продал мои ресы", fadeIn, hold, fadeOut);
+			case 10 -> player1.sendTitle(ChatColor.WHITE + "кот", ChatColor.WHITE + "скинь логи", fadeIn, hold, fadeOut);
+			case 11 -> player1.sendTitle(ChatColor.WHITE + "тут нет", ChatColor.WHITE + "голубей", fadeIn, hold, fadeOut);
+			case 12 -> player1.sendTitle(ChatColor.WHITE + "NO WAY", ChatColor.WHITE + "Крис фумо", fadeIn, hold, fadeOut);
+			case 13 -> player1.sendTitle(ChatColor.WHITE + "Класс!", ChatColor.WHITE + "Я негр!", fadeIn, hold, fadeOut);
+			case 14 -> player1.sendTitle(ChatColor.WHITE + "ео", ChatColor.WHITE + "плши", fadeIn, hold, fadeOut);
+			case 15 -> player1.sendTitle(ChatColor.WHITE + "мяу, мяри мяри", ChatColor.WHITE + "мяу мяу мяу мяу", fadeIn, hold, fadeOut);
+			case 16 -> player1.sendTitle(ChatColor.WHITE + "пустите торда", ChatColor.WHITE + "на КоИ", fadeIn, hold, fadeOut);
+			case 17 -> player1.sendTitle(ChatColor.WHITE + "stay", ChatColor.WHITE + "safe", fadeIn, hold, fadeOut);
 		}
 	}
 
@@ -2157,11 +2105,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				Bukkit.getScheduler().runTaskLater(this, () -> {
 					player1.playSound(player1.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1.5F);
 					player1.sendTitle(ChatColor.WHITE + "Игра начнётся через", ChatColor.GREEN + "1", 1, 20, 20);
-					Bukkit.getScheduler().runTaskLater(this, () -> {
-
-						gameStartSequence(player1, teamname);
-
-					}, 40L);
+					Bukkit.getScheduler().runTaskLater(this, () -> gameStartSequence(player1, teamname), 40L);
 				}, 40L);
 			}, 40L);
 		}, 40L);
