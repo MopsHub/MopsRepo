@@ -1,0 +1,15 @@
+#Main config
+
+subConfigs:
+  - "/shouldntbeinjar.mops.yml"
+  - "random_.yml"
+  - "test.config"
+  - "nothing.avi"
+  - "permap/test.yml"
+
+configsFolder: "configs/"
+
+translations:
+  languages:
+    - "ru-RU"
+    - "en-US"
