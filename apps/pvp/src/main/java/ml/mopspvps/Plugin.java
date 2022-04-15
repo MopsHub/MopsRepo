@@ -45,7 +45,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			exception.printStackTrace();
 			logger.info("among.txt живёт в spain без a  :(");
 		}
-		BufferedReader reader2 = new BufferedReader(new InputStreamReader(this.getResource("/json/us.txt")));
+		BufferedReader reader2 = new BufferedReader(new InputStreamReader(this.getResource("json/us.txt")));
 		try {
 			logger.info("Содержимое json/us.txt: " + reader2.readLine());
 		} catch (IOException exception) {
