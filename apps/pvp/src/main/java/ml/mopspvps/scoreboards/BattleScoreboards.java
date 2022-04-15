@@ -130,30 +130,30 @@ public class BattleScoreboards {
 		Score score4 = obj.getScore(ChatColor.GOLD + " ");
 		score4.setScore(7);
 
-		String turtletime = ChatColor.DARK_PURPLE + "Никогда";
-		if (1 == 2) {
-			//иф = если черепашкотаймер между 0 и 5 секундами
-			turtletime = ChatColor.GREEN + "Только что!!!";
-		}
-		if (1 == 2) {
-			//иф = если черепашкотаймер между 5 и 80 секундами
-			turtletime = ChatColor.RED + "Долго...";
-		}
-		if (1 == 2) {
-			//иф = если черепашкотаймер между 80 и 130 секундами
-			turtletime = ChatColor.GOLD + "Не скоро";
-		}
-		if (1 == 2) {
-			//иф = если черепашкотаймер между 130 и 150 (0) секундами
-			turtletime = ChatColor.AQUA + "Скоро!";
-		}
+//		String turtletime = ChatColor.DARK_PURPLE + "Никогда";
+//		if (1 == 2) {
+//			//иф = если черепашкотаймер между 0 и 5 секундами
+//			turtletime = ChatColor.GREEN + "Только что!!!";
+//		}
+//		if (1 == 2) {
+//			//иф = если черепашкотаймер между 5 и 80 секундами
+//			turtletime = ChatColor.RED + "Долго...";
+//		}
+//		if (1 == 2) {
+//			//иф = если черепашкотаймер между 80 и 130 секундами
+//			turtletime = ChatColor.GOLD + "Не скоро";
+//		}
+//		if (1 == 2) {
+//			//иф = если черепашкотаймер между 130 и 150 (0) секундами
+//			turtletime = ChatColor.AQUA + "Скоро!";
+//		}
 
 		int damagetaken = 0;
 
 		Score score5 = obj.getScore(ChatColor.WHITE + "Дамаг: " + damagetaken);
 		score5.setScore(6);
-		Score score6 = obj.getScore(ChatColor.WHITE + "До черепашки: " + turtletime);
-		score6.setScore(5);
+//		Score score6 = obj.getScore(ChatColor.WHITE + "До черепашки: " + turtletime);
+//		score6.setScore(5);
 		Score score7 = obj.getScore(ChatColor.YELLOW + " ");
 		score7.setScore(4);
 		Score score8 = obj.getScore(ChatColor.WHITE + "Вы в " + map + "| Бой");

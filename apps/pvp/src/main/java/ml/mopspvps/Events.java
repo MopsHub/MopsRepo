@@ -27,9 +27,11 @@ import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scoreboard.*;
-import ml.mopsutils.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -177,7 +179,6 @@ public class Events implements Listener {
 					} else {
 						maxchance = rand.nextInt(128) % 128 / damage1 + 1;
 					}
-					Random rand2 = new Random();
 					int chance = rand.nextInt(128) % maxchance + 1;
 					if (chance == maxchance) {
 						int score2 = (score != null ? score.getScore() : 0) / 8;
@@ -235,11 +236,6 @@ public class Events implements Listener {
 			if (player.getGameMode() != GameMode.CREATIVE) {
 				Block block = event.getBlock();
 				block.setType(Material.AIR);
-//                if (player.getInventory().getHelmet() == null) {
-//                    ItemStack head = new ItemStack(block.getType());
-//                    player.getInventory().setHelmet(head);
-//                    head.setAmount(0);
-//                }
 			}
 		}
 		if (player.getScoreboardTags().contains("city")) {
@@ -429,21 +425,6 @@ public class Events implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void onShoot(EntityShootBowEvent event) {
-		if (event.getEntity() instanceof Player) {
-			Player player = ((Player) event.getEntity()).getPlayer();
-			try {
-				if (Objects.requireNonNull(player).getInventory().getItemInMainHand() != null && (Objects.requireNonNull(player.getInventory().getItemInMainHand().getItemMeta()).getDisplayName().equals(ChatColor.GREEN + "Лук Лучника"))) {
-					ItemStack item = event.getBow();
-					Entity arrow = event.getProjectile();
-				}
-			} catch (NullPointerException e) {
-				logger.severe("пиздец: ");
-
-			}
-		}
-	}
 
 	/**
 	 * @param event - ивент который будет обрабатываться (в коде это PlayerInteractEvent) ((почему кста?))
