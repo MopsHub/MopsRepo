@@ -54,7 +54,6 @@ public class Events implements Listener {
 		this.cityEvents = Dependencies.getCityEvents();
 		this.logger = plugin.getLogger();
 	}
-
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		event.joinMessage(Component.empty());
