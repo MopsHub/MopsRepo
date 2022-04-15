@@ -32,7 +32,6 @@ public class Dependencies {
 	private final static HashMap<Player, String> rank = new HashMap<>();
 	private static List<ArmorStand> armorstandlist = new ArrayList<>();
 	static Plugin plugin;
-
 	static Events events;
 	private final static LobbyEvents lobbyEvents = new LobbyEvents();
 	private final static QuestEvents questEvents = new QuestEvents();
