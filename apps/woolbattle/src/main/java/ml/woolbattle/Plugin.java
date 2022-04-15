@@ -35,7 +35,13 @@ import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 import java.util.*;
 
+import ml.woolbattle.Translation;
+
 public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
+
+	// внимание добавьте адекватный выбор языка который распространяется
+	// на все сервера, и скажите мне об этом
+	// спасибо
 
 	List<Block> ppbs = new ArrayList<Block>();
 	World mainworld = Bukkit.getServer().getWorlds().get(0);
@@ -141,19 +147,19 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 						if (lastdamage.getScore(player.getName()).getScore() == 1) {
 							redkills = redkills + 1;
-							broadcastDeath(player, "был убит " + ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫМИ" + ChatColor.GRAY + ".");
+							broadcastDeath(player, getByLang("en", "woolbattle.gotKilledBy") + " " + ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫМИ" + ChatColor.GRAY + ".");
 						}
 						if (lastdamage.getScore(player.getName()).getScore() == 2) {
 							yellowkills = yellowkills + 1;
-							broadcastDeath(player, "был убит " + ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫМИ" + ChatColor.GRAY + ".");
+							broadcastDeath(player, getByLang("en", "woolbattle.gotKilledBy") + " " + ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫМИ" + ChatColor.GRAY + ".");
 						}
 						if (lastdamage.getScore(player.getName()).getScore() == 3) {
 							greenkills = greenkills + 1;
-							broadcastDeath(player, "был убит " + ChatColor.GREEN + "" + ChatColor.BOLD + "ЗЕЛЁНЫМИ" + ChatColor.GRAY + ".");
+							broadcastDeath(player, getByLang("en", "woolbattle.gotKilledBy") + " " + ChatColor.GREEN + "" + ChatColor.BOLD + "ЗЕЛЁНЫМИ" + ChatColor.GRAY + ".");
 						}
 						if (lastdamage.getScore(player.getName()).getScore() == 4) {
 							bluekills = bluekills + 1;
-							broadcastDeath(player, "был убит " + ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИМИ" + ChatColor.GRAY + ".");
+							broadcastDeath(player, getByLang("en", "woolbattle.gotKilledBy") + " " + ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИМИ" + ChatColor.GRAY + ".");
 						}
 
 						if(lastdamage.getScore(player.getName()).getScore() != 1 && lastdamage.getScore(player.getName()).getScore() != 2 && lastdamage.getScore(player.getName()).getScore() != 3 && lastdamage.getScore(player.getName()).getScore() != 4) {
@@ -2215,5 +2221,8 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		return amount;
 	}
 
+	public String getByLang(String lang, String string) {
+		return new Translation().getByLang(lang, string);
+	}
 }
 
