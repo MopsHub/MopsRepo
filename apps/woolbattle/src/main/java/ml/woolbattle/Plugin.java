@@ -1,7 +1,9 @@
 package ml.woolbattle;
 
+import net.kyori.adventure.audience.MessageType;
+import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -330,7 +332,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 							player.setVelocity((player.getEyeLocation().getDirection().multiply(0.9)).add(new Vector(0, 0.45, 0)));
 							player.setAllowFlight(false);
 						} else {
-							player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Недостаточно шерсти!"));
+							player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 						}
 					}
 				}
@@ -1124,7 +1126,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 							player.setVelocity(new Vector(0, -1, 0));
 						}
 					} else {
-						player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Недостаточно шерсти!"));
+						player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 					}
 				}
 				if (displayname.equals(ChatColor.RED + "Платформа!")) {
@@ -1165,7 +1167,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 							}
 						}
 					} else {
-						player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Недостаточно шерсти!"));
+						player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 					}
 
 				}
@@ -1196,7 +1198,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 							players.playSound(loc, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1F, 2F);
 						}
 					} else {
-						player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Недостаточно шерсти!"));
+						player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 					}
 				} else if (displayname.equals(ChatColor.YELLOW + "Взрывная Палка (T2)")) {
 					Team team = board.getPlayerTeam(player);
@@ -1224,7 +1226,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 							players.playSound(players.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1F, 2);
 						}
 					} else {
-						player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Недостаточно шерсти!"));
+						player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 					}
 				} else if(displayname.equals(ChatColor.AQUA + "Ножницы")) {
 					Block block = event.getClickedBlock();
@@ -1252,7 +1254,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 								block.setType(Material.AIR);
 								player.playSound(block.getLocation(), Sound.BLOCK_WOODEN_TRAPDOOR_CLOSE, 1, 2);
 							} else {
-								player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "Недостаточно шерсти!"));
+								player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 							}
 						}
 					}
@@ -2221,7 +2223,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		return amount;
 	}
 
-	public String getByLang(String lang, String string) {
+	public TextComponent getByLang(String lang, String string) {
 		return new Translation().getByLang(lang, string);
 	}
 }
