@@ -31,7 +31,6 @@ public class Dependencies {
 	private static HashMap<Player, String> name = new HashMap<>();
 	private final static HashMap<Player, String> rank = new HashMap<>();
 	private static List<ArmorStand> armorstandlist = new ArrayList<>();
-
 	static Plugin plugin;
 
 	static Events events;

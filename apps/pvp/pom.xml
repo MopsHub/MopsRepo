@@ -70,7 +70,7 @@
                         <configuration>
                             <filters>
                                 <filter>
-                                    <artifact>mops-monorepo:mops-base</artifact>
+                                    <artifact>*:*</artifact>
                                     <includes>
                                         <include>ml/**</include>
                                     </includes>
