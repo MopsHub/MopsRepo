@@ -24,7 +24,8 @@ jobs:
       - name: JDK
         uses: actions/setup-java@v2.1.0
         with:
-          java-version: 16
+          java-version: 17
+          distribution: temurin
       - name: Build
         run: mvn clean test --threads=2 --batch-mode
       - name: Lint Code Base
