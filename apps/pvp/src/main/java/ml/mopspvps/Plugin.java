@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import ml.mopsutils.Resources;
-
+import ml.mopsbase.MopsPlugin;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  * @see org.bukkit.plugin.java.JavaPlugin
  */
 
-public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
+public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	static Resources r = new Resources();
 	static Dependencies dependencies = null;
 	static Events events = null;
