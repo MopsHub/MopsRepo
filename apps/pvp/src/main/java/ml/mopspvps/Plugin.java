@@ -10,7 +10,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import ml.mopsutils.Resources;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.http.WebSocket.Listener;
 import java.sql.Timestamp;
 import java.util.logging.Logger;
@@ -23,7 +27,7 @@ import java.util.logging.Logger;
  */
 
 public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
-
+	static Resources r = new Resources();
 	static Dependencies dependencies = null;
 	static Events events = null;
 
@@ -34,6 +38,21 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		Logger logger = getLogger();
 		Timestamp enableTimeStamp = new Timestamp(System.currentTimeMillis());
 		Bukkit.broadcast(restartMessage);
+		logger.info("запускаем серв)");
+		BufferedReader reader1 = new BufferedReader(new InputStreamReader(r.getResourceAsStream(this, "among.txt")));
+		try {
+			logger.info("Содержимое among.txt: " + reader1.readLine());
+		} catch (IOException exception) {
+			exception.printStackTrace();
+			logger.info("among.txt живёт в spain без a  :(");
+		}
+		BufferedReader reader2 = new BufferedReader(new InputStreamReader(r.getJSONResourceAsStream(this, "us.txt")));
+		try {
+			logger.info("Содержимое json/us.txt: " + reader2.readLine());
+		} catch (IOException exception) {
+			exception.printStackTrace();
+			logger.info("json/us.txt живёт в spain без a  :(");
+		}
 
 		Plugin.dependencies = new Dependencies(Plugin.this);
 
