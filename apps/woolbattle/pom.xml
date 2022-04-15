@@ -17,7 +17,6 @@
         </plugins>
     </build>
 
-    <groupId>ml.mops.monorepo</groupId>
     <artifactId>woolbattle</artifactId>
     <name>Mops :: Apps [AKA Plugins] :: WoolBattle</name>
     <version>1.0-SNAPSHOT</version>
@@ -53,11 +52,24 @@
             <groupId>org.purpurmc.purpur</groupId>
             <artifactId>purpur-api</artifactId>
             <version>1.18.2-R0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>ml.mops.monorepo</groupId>
             <artifactId>mops-base</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-api</artifactId>
+            <version>4.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-serializer-legacy</artifactId>
+            <version>4.10.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
