@@ -76,7 +76,7 @@
                                     </includes>
                                 </filter>
                                 <filter>
-                                    <artifact>mops-monorepo:*</artifact>
+                                    <artifact>ml.mops.monorepo:*</artifact>
                                     <includes>
                                         <include>**</include>
                                     </includes>
