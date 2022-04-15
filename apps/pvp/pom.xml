@@ -75,6 +75,12 @@
                                         <include>ml/**</include>
                                     </includes>
                                 </filter>
+                                <filter>
+                                    <artifact>mops-monorepo:*</artifact>
+                                    <includes>
+                                        <include>**</include>
+                                    </includes>
+                                </filter>
                             </filters>
                         </configuration>
                     </execution>
