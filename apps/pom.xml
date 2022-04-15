@@ -11,6 +11,18 @@
 
     <artifactId>apps</artifactId>
     <name>Mops :: Apps [AKA Plugins]</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <packaging>pom</packaging>
 
     <modules>
@@ -18,6 +30,5 @@
         <module>pvp</module>
         <module>woolbattle</module>
     </modules>
-
 
 </project>
