@@ -69,9 +69,9 @@
                         </goals>
                         <configuration>
                             <artifactSet>
-                                <excludes>
+                                <includes>
                                     <include>ml.mops.monorepo:*</include>
-                                </excludes>
+                                </includes>
                             </artifactSet>
                         </configuration>
                     </execution>
