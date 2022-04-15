@@ -1,8 +1,8 @@
 name: MopsPVP
-main: ml.mopspvps.Main
+main: ml.mopspvps.Plugin
 version: 1.18.2
 api-version: 1.18
-author: SirCat07 (and MopsPVP dev team)
+author: MopsCorporation
 description: Plugin for MopsPVP
 commands:
   pog:
