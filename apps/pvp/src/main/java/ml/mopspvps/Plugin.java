@@ -30,7 +30,6 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	static Resources r = new Resources();
 	static Dependencies dependencies = null;
 	static Events events = null;
-
 	final TextComponent restartMessage = Component.text("Сервер был перезагружен!").color(NamedTextColor.GREEN);
 
 	@Override
