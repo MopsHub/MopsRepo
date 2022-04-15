@@ -41,6 +41,7 @@ import ml.woolbattle.Translation;
 
 public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
+	String lang = "ru";
 	// внимание добавьте адекватный выбор языка который распространяется
 	// на все сервера, и скажите мне об этом
 	// спасибо
@@ -55,10 +56,10 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	int greenkills = 0;
 	int bluekills = 0;
 
-	String genAstatus = ChatColor.GRAY + "НЕЗАХВАЧЕН";
-	String genBstatus = ChatColor.GRAY + "НЕЗАХВАЧЕН";
-	String genCstatus = ChatColor.GRAY + "НЕЗАХВАЧЕН";
-	String genDstatus = ChatColor.GRAY + "НЕЗАХВАЧЕН";
+	String genAstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
+	String genBstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
+	String genCstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
+	String genDstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
 
 	List<Block> genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
 	List<Block> genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
@@ -115,7 +116,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 						if (teamname.contains("red")) {
 							ItemStack woolitem = new ItemStack(Material.RED_WOOL);
 							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.setDisplayName(ChatColor.RED + "Красная Шерсть");
+							woolmeta.setDisplayName(getByLang(lang, "woolbattle.redWool").toString());
 							woolitem.setItemMeta(woolmeta);
 							woolitem.setAmount(200000);
 							player.getInventory().removeItem(woolitem);
@@ -123,7 +124,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 						if (teamname.contains("yellow")) {
 							ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL);
 							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.setDisplayName(ChatColor.YELLOW + "Жёлтая Шерсть");
+							woolmeta.setDisplayName(getByLang(lang, "woolbattle.yellowWool").toString());
 							woolitem.setItemMeta(woolmeta);
 							woolitem.setAmount(200000);
 							player.getInventory().removeItem(woolitem);
@@ -131,7 +132,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 						if (teamname.contains("green")) {
 							ItemStack woolitem = new ItemStack(Material.LIME_WOOL);
 							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.setDisplayName(ChatColor.GREEN + "Зелёная Шерсть");
+							woolmeta.setDisplayName(getByLang(lang, "woolbattle.greenWool").toString());
 							woolitem.setItemMeta(woolmeta);
 							woolitem.setAmount(200000);
 							player.getInventory().removeItem(woolitem);
@@ -139,7 +140,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 						if (teamname.contains("blue")) {
 							ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL);
 							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.setDisplayName(ChatColor.AQUA + "Синяя Шерсть");
+							woolmeta.setDisplayName(getByLang(lang, "woolbattle.blueWool").toString());
 							woolitem.setItemMeta(woolmeta);
 							woolitem.setAmount(200000);
 							player.getInventory().removeItem(woolitem);
@@ -149,19 +150,19 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 						if (lastdamage.getScore(player.getName()).getScore() == 1) {
 							redkills = redkills + 1;
-							broadcastDeath(player, getByLang("en", "woolbattle.gotKilledBy") + " " + ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫМИ" + ChatColor.GRAY + ".");
+							broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫМИ" + ChatColor.GRAY + ".");
 						}
 						if (lastdamage.getScore(player.getName()).getScore() == 2) {
 							yellowkills = yellowkills + 1;
-							broadcastDeath(player, getByLang("en", "woolbattle.gotKilledBy") + " " + ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫМИ" + ChatColor.GRAY + ".");
+							broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫМИ" + ChatColor.GRAY + ".");
 						}
 						if (lastdamage.getScore(player.getName()).getScore() == 3) {
 							greenkills = greenkills + 1;
-							broadcastDeath(player, getByLang("en", "woolbattle.gotKilledBy") + " " + ChatColor.GREEN + "" + ChatColor.BOLD + "ЗЕЛЁНЫМИ" + ChatColor.GRAY + ".");
+							broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.GREEN + "" + ChatColor.BOLD + "ЗЕЛЁНЫМИ" + ChatColor.GRAY + ".");
 						}
 						if (lastdamage.getScore(player.getName()).getScore() == 4) {
 							bluekills = bluekills + 1;
-							broadcastDeath(player, getByLang("en", "woolbattle.gotKilledBy") + " " + ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИМИ" + ChatColor.GRAY + ".");
+							broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИМИ" + ChatColor.GRAY + ".");
 						}
 
 						if(lastdamage.getScore(player.getName()).getScore() != 1 && lastdamage.getScore(player.getName()).getScore() != 2 && lastdamage.getScore(player.getName()).getScore() != 3 && lastdamage.getScore(player.getName()).getScore() != 4) {
@@ -536,7 +537,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 										if (!player1.getInventory().contains(Material.RED_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.RED_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
-											woolmeta.setDisplayName(ChatColor.RED + "Красная Шерсть");
+											woolmeta.setDisplayName(getByLang(lang, "woolbattle.redWool").toString());
 											woolitem.setItemMeta(woolmeta);
 											player1.getInventory().addItem(woolitem);
 										}
@@ -547,7 +548,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 										if (!player1.getInventory().contains(Material.YELLOW_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
-											woolmeta.setDisplayName(ChatColor.YELLOW + "Жёлтая Шерсть");
+											woolmeta.setDisplayName(getByLang(lang, "woolbattle.yellowWool").toString());
 											woolitem.setItemMeta(woolmeta);
 											player1.getInventory().addItem(woolitem);
 										}
@@ -558,7 +559,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 										if (!player1.getInventory().contains(Material.LIME_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.LIME_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
-											woolmeta.setDisplayName(ChatColor.GREEN + "Зелёная Шерсть");
+											woolmeta.setDisplayName(getByLang(lang, "woolbattle.greenWool").toString());
 											woolitem.setItemMeta(woolmeta);
 											player1.getInventory().addItem(woolitem);
 										}
@@ -569,7 +570,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 										if (!player1.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
-											woolmeta.setDisplayName(ChatColor.AQUA + "Синяя Шерсть");
+											woolmeta.setDisplayName(getByLang(lang, "woolbattle.blueWool").toString());
 											woolitem.setItemMeta(woolmeta);
 											player1.getInventory().addItem(woolitem);
 										}
@@ -1022,7 +1023,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 					if (!player.getInventory().contains(Material.RED_WOOL, 512)) {
 						ItemStack woolitem = new ItemStack(Material.RED_WOOL, 1);
 						ItemMeta woolmeta = woolitem.getItemMeta();
-						woolmeta.setDisplayName(ChatColor.RED + "Красная Шерсть");
+						woolmeta.setDisplayName(getByLang(lang, "woolbattle.redWool").toString());
 						woolitem.setItemMeta(woolmeta);
 						player.getInventory().addItem(woolitem);
 					} else {
@@ -1037,7 +1038,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 					if (!player.getInventory().contains(Material.YELLOW_WOOL, 512)) {
 						ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, 1);
 						ItemMeta woolmeta = woolitem.getItemMeta();
-						woolmeta.setDisplayName(ChatColor.YELLOW + "Жёлтая Шерсть");
+						woolmeta.setDisplayName(getByLang(lang, "woolbattle.yellowWool").toString());
 						woolitem.setItemMeta(woolmeta);
 						player.getInventory().addItem(woolitem);
 					} else {
@@ -1067,7 +1068,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 					if (!player.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
 						ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
 						ItemMeta woolmeta = woolitem.getItemMeta();
-						woolmeta.setDisplayName(ChatColor.AQUA + "Синяя Шерсть");
+						woolmeta.setDisplayName(getByLang(lang, "woolbattle.blueWool").toString());
 						woolitem.setItemMeta(woolmeta);
 						player.getInventory().addItem(woolitem);
 					} else {
@@ -1273,7 +1274,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			if (player.getInventory().contains(Material.RED_WOOL, itemcount)) {
 				ItemStack woolitem = new ItemStack(Material.RED_WOOL, itemcount);
 				ItemMeta woolmeta = woolitem.getItemMeta();
-				woolmeta.setDisplayName(ChatColor.RED + "Красная Шерсть");
+				woolmeta.setDisplayName(getByLang(lang, "woolbattle.redWool").toString());
 				woolitem.setItemMeta(woolmeta);
 				player.getInventory().removeItem(woolitem);
 				hasItems = true;
@@ -1283,7 +1284,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			if (player.getInventory().contains(Material.YELLOW_WOOL, itemcount)) {
 				ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, itemcount);
 				ItemMeta woolmeta = woolitem.getItemMeta();
-				woolmeta.setDisplayName(ChatColor.YELLOW + "Жёлтая Шерсть");
+				woolmeta.setDisplayName(getByLang(lang, "woolbattle.yellowWool").toString());
 				woolitem.setItemMeta(woolmeta);
 				player.getInventory().removeItem(woolitem);
 				hasItems = true;
@@ -1293,7 +1294,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			if (player.getInventory().contains(Material.LIME_WOOL, itemcount)) {
 				ItemStack woolitem = new ItemStack(Material.LIME_WOOL, itemcount);
 				ItemMeta woolmeta = woolitem.getItemMeta();
-				woolmeta.setDisplayName(ChatColor.GREEN + "Зелёная Шерсть");
+				woolmeta.setDisplayName(getByLang(lang, "woolbattle.greenWool").toString());
 				woolitem.setItemMeta(woolmeta);
 				player.getInventory().removeItem(woolitem);
 				hasItems = true;
@@ -1303,7 +1304,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			if (player.getInventory().contains(Material.LIGHT_BLUE_WOOL, itemcount)) {
 				ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, itemcount);
 				ItemMeta woolmeta = woolitem.getItemMeta();
-				woolmeta.setDisplayName(ChatColor.AQUA + "Синяя Шерсть");
+				woolmeta.setDisplayName(getByLang(lang, "woolbattle.blueWool").toString());
 				woolitem.setItemMeta(woolmeta);
 				player.getInventory().removeItem(woolitem);
 				hasItems = true;
@@ -1496,10 +1497,10 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		minutes[0] = 0;
 		minutes0[0] = 0;
 
-		genAstatus = ChatColor.GRAY + "НЕЗАХВАЧЕН";
-		genBstatus = ChatColor.GRAY + "НЕЗАХВАЧЕН";
-		genCstatus = ChatColor.GRAY + "НЕЗАХВАЧЕН";
-		genDstatus = ChatColor.GRAY + "НЕЗАХВАЧЕН";
+		genAstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
+		genBstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
+		genCstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
+		genDstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
 
 		String nextevent = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
 		String nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
@@ -1628,7 +1629,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 	public void genConquerChecks(List<Block> gen, List<Block> genLONG, String genLetter) {
 		if(!hardmode) {
-			String genStatus = ChatColor.GRAY + "НЕЗАХВАЧЕН";
+			String genStatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
 			if (gen == genAblocks) {
 				genStatus = genAstatus;
 			}
@@ -1754,7 +1755,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	public void resetGeneratorText() {
 
 		List<String> genStatuses = new ArrayList<String>();
-		genStatuses.add(ChatColor.GRAY + "НЕЗАХВАЧЕН");
+		genStatuses.add(getByLang(lang, "woolbattle.generator.uncaptured").toString());
 		genStatuses.add(ChatColor.RED + "КРАСНЫЙ");
 		genStatuses.add(ChatColor.YELLOW + "ЖЁЛТЫЙ");
 		genStatuses.add(ChatColor.GREEN + "ЗЕЛЁНЫЙ");
@@ -2174,7 +2175,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			if (player.getInventory().contains(Material.RED_WOOL, 512)) {
 				ItemStack woolitem = new ItemStack(Material.RED_WOOL);
 				ItemMeta woolmeta = woolitem.getItemMeta();
-				woolmeta.setDisplayName(ChatColor.RED + "Красная Шерсть");
+				woolmeta.setDisplayName(getByLang(lang, "woolbattle.redWool").toString());
 				woolitem.setItemMeta(woolmeta);
 				woolitem.setAmount(getAmount(player, woolitem)-512);
 				player.getInventory().removeItem(woolitem);
@@ -2184,7 +2185,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			if (player.getInventory().contains(Material.YELLOW_WOOL, 512)) {
 				ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL);
 				ItemMeta woolmeta = woolitem.getItemMeta();
-				woolmeta.setDisplayName(ChatColor.YELLOW + "Жёлтая Шерсть");
+				woolmeta.setDisplayName(getByLang(lang, "woolbattle.yellowWool").toString());
 				woolitem.setItemMeta(woolmeta);
 				woolitem.setAmount(getAmount(player, woolitem)-512);
 				player.getInventory().removeItem(woolitem);
@@ -2194,7 +2195,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			if (player.getInventory().contains(Material.LIME_WOOL, 512)) {
 				ItemStack woolitem = new ItemStack(Material.LIME_WOOL);
 				ItemMeta woolmeta = woolitem.getItemMeta();
-				woolmeta.setDisplayName(ChatColor.GREEN + "Зелёная Шерсть");
+				woolmeta.setDisplayName(getByLang(lang, "woolbattle.greenWool").toString());
 				woolitem.setItemMeta(woolmeta);
 				woolitem.setAmount(getAmount(player, woolitem)-512);
 				player.getInventory().removeItem(woolitem);
@@ -2204,7 +2205,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			if (player.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
 				ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL);
 				ItemMeta woolmeta = woolitem.getItemMeta();
-				woolmeta.setDisplayName(ChatColor.AQUA + "Синяя Шерсть");
+				woolmeta.setDisplayName(getByLang(lang, "woolbattle.blueWool").toString());
 				woolitem.setItemMeta(woolmeta);
 				woolitem.setAmount(getAmount(player, woolitem)-512);
 				player.getInventory().removeItem(woolitem);
@@ -2229,4 +2230,3 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		return new Translation().getByLang(lang, string);
 	}
 }
-
