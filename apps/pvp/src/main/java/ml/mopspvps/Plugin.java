@@ -38,14 +38,14 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Timestamp enableTimeStamp = new Timestamp(System.currentTimeMillis());
 		Bukkit.broadcast(restartMessage);
 		logger.info("запускаем серв)");
-		BufferedReader reader1 = new BufferedReader(new InputStreamReader(r.getResourceAsStream(this, "among.txt")));
+		BufferedReader reader1 = new BufferedReader(new InputStreamReader(this.getResource("among.txt")));
 		try {
 			logger.info("Содержимое among.txt: " + reader1.readLine());
 		} catch (IOException exception) {
 			exception.printStackTrace();
 			logger.info("among.txt живёт в spain без a  :(");
 		}
-		BufferedReader reader2 = new BufferedReader(new InputStreamReader(r.getJSONResourceAsStream(this, "us.txt")));
+		BufferedReader reader2 = new BufferedReader(new InputStreamReader(this.getResource("/json/us.txt")));
 		try {
 			logger.info("Содержимое json/us.txt: " + reader2.readLine());
 		} catch (IOException exception) {
