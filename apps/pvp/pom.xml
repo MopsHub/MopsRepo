@@ -63,25 +63,16 @@
                 <version>3.2.1</version>
                 <executions>
                     <execution>
-                        <phase>pre-integration-test</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <includes>
-                                        <include>ml/**</include>
-                                    </includes>
-                                </filter>
-                                <filter>
-                                    <artifact>ml.mops.monorepo:*</artifact>
-                                    <includes>
-                                        <include>**</include>
-                                    </includes>
-                                </filter>
-                            </filters>
+                            <artifactSet>
+                                <excludes>
+                                    <include>ml.mops.monorepo:*</include>
+                                </excludes>
+                            </artifactSet>
                         </configuration>
                     </execution>
                 </executions>
