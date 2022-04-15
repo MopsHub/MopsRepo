@@ -33,7 +33,6 @@ public class Translation extends Plugin {
             }
             return translatedMessage;
         }
-
         return invalidLanguage;
     }
 }
