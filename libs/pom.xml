@@ -26,7 +26,8 @@
     </build>
 
     <modules>
-        <module>mops-base</module>
+        <module>mopsbase</module>
+        <module>mopselements</module>
     </modules>
 
 </project>
