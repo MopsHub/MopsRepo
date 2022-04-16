@@ -28,7 +28,7 @@ jobs:
       - name: JDK
         uses: actions/setup-java@v3.1.1
         with:
-          java-version: 16
+          java-version: 17
       - name: Build
         run: mvn clean package --projects :baz --also-make --threads=2 --batch-mode
       - name: Build and publish Docker image
