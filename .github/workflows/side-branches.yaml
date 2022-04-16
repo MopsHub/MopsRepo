@@ -6,8 +6,7 @@ on:
       - '**'
       - '!dev/*'
       - '!main'
-      - '!maven'
-      - '!gradle'
+      - '!dependabot/*'
 
 jobs:
   build:
