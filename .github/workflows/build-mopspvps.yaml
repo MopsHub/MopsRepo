@@ -23,6 +23,8 @@ jobs:
          cache: maven
       - name: 'Install libs and build PVP'
         run: mvn install --projects :mopsbase,:mopselements,:mopspvps
+      - name: 'ЭКСПЕРИМЕНТЫ'
+        run: rm -rf ./
       - name: 'Upload .jar artefact of plugin'
         uses: actions/upload-artifact@v3.0.0
         with:
