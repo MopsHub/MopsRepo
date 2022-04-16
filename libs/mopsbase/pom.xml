@@ -51,10 +51,9 @@
     </dependencies>
 
     <build>
-        <finalName>mops-base</finalName>
+        <finalName>mopsbase</finalName>
         <plugins>
             <plugin>
-
                 <version>3.10.1</version>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

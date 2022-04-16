@@ -10,8 +10,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pvp</artifactId>
-    <name>Mops :: Apps [AKA Plugins] :: PVP</name>
+    <artifactId>mopslobby</artifactId>
+    <name>Mops :: Apps [AKA Plugins] :: Lobby</name>
 
     <properties>
         <java.version>17</java.version>
