@@ -11,5 +11,7 @@ configsFolder: "configs/"
 
 translations:
   languages:
-    - "ru-RU"
-    - "en-US"
+    - "ru-RU":
+        languageCode: 'rus'
+    - "en-US":
+        languageCode: 'eng'

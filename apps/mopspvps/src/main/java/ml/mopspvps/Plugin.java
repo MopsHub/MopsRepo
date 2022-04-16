@@ -26,7 +26,6 @@ import java.util.logging.Logger;
  */
 
 public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
-	static Resources r = new Resources();
 	static Dependencies dependencies = null;
 	static Events events = null;
 
@@ -37,21 +36,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Logger logger = getLogger();
 		Timestamp enableTimeStamp = new Timestamp(System.currentTimeMillis());
 		Bukkit.broadcast(restartMessage);
-		logger.info("запускаем серв)");
-		BufferedReader reader1 = new BufferedReader(new InputStreamReader(this.getResource("among.txt")));
-		try {
-			logger.info("Содержимое among.txt: " + reader1.readLine());
-		} catch (IOException exception) {
-			exception.printStackTrace();
-			logger.info("among.txt живёт в spain без a  :(");
-		}
-		BufferedReader reader2 = new BufferedReader(new InputStreamReader(this.getResource("json/us.txt")));
-		try {
-			logger.info("Содержимое json/us.txt: " + reader2.readLine());
-		} catch (IOException exception) {
-			exception.printStackTrace();
-			logger.info("json/us.txt живёт в spain без a  :(");
-		}
+
+		this.saveDefaultConfig();
+		this.config = this.getConfig();
+
+		logger.info("config: " + config.toString());
 
 		Plugin.dependencies = new Dependencies(Plugin.this);
 
