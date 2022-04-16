@@ -80,6 +80,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
 		try {
 			config = objectMapper.readValue(cfgText, Config.class);
+			try {
+				logger.warning(config.toString());
+			} catch (Exception e) {
+				logger.warning("Unable to turn config into string due to:\n" + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+			}
 		} catch (Exception e) {
 			logger.warning("Exception while parsing config: " + e.getMessage() + "\n " + Arrays.toString(e.getStackTrace()));
 			this.setEnabled(false);
@@ -94,7 +99,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			return;
 		}
 
-		this.dependencies = new Dependencies(Plugin.this);
+		dependencies = new Dependencies(Plugin.this);
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getServer().getOnlinePlayers()) {
