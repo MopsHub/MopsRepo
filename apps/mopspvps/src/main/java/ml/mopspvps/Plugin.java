@@ -1,5 +1,11 @@
 package ml.mopspvps;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import ml.mopsbase.Config;
+import ml.mopsexception.OnEnableException;
+import ml.mopsexception.configs.BlankConfigException;
+import ml.mopsexception.configs.ParsingConfigToYAMLStringException;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -11,12 +17,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import ml.mopsutils.Resources;
 import ml.mopsbase.MopsPlugin;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import java.io.*;
 import java.net.http.WebSocket.Listener;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
@@ -37,27 +43,58 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Logger logger = getLogger();
 		Timestamp enableTimeStamp = new Timestamp(System.currentTimeMillis());
 		Bukkit.broadcast(restartMessage);
+
 		BufferedReader reader1 = new BufferedReader(new InputStreamReader(this.getResource("among.txt")));
-		File cfgFile;
+		File cfgFile = new File(getDataFolder().getAbsolutePath() + "/config.yml");
 		String cfgText = "";
 
-		this.saveDefaultConfig();
-		this.config = this.getConfig();
-		cfgFile = new File(getDataFolder().getAbsolutePath() + "/config.yml");
 		try {
-			cfgText = getResource("/config.yml").readAllBytes().toString();
-		} catch (IOException exception) {
-			exception.printStackTrace();
-			logger.warning(exception.getMessage());
-			logger.warning(String.valueOf(exception.getStackTrace()));
+			Scanner myReader = new Scanner(cfgFile);
+			while (myReader.hasNextLine()) {
+				String data = myReader.nextLine();
+				cfgText = cfgText + data;
+			}
+			myReader.close();
+		} catch (FileNotFoundException e) {
+			logger.info("Custom config not found. Loading default one");
+			try {
+				Scanner myReader = new Scanner(cfgFile);
+				while (myReader.hasNextLine()) {
+					String data = myReader.nextLine();
+					cfgText = cfgText + data;
+				}
+				myReader.close();
+			}
+			catch (Exception ex) {
+				logger.warning("default config not found.");
+				logger.warning(ex.getStackTrace().toString());
+			}
 		}
 
 		if (cfgText.isBlank()) {
-			logger.warning("Default config not found");
+			logger.warning("Both default and custom configs are not found/empty/blank");
+			this.setEnabled(false);
+			return;
 		}
 
+		ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+		try {
+			config = objectMapper.readValue(cfgText, Config.class);
+		} catch (Exception e) {
+			logger.warning("Exception while parsing config: " + e.getMessage() + "\n " + e.getStackTrace().toString());
+			this.setEnabled(false);
+			return;
+		}
 
-		Plugin.dependencies = new Dependencies(Plugin.this);
+		try {
+			logger.info("Loaded config containing: " + config.parseToString());
+		} catch (ParsingConfigToYAMLStringException | BlankConfigException e) {
+			logger.warning(e.getMessage());
+			this.setEnabled(false);
+			return;
+		}
+
+		this.dependencies = new Dependencies(Plugin.this);
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getServer().getOnlinePlayers()) {

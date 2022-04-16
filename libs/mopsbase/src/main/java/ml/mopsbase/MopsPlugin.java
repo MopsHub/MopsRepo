@@ -10,10 +10,6 @@ import java.util.List;
 
 public class MopsPlugin extends JavaPlugin {
 	private List<GameSession> gameSessions;
-
-	private Config loadConfig(String path, Folder f) {
-		return null;
-	}
-
+	protected Config config;
 
 }
