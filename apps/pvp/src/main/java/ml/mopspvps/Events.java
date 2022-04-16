@@ -592,7 +592,4 @@ public class Events implements Listener {
 			logger.info("<=РАНГИ=> Записано имя " + player.getName() + "с рангом " + ChatColor.GRAY + "");
 		}
 	}
-
-
-
 }
