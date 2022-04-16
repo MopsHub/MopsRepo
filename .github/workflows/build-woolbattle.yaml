@@ -1,4 +1,4 @@
-name: Build PVP
+name: Build WoolBattle
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - 'main'
       - 'dev/*'
     paths:
-      - 'apps/pvp/**'
+      - 'apps/woolbattle/**'
 
 jobs:
   build-plugin:
@@ -21,10 +21,10 @@ jobs:
          java-version: '17'
          distribution: 'temurin'
          cache: maven
-      - name: 'Install libs and build PVP'
-        run: mvn install --projects :mops-base,:pvp
+      - name: 'Install libs and build WoolBattle'
+        run: mvn install --projects :mopsbase,:mopselements,:woolbattle
       - name: 'Upload .jar artefact of plugin'
         uses: actions/upload-artifact@v3.0.0
         with:
-         name: MopsPVP Plugin JAR
-         path: apps/pvp/target/pvp.jar
+         name: WoolBattle Plugin JAR
+         path: apps/woolbattle/target/woolbattle.jar

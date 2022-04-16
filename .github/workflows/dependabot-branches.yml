@@ -19,14 +19,15 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: 'Install libs and build plugins'
-        run: mvn install --projects :mops-base,:pvp,:lobby,:woolbattle
+        run: mvn install --projects :mopsbase,:mopselements,:mopspvps,:mopslobby,:woolbattle
       - name: 'Move .jar s'
         run: |
           mkdir staging
-          cp apps/pvp/target/*.jar staging
+          cp apps/mopspvps/target/*.jar staging
           cp apps/woolbattle/target/*.jar staging
-          cp apps/lobby/target/*.jar staging
-          cp libs/mops-base/target/*.jar staging
+          cp apps/mopslobby/target/*.jar staging
+          cp libs/mopsbase/target/*.jar staging
+          cp libs/mopselements/target/*.jar staging
       - name: 'Upload .jar artefact of plugin'
         uses: actions/upload-artifact@v3.0.0
         with:
