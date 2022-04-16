@@ -6,7 +6,7 @@ on:
       - 'main'
       - 'dev/*'
     paths:
-      - 'apps/pvp/**'
+      - 'apps/mopspvps/**'
 
 jobs:
   build-plugin:
@@ -27,4 +27,4 @@ jobs:
         uses: actions/upload-artifact@v3.0.0
         with:
          name: MopsPVP Plugin JAR
-         path: apps/pvp/target/pvp.jar
+         path: apps/pvp/target/mopspvps.jar
