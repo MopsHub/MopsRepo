@@ -1,33 +1,33 @@
-name: Build Side Branch
-
-on:
-  push:
-    branches:
-      - '**'
-      - '!dev/*'
-      - '!main'
-      - '!dependabot/*'
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3.0.1
-      - name: Cache Depdendencies
-        uses: actions/cache@v3.0.2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-maven-
-      - name: JDK
-        uses: actions/setup-java@v3.1.1
-        with:
-          java-version: 17
-          distribution: temurin
-      - name: Build
-        run: mvn clean test --threads=2 --batch-mode
-      - name: Lint Code Base
-        uses: docker://github/super-linter:v2.1.0
-        env:
-          VALIDATE_ALL_CODEBASE: false
+#name: Build Side Branch
+#
+#on:
+#  push:
+#    branches:
+#      - '**'
+#      - '!dev/*'
+#      - '!main'
+#      - '!dependabot/*'
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3.0.1
+#      - name: Cache Depdendencies
+#        uses: actions/cache@v3.0.2
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: ${{ runner.os }}-maven-
+#      - name: JDK
+#        uses: actions/setup-java@v3.1.1
+#        with:
+#          java-version: 17
+#          distribution: temurin
+#      - name: Build
+#        run: mvn clean test --threads=2 --batch-mode
+#      - name: Lint Code Base
+#        uses: docker://github/super-linter:v2.1.0
+#        env:
+#          VALIDATE_ALL_CODEBASE: false
