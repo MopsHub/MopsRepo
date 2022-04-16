@@ -11,5 +11,6 @@ import java.util.List;
 public class MopsPlugin extends JavaPlugin {
 	private List<GameSession> gameSessions;
 	protected Config config;
+	protected Config defaultConfig;
 
 }
