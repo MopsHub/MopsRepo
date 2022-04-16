@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>monorepo-maven-example</artifactId>
-        <groupId>com.github.kgunnerud.example</groupId>
+        <artifactId>monorepo</artifactId>
+        <groupId>ml.monorepo</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 

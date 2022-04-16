@@ -60,7 +60,7 @@
     </dependencies>
 
     <build>
-        <finalName>pvp</finalName>
+        <finalName>mopspvps</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
