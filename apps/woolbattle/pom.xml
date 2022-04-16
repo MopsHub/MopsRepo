@@ -49,8 +49,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>ml.mops.monorepo</groupId>
-            <artifactId>mops-base</artifactId>
+            <groupId>ml.monorepo</groupId>
+            <artifactId>mopsbase</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

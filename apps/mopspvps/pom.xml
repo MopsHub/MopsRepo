@@ -49,7 +49,7 @@
         </dependency>
         <dependency>
             <groupId>ml.mops.monorepo</groupId>
-            <artifactId>mops-base</artifactId>
+            <artifactId>mopsbase</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
