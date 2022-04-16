@@ -11,11 +11,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import ml.mopsutils.Resources;
 import ml.mopsbase.MopsPlugin;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.http.WebSocket.Listener;
 import java.sql.Timestamp;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
@@ -36,6 +37,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Logger logger = getLogger();
 		Timestamp enableTimeStamp = new Timestamp(System.currentTimeMillis());
 		Bukkit.broadcast(restartMessage);
+		BufferedReader reader1 = new BufferedReader(new InputStreamReader(this.getResource("among.txt")));
 		File cfgFile;
 		String cfgText = "";
 
@@ -54,11 +56,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			logger.warning("Default config not found");
 		}
 
-
-
-
-
-		logger.info("config: " + config.toString());
 
 		Plugin.dependencies = new Dependencies(Plugin.this);
 
