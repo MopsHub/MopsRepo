@@ -67,7 +67,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			}
 			catch (Exception ex) {
 				logger.warning("default config not found.");
-				logger.warning(ex.getStackTrace().toString());
+				logger.warning(Arrays.toString(ex.getStackTrace()));
 			}
 		}
 
@@ -81,7 +81,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		try {
 			config = objectMapper.readValue(cfgText, Config.class);
 		} catch (Exception e) {
-			logger.warning("Exception while parsing config: " + e.getMessage() + "\n " + e.getStackTrace().toString());
+			logger.warning("Exception while parsing config: " + e.getMessage() + "\n " + Arrays.toString(e.getStackTrace()));
 			this.setEnabled(false);
 			return;
 		}
