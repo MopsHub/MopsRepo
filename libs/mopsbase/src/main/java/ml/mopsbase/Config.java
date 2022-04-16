@@ -21,6 +21,14 @@ public class Config {
 		public Translations() {}
 
 		private List<String> languages;
+
+		public List<String> getLanguages() {
+			return languages;
+		}
+
+		public void setLanguages(List<String> languages) {
+			this.languages = languages;
+		}
 	}
 
 	@NotNull
@@ -45,5 +53,29 @@ public class Config {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public List<String> getSubConfigs() {
+		return subConfigs;
+	}
+
+	public void setSubConfigs(List<String> subConfigs) {
+		this.subConfigs = subConfigs;
+	}
+
+	public String getConfigsFolder() {
+		return configsFolder;
+	}
+
+	public void setConfigsFolder(String configsFolder) {
+		this.configsFolder = configsFolder;
+	}
+
+	public Translations getTranslations() {
+		return translations;
+	}
+
+	public void setTranslations(Translations translations) {
+		this.translations = translations;
 	}
 }
