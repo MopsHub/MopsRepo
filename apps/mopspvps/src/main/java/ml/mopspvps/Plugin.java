@@ -11,11 +11,11 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import ml.mopsutils.Resources;
 import ml.mopsbase.MopsPlugin;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import java.io.*;
 import java.net.http.WebSocket.Listener;
 import java.sql.Timestamp;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
@@ -36,9 +36,27 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Logger logger = getLogger();
 		Timestamp enableTimeStamp = new Timestamp(System.currentTimeMillis());
 		Bukkit.broadcast(restartMessage);
+		File cfgFile;
+		String cfgText = "";
 
 		this.saveDefaultConfig();
 		this.config = this.getConfig();
+		cfgFile = new File(getDataFolder().getAbsolutePath() + "/config.yml");
+		try {
+			cfgText = getResource("/config.yml").readAllBytes().toString();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+			logger.warning(exception.getMessage());
+			logger.warning(String.valueOf(exception.getStackTrace()));
+		}
+
+		if (cfgText.isBlank()) {
+			logger.warning("Default config not found");
+		}
+
+
+
+
 
 		logger.info("config: " + config.toString());
 
