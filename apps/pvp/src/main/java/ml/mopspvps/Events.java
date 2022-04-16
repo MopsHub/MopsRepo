@@ -502,6 +502,7 @@ public class Events implements Listener {
 				switch (itemEvents.useCustomItemEvent(event, player, item)) {
 					case CANCELED -> event.setCancelled(true); //Ивент был отменён
 					case HANDLED -> { //Ивент был обработан
+
 					}
 					case NOT_HANDLED -> { //Ивент не был обработан (пока что)
 					}
