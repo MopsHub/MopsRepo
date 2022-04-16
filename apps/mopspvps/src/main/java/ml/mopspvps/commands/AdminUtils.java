@@ -43,8 +43,7 @@ public class AdminUtils extends Commands {
 		String arguments = Utils.combineStrings(args, CHARACTER.SPACE); //Объеденение всех аргументов в строку в стиле "arg0 arg1 arg2"
 		String commandName = command.getName().toLowerCase(Locale.ROOT); //Получение названия команды
 
-		if (sender instanceof Player && perms) { //Проверка на права и игрока
-			Player player = (Player) sender;
+		if (sender instanceof Player player && perms) { //Проверка на права и игрока
 			Player target;
 			switch (commandName) { //Проверка команды
 				case "crank": {
