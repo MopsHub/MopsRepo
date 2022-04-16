@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pvp</artifactId>
+    <artifactId>mopspvps</artifactId>
     <name>Mops :: Apps [AKA Plugins] :: PVP</name>
 
     <properties>
