@@ -514,7 +514,6 @@ public class Events implements Listener {
 			}
 		}
 	}
-
 	@Deprecated
 	public void checkRank(Player player) {
 		ScoreboardManager manager = Bukkit.getScoreboardManager();
