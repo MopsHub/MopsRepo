@@ -1,9 +1,7 @@
 package ml.woolbattle;
 
 import ml.mopsbase.MopsPlugin;
-import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.text.Component;
-import net.md_5.bungee.api.ChatMessageType;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -28,7 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -38,11 +35,10 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 import java.util.logging.Logger;
-
-import ml.woolbattle.Translation;
-import org.jetbrains.annotations.NotNull;
 
 public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
@@ -77,8 +73,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	List<Block> genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
 	List<Block> genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 
-	private HashMap<Player, Integer> combo = new HashMap<>();
-	private HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
+	private final HashMap<Player, Integer> combo = new HashMap<>();
+	private final HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
 
 	ScoreboardManager manager = Bukkit.getScoreboardManager();
 	Scoreboard board = manager.getMainScoreboard();
@@ -108,19 +104,19 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		logger.info("config: \n" + config.saveToString() );
 		logger.info("default config: \n" + ((FileConfiguration) Objects.requireNonNull(config.getDefaults())).saveToString());
 
-		String data;
+		StringBuilder data;
 
-		try (Scanner reader = new Scanner(getResource("translations.yml"))) {
-			data = "";
+		try (Scanner reader = new Scanner(Objects.requireNonNull(getResource("translations.yml")))) {
+			data = new StringBuilder();
 			while (reader.hasNextLine()) {
-				data = data + "\n" + reader.nextLine();
+				data.append("\n").append(reader.nextLine());
 			}
 		}
 
 		try {
-			this.translation.loadFromString(data);
+			this.translation.loadFromString(data.toString());
 		} catch (InvalidConfigurationException e) {
-			logger.warning(String.valueOf(e.getStackTrace()));
+			logger.warning(Arrays.toString(e.getStackTrace()));
 		}
 
 		logger.info("Loaded translations: \n" + translation.saveToString());
@@ -129,6 +125,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 
 				Team team = board.getPlayerTeam(player);
+				assert team != null;
 				String teamname = team.getName();
 
 				mainworld = player.getWorld();
@@ -179,7 +176,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 						Objective lastdamage = board.getObjective("lastdamagedbyteam");
 
-						switch (lastdamage.getScore(player.getName()).getScore()) {
+						switch (Objects.requireNonNull(lastdamage).getScore(player.getName()).getScore()) {
 							case 1 -> {
 								redkills = redkills + 1;
 								broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫМИ" + ChatColor.GRAY + ".");
@@ -307,6 +304,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 				Team team = board.getPlayerTeam(player);
+				assert team != null;
 				String teamname = team.getName();
 
 				if (player.getScoreboardTags().contains("onspawn") || !hardmode) {
@@ -404,6 +402,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				for (Player player1 : Bukkit.getOnlinePlayers()) {
 					if (!(board.getPlayerTeam(player1) == null)) {
 						Team team = board.getPlayerTeam(player1);
+						assert team != null;
 						String teamname = team.getName();
 
 						try {
@@ -507,7 +506,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							nextevent0 = ChatColor.DARK_GRAY + " (Сражение до конца)";
 						}
 
-						fakekills.getScoreboard().resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1));
+						Objects.requireNonNull(fakekills.getScoreboard()).resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1));
 						fakekills.getScoreboard().resetScores(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1));
 						fakekills.getScoreboard().resetScores(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills - 1));
 						fakekills.getScoreboard().resetScores(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1));
@@ -548,6 +547,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 					for (Player player1 : mainworld.getPlayers()) {
 						Team team = board.getPlayerTeam(player1);
+						assert team != null;
 						String teamname = team.getName();
 
 						List<String> genStatuses = new ArrayList<String>();
