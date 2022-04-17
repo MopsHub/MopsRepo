@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -18,7 +17,7 @@ public class Translation {
     public List<String> languages = new LinkedList<>(Arrays.asList(new String[]{"rus", "eng"}));
 
     public Translation(FileConfiguration fc, Logger logger) {
-        this.woolbattleTranslation = ((FileConfiguration) fc.getConfigurationSection("woolbattle"));
+        this.woolbattleTranslation = ((FileConfiguration) fc.get("woolbattle"));
         logger.info("woolbattle translation:\n" + woolbattleTranslation.saveToString());
     }
 

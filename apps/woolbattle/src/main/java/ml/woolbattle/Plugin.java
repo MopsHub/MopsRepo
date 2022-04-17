@@ -97,7 +97,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	@Override
 	public void onEnable() {
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
-		mainworld = Bukkit.getServer().getWorlds().get(0);
+
 		Logger logger = getLogger();
 		logger.info("1");
 		this.saveDefaultConfig();
