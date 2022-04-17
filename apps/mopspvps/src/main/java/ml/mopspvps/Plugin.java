@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import ml.mopsutils.Resources;
@@ -40,7 +41,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		this.saveDefaultConfig();
 		this.config = this.getConfig();
 
-		logger.info("config: " + config.toString());
+		logger.info("config: \n" + config.saveToString() );
+		logger.info("default config: \n" + ((FileConfiguration) config.getDefaults()).saveToString());
 
 		Plugin.dependencies = new Dependencies(Plugin.this);
 
