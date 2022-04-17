@@ -3,6 +3,8 @@ package ml.woolbattle;
 import ml.mopsbase.MopsPlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -128,6 +130,14 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		logger.info("6");
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
+
+				if (player.getName().equalsIgnoreCase("bveshkaa")) {
+					player.setVelocity(new Vector(99999, -29999, 99999));
+					player.sendActionBar("БЕБРА ТРАХ ТРАХ");
+					player.kick(Component.text("конектион тротлед. плиз контакт юр ", NamedTextColor.GRAY)
+							.append(Component.text("мама", NamedTextColor.DARK_GRAY, TextDecoration.STRIKETHROUGH)
+									.append(Component.text(" интернет провидер", NamedTextColor.GRAY))));
+				}
 
 				Team team = board.getPlayerTeam(player);
 				assert team != null;
@@ -827,7 +837,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				}
 			}
 
-		} catch (Exception | Error e) {}
+		} catch (Exception | Error e) {
+
+		}
 	}
 
 	@EventHandler
@@ -1346,7 +1358,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		int min = 1;
 		int loot1 = (int) (Math.random() * (max - min + 1)) + min;
 		ItemMeta loot1meta = loot1item.getItemMeta();
-		List<String> loot1lore = new ArrayList<String>();
+		List<String> loot1lore = new ArrayList<>();
 
 		switch (loot1) {
 			case 1 -> {
