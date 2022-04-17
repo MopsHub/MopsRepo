@@ -1,5 +1,6 @@
 package ml.woolbattle;
 
+import ml.mopsbase.MopsPlugin;
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatMessageType;
@@ -10,6 +11,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -36,16 +39,18 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 import java.util.*;
+import java.util.logging.Logger;
 
 import ml.woolbattle.Translation;
 import org.jetbrains.annotations.NotNull;
 
-public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
+public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
-	String lang = "ru";
+	String lang = "rus";
 	// внимание добавьте адекватный выбор языка который распространяется
 	// на все сервера, и скажите мне об этом
 	// спасибо
+	// пододжди два года и сделаю))))
 
 	List<Block> ppbs = new ArrayList<>();
 	World mainworld = Bukkit.getServer().getWorlds().get(0);
@@ -90,10 +95,35 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 	boolean testmode = false;
 
+
+
 	@Override
 	public void onEnable() {
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
 		mainworld = Bukkit.getServer().getWorlds().get(0);
+		Logger logger = getLogger();
+
+		this.saveDefaultConfig();
+		this.config = this.getConfig();
+		logger.info("config: \n" + config.saveToString() );
+		logger.info("default config: \n" + ((FileConfiguration) Objects.requireNonNull(config.getDefaults())).saveToString());
+
+		String data;
+
+		try (Scanner reader = new Scanner(getResource("translations.yml"))) {
+			data = "";
+			while (reader.hasNextLine()) {
+				data = data + "\n" + reader.nextLine();
+			}
+		}
+
+		try {
+			this.translation.loadFromString(data);
+		} catch (InvalidConfigurationException e) {
+			logger.warning(String.valueOf(e.getStackTrace()));
+		}
+
+		logger.info("Loaded translations: \n" + translation.saveToString());
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
@@ -2171,6 +2201,6 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	}
 
 	public TextComponent getByLang(String lang, String string) {
-		return new Translation().getByLang(lang, string);
+		return new Translation(translation).getTranslation(lang, string.replaceFirst("woolbattle.", ""));
 	}
 }

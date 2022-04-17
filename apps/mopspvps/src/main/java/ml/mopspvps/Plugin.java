@@ -8,13 +8,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.http.WebSocket.Listener;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
@@ -27,7 +30,6 @@ import java.util.logging.Logger;
 public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	static Dependencies dependencies = null;
 	static Events events = null;
-
 	final TextComponent restartMessage = Component.text("Сервер был перезагружен!").color(NamedTextColor.GREEN);
 
 	@Override
@@ -38,9 +40,27 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		this.saveDefaultConfig();
 		this.config = this.getConfig();
-
 		logger.info("config: \n" + config.saveToString() );
 		logger.info("default config: \n" + ((FileConfiguration) Objects.requireNonNull(config.getDefaults())).saveToString());
+
+		String data;
+
+		try (Scanner reader = new Scanner(getResource("translations.yml"))) {
+			data = "";
+			while (reader.hasNextLine()) {
+				data = data + "\n" + reader.nextLine();
+			}
+		}
+
+		try {
+			this.translation.loadFromString(data);
+		} catch (InvalidConfigurationException e) {
+			logger.warning(String.valueOf(e.getStackTrace()));
+		}
+
+		logger.info("Loaded translations: \n" + translation.saveToString());
+
+
 
 		Plugin.dependencies = new Dependencies(Plugin.this);
 

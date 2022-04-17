@@ -1,0 +1,62 @@
+woolbattle:
+  gotKilledBy:
+      rus: "был убит"
+      eng: "got killed by"
+  generator.uncaptured:
+      rus: "&7НЕЗАХВАЧЕН"
+      eng: "&7UNCAPTURED"
+  generator.red:
+      rus: "&cКРАСНЫЙ"
+      eng: "&cRED"
+  generator.yellow:
+      rus: "&eЖЁЛТЫЙ"
+      eng: "&eYELLOW"
+  generator.green:
+      rus: "&aЗЕЛЁНЫЙ"
+      eng: "&aGREEN"
+  generator.blue:
+      rus: "&bСИНИЙ"
+      eng: "&bBLUE"
+  redWool:
+      rus: "&cКрасная Шерсть"
+      eng: "&cRed Wool"
+  yellowWool:
+      rus: "&9Жёлтая Шерсть"
+      eng: "&9Yellow Wool"
+  greenWool:
+      rus: "&aЖёлтая Шерсть"
+      eng: "&aGreen Wool"
+  blueWool:
+      rus: "&bСиняя Шерсть"
+      eng: "&bBlue Wool"
+  doubleJumpBoots.name: #у дабл джамп ботинок в названии цвет зависим от команды
+      rus: "Дабл-Джамп Ботинки"
+      eng: "Double-Jump Boots"
+  doubleJumpBoots.lore:
+      rus: |
+        &7Позволяют прыгать в воздухе. &8(Нужно нажать пробел в падении дважды)
+        &bСтоимость: 16 шерсти
+      eng: |
+        &7Lets you jump in the air. &8(Requires pressing space 2 times while falling)
+        &bCost: 16 wool
+  notEnoughWool:
+      rus: "&cНедостаточно шерсти!"
+      eng: "&cNot enough wool!"
+  event.refill1:
+      rus: "&8(Рефилл | 4:00)"
+      eng: "&8(Refill | 4:00)"
+  event.refill2:
+      rus: "&8(Рефилл | 8:00)"
+      eng: "&8(Refill | 8:00)"
+  event.refill3:
+      rus: "&8(Рефилл | 12:00)"
+      eng: "&8(Refill | 12:00)"
+  event.hardmode:
+      rus: "&8(&4Хардмод&8 | 20:00)"
+      eng: "&8(&4Hardmode&8 | 20:00)"
+  event.deathmatch:
+      rus: "&8(Сражение до конца)"
+      eng: "&8(Deathmatch)"
+  scoreboardTime:
+      rus: "&fВремя:"
+      eng: "&fTime:"
