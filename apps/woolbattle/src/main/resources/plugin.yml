@@ -1,43 +1,43 @@
 name: WoolBattle
 main: ml.woolbattle.Plugin
-version: 'indev-SNAPSHOT-1.0'
+version: "'indev-SNAPSHOT-1.0"
 api-version: 1.18
 author: MopsCorporation
 description: Plugin for WoolBattle
 commands:
   startgame:
-    description:
+    description: ""
     usage: /startgame
   clearblocks:
-    description:
+    description: ""
     usage: /clearblocks
   stopgame:
-    description:
+    description: ""
     usage: /stopgame
   hardmode:
-    description:
+    description: ""
     usage: /hardmode
   refill:
-    description:
+    description: ""
     usage: /refill
   clearscoreboards:
-    description:
+    description: ""
     usage: /clearscoreboards
   testmode:
-    description:
+    description: ""
     usage: /testmode
   cubicstuff:
-    description:
+    description: ""
     usage: /cubicstuff
   spawn:
-    description:
+    description: ""
     usage: /spawn
   hub:
-    description:
+    description: ""
     usage: /hub
   lobby:
-    description:
+    description: ""
     usage: /lobby
   l:
-    description:
+    description: ""
     usage: /l

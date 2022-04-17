@@ -1,103 +1,91 @@
 name: MopsPVP
 main: ml.mopspvps.Plugin
-version: 'indev-SNAPSHOT-1.0'
+version: "'indev-SNAPSHOT-1.0"
 api-version: 1.18
 author: MopsCorporation
 description: Plugin for MopsPVP
 commands:
   pog:
-    description:
+    description: ""
     usage: /poga
   slimetest:
-    description:
+    description: ""
     usage: /slimetest
   name:
-    description:
+    description: ""
     usage: /name
   rank:
-    description:
+    description: ""
     usage: /rank
   kickall:
-    description:
+    description: ""
     usage: /kickall
   customgive:
-    description:
+    description: ""
     usage: /customgive
   loreadd:
-    description:
+    description: ""
     usage: /loreadditem
   loreclear:
-    description:
+    description: ""
     usage: /loreclearitem
   nameitem:
-    description:
+    description: ""
     usage: /nameitem
   fly:
-    description:
+    description: ""
     usage: /fly
   whoiam:
-    description:
+    description: ""
     usage: /whoiam
   announce:
-    description:
+    description: ""
     usage: /announce
   enchantitem:
-    description:
+    description: ""
     usage: /enchantitem
   enchantclear:
-    description:
+    description: ""
     usage: /enchantclear
   hideflags:
-    description:
+    description: ""
     usage: /hideflags
   kit:
-    description:
+    description: ""
     usage: /kit
   lobby:
-    description:
+    description: ""
     usage: /lobby
   hub:
-    description:
+    description: ""
     usage: /hub
   l:
-    description:
+    description: ""
     usage: /l
   test:
-    description:
+    description: ""
     usage: /test
   vector:
-    description:
+    description: ""
     usage: /vector
   calc:
-    description:
+    description: ""
     usage: /calc
   unbreak:
-    description:
+    description: ""
     usage: /unbreak
   food:
-    description:
+    description: ""
     usage: /food
   coins:
-    description:
+    description: ""
     usage: /coins
   crank:
-    description:
+    description: ""
     usage: "/crank me &6[&2COOL&6]&a"
   cname:
-    description:
+    description: ""
     usage: "/crank me &aCoolGuy"
   cnameitem:
-    description:
+    description: ""
     usage: "/crank &6<&2COOL_SWORD&6>&a"
-
-startgame:
-  description:
-  usage:
-
-stopame:
-  description:
-  usage:
-
-refil:
-  description:
-  usage:
