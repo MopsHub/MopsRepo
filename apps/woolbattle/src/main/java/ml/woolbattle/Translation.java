@@ -33,6 +33,7 @@ public class Translation {
             return tc;
         }
         else return invalidLanguage;
+
     }
 //    public TextComponent getByLang(String lang, String string) {
 //
