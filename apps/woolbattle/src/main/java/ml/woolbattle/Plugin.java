@@ -2201,6 +2201,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 
 	public TextComponent getByLang(String lang, String string) {
-		return new Translation(translation).getTranslation(lang, string.replaceFirst("woolbattle.", ""));
+		return new Translation(translation, getLogger()).getTranslation(lang, string.replaceFirst("woolbattle.", ""));
 	}
 }
