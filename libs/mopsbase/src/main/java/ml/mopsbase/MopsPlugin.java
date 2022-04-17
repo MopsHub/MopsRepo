@@ -7,6 +7,7 @@ import ml.mopsexception.MopsConfigException;
 import ml.mopsexception.MopsTranslationException;
 import ml.mopsexception.configs.BlankConfigException;
 import ml.mopsexception.configs.ParseCfgToYAMLException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedReader;
@@ -19,51 +20,50 @@ import java.util.logging.Logger;
 
 public class MopsPlugin extends JavaPlugin {
 	private List<GameSession> gameSessions;
-	protected Config config;
-	protected Config defaultConfig;
+	protected FileConfiguration config;
 
 	protected void loadTrainslation() throws MopsTranslationException {
 
 	}
 
-	public void loadConfig(Logger logger) throws MopsConfigException {
-		InputStream configFile = this.getResource("config.yml");
-		ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
-		try {
-			this.config = objectMapper.readValue(configFile, Config.class);
-		} catch (IOException e) {
-			throw new MopsConfigException(e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
-		}
-
-		Scanner reader = new Scanner(configFile);
-		String data = "";
-		while (reader.hasNextLine()) {
-			data = data + "\n" + reader.nextLine();
-			System.out.println(data);
-		}
-		if (data.isBlank()) {
-			throw new BlankConfigException();
-		}
-		logger.info("Loaded config.yml: \n" + data);
-	}
-
-	public void logConfig(Logger logger) throws NullPointerException, ParseCfgToYAMLException {
-		ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
-		String cfg = "";
-		try {
-			cfg = objectMapper.writeValueAsString(this.config);
-		} catch (JsonProcessingException e) {
-			throw new ParseCfgToYAMLException(e);
-		}
-		if (config.equals(new Config()) || cfg.isBlank()) {
-			logger.warning("Something wrong with config2yaml parser. String or Config object (hash: %s) are blank.".formatted(config.hashCode()));
-			throw new NullPointerException();
-		} else {
-			logger.info("Curently loaded config (parsed back2yaml): \n" + cfg);
-		}
-	}
-
-
+//	public void loadConfig(Logger logger) throws MopsConfigException {
+//		InputStream configFile = this.getResource("config.yml");
+//		ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+//		try {
+//			this.config = objectMapper.readValue(configFile, Config.class);
+//		} catch (IOException e) {
+//			throw new MopsConfigException(e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+//		}
+//
+//		Scanner reader = new Scanner(configFile);
+//		String data = "";
+//		while (reader.hasNextLine()) {
+//			data = data + "\n" + reader.nextLine();
+//			System.out.println(data);
+//		}
+//		if (data.isBlank()) {
+//			throw new BlankConfigException();
+//		}
+//		logger.info("Loaded config.yml: \n" + data);
+//	}
+//
+//	public void logConfig(Logger logger) throws NullPointerException, ParseCfgToYAMLException {
+//		ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+//		String cfg = "";
+//		try {
+//			cfg = objectMapper.writeValueAsString(this.config);
+//		} catch (JsonProcessingException e) {
+//			throw new ParseCfgToYAMLException(e);
+//		}
+//		if (config.equals(new Config()) || cfg.isBlank()) {
+//			logger.warning("Something wrong with config2yaml parser. String or Config object (hash: %s) are blank.".formatted(config.hashCode()));
+//			throw new NullPointerException();
+//		} else {
+//			logger.info("Curently loaded config (parsed back2yaml): \n" + cfg);
+//		}
+//	}
+//
+//
 
 		//		File cfgFile = new File(getDataFolder().getAbsolutePath() + "/config.yml");
 //		String cfgText = "";
