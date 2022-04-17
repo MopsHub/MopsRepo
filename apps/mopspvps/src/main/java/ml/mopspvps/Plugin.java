@@ -1,8 +1,5 @@
 package ml.mopspvps;
 
-import ml.mopsbase.MopsPlugin;
-import ml.mopsexception.MopsConfigException;
-import ml.mopsexception.configs.ParseCfgToYAMLException;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -12,7 +9,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
+import ml.mopsutils.Resources;
+import ml.mopsbase.MopsPlugin;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.http.WebSocket.Listener;
 import java.sql.Timestamp;
 import java.util.logging.Logger;
@@ -27,7 +28,6 @@ import java.util.logging.Logger;
 public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	static Dependencies dependencies = null;
 	static Events events = null;
-	static Logger logger;
 
 	final TextComponent restartMessage = Component.text("Сервер был перезагружен!").color(NamedTextColor.GREEN);
 
@@ -37,18 +37,12 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Timestamp enableTimeStamp = new Timestamp(System.currentTimeMillis());
 		Bukkit.broadcast(restartMessage);
 
-		try {
-			loadConfig(logger);
-		} catch (MopsConfigException e) {
-			logger.warning(e.getMessage());
-		}
-		try {
-			logConfig(logger);
-		} catch (ParseCfgToYAMLException e) {
-			logger.warning(String.valueOf(e.getStackTrace()));
-		}
+		this.saveDefaultConfig();
+		this.config = this.getConfig();
 
-		dependencies = new Dependencies(Plugin.this);
+		logger.info("config: " + config.toString());
+
+		Plugin.dependencies = new Dependencies(Plugin.this);
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -112,7 +106,5 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	static Dependencies getDependencies() {
 		return dependencies;
 	}
-
-
 }
 
