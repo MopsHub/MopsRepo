@@ -4,6 +4,7 @@ version: "'indev-SNAPSHOT-1.0"
 api-version: 1.18
 author: MopsCorporation
 description: Plugin for WoolBattle
+load: POSTWORLD
 commands:
   startgame:
     description: ""

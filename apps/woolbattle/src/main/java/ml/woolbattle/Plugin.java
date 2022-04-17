@@ -304,7 +304,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					}
 				}
 			}
-		}, 1L, 5L);
+		}, 80L, 5L);
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
@@ -370,14 +370,14 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					}
 				}
 			}
-		}, 1L, 1L);
+		}, 80L, 1L);
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			genConquerChecks(genAblocks, genAblocksLONG, "A");
 			genConquerChecks(genBblocks, genBblocksLONG, "B");
 			genConquerChecks(genCblocks, genCblocksLONG, "C");
 			genConquerChecks(genDblocks, genDblocksLONG, "D");
-		}, 1L, 20L);
+		}, 80L, 20L);
 
 		mainworld = Bukkit.getServer().getWorlds().get(0);
 	}
