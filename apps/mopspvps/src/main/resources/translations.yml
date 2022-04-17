@@ -51,6 +51,25 @@ woolbattle: #это главный элемент, называй и разде�
   - id: "notEnoughWool"
     rus: "&cНедостаточно шерсти!"
     eng: "&cNot enough wool!"
+  - id: "event.refill1"
+    rus: "&8(Рефилл | 4:00)"
+    eng: "&8(Refill | 4:00)"
+  - id: "event.refill2"
+    rus: "&8(Рефилл | 8:00)"
+    eng: "&8(Refill | 8:00)"
+  - id: "event.refill3"
+    rus: "&8(Рефилл | 12:00)"
+    eng: "&8(Refill | 12:00)"
+  - id: "event.hardmode"
+    rus: "&8(&4Хардмод&8 | 20:00)"
+    eng: "&8(&4Hardmode&8 | 20:00)"
+  - id: "event.deathmatch"
+    rus: "&8(Сражение до конца)"
+    eng: "&8(Deathmatch)"
+  - id: "scoreboardTime"
+    rus: "&fВремя:"
+    eng: "&fTime:"
+
 
 
 # Так делай цвета и коды (пока что)
