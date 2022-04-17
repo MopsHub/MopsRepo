@@ -11,6 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -26,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -40,13 +42,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.logging.Logger;
 
-public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
+public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 	String lang = "rus";
 	// внимание добавьте адекватный выбор языка который распространяется
 	// на все сервера, и скажите мне об этом
 	// спасибо
 	// пододжди два года и сделаю))))
+
+	protected FileConfiguration config;
+	public FileConfiguration translation = new YamlConfiguration();
 
 	List<Block> ppbs = new ArrayList<>();
 	World mainworld = Bukkit.getServer().getWorlds().get(0);
