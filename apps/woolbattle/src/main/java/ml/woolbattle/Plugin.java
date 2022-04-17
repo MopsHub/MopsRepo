@@ -50,7 +50,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	// пододжди два года и сделаю))))
 
 	List<Block> ppbs = new ArrayList<>();
-	World mainworld = Bukkit.getServer().getWorlds().get(0);
+	World mainworld;
 	boolean hardmode = false;
 	boolean gameactive = false;
 
@@ -378,6 +378,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			genConquerChecks(genCblocks, genCblocksLONG, "C");
 			genConquerChecks(genDblocks, genDblocksLONG, "D");
 		}, 1L, 20L);
+
+		mainworld = Bukkit.getServer().getWorlds().get(0);
 	}
 
 	final int[] minutes = {0};
