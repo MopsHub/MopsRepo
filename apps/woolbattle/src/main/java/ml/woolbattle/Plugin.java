@@ -110,11 +110,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		try (Scanner reader = new Scanner(Objects.requireNonNull(getResource("translations.yml")))) {
 			logger.info("3");
 			data = new StringBuilder();
-			logger.info(data.toString());
 			while (reader.hasNextLine()) {
 				data.append("\n").append(reader.nextLine());
 				logger.info("4");
 			}
+			logger.info(data.toString());
 		}
 
 		try {
