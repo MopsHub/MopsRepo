@@ -1,5 +1,6 @@
 package ml.mopspvps;
 
+import ml.mopsbase.MopsPlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -10,13 +11,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import ml.mopsutils.Resources;
-import ml.mopsbase.MopsPlugin;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.net.http.WebSocket.Listener;
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -42,7 +40,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		this.config = this.getConfig();
 
 		logger.info("config: \n" + config.saveToString() );
-		logger.info("default config: \n" + ((FileConfiguration) config.getDefaults()).saveToString());
+		logger.info("default config: \n" + ((FileConfiguration) Objects.requireNonNull(config.getDefaults())).saveToString());
 
 		Plugin.dependencies = new Dependencies(Plugin.this);
 
@@ -105,8 +103,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		return Dependencies.getCommands().commandsExecutor(sender, command, label, args);
 	}
 
-	static Dependencies getDependencies() {
-		return dependencies;
-	}
+//	static Dependencies getDependencies() {
+//		return dependencies;
+//	}
 }
 
