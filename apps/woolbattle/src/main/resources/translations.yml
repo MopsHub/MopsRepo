@@ -1,62 +1,62 @@
 woolbattle:
-  gotKilledBy:
+  - gotKilledBy:
       rus: "был убит"
       eng: "got killed by"
-  generator.uncaptured:
+  - generator.uncaptured:
       rus: "&7НЕЗАХВАЧЕН"
       eng: "&7UNCAPTURED"
-  generator.red:
+  - generator.red:
       rus: "&cКРАСНЫЙ"
       eng: "&cRED"
-  generator.yellow:
+  - generator.yellow:
       rus: "&eЖЁЛТЫЙ"
       eng: "&eYELLOW"
-  generator.green:
+  - generator.green:
       rus: "&aЗЕЛЁНЫЙ"
       eng: "&aGREEN"
-  generator.blue:
+  - generator.blue:
       rus: "&bСИНИЙ"
       eng: "&bBLUE"
-  redWool:
+  - redWool:
       rus: "&cКрасная Шерсть"
       eng: "&cRed Wool"
-  yellowWool:
+  - yellowWool:
       rus: "&9Жёлтая Шерсть"
       eng: "&9Yellow Wool"
-  greenWool:
+  - greenWool:
       rus: "&aЖёлтая Шерсть"
       eng: "&aGreen Wool"
-  blueWool:
+  - blueWool:
       rus: "&bСиняя Шерсть"
       eng: "&bBlue Wool"
-  doubleJumpBoots.name: #у дабл джамп ботинок в названии цвет зависим от команды
+  - doubleJumpBoots.name: #у дабл джамп ботинок в названии цвет зависим от команды
       rus: "Дабл-Джамп Ботинки"
       eng: "Double-Jump Boots"
-  doubleJumpBoots.lore:
+  - doubleJumpBoots.lore:
       rus: |
         &7Позволяют прыгать в воздухе. &8(Нужно нажать пробел в падении дважды)
         &bСтоимость: 16 шерсти
       eng: |
         &7Lets you jump in the air. &8(Requires pressing space 2 times while falling)
         &bCost: 16 wool
-  notEnoughWool:
+  - notEnoughWool:
       rus: "&cНедостаточно шерсти!"
       eng: "&cNot enough wool!"
-  event.refill1:
+  - event.refill1:
       rus: "&8(Рефилл | 4:00)"
       eng: "&8(Refill | 4:00)"
-  event.refill2:
+  - event.refill2:
       rus: "&8(Рефилл | 8:00)"
       eng: "&8(Refill | 8:00)"
-  event.refill3:
+  - event.refill3:
       rus: "&8(Рефилл | 12:00)"
       eng: "&8(Refill | 12:00)"
-  event.hardmode:
+  - event.hardmode:
       rus: "&8(&4Хардмод&8 | 20:00)"
       eng: "&8(&4Hardmode&8 | 20:00)"
-  event.deathmatch:
+  - event.deathmatch:
       rus: "&8(Сражение до конца)"
       eng: "&8(Deathmatch)"
-  scoreboardTime:
+  - scoreboardTime:
       rus: "&fВремя:"
       eng: "&fTime:"
