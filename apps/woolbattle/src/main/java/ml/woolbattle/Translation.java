@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacyAmpersand;
 
@@ -14,10 +15,11 @@ public class Translation {
     private TextComponent invalidString = Component.text("Invalid String", NamedTextColor.RED);
     private TextComponent invalidLanguage = Component.text("Invalid Language", NamedTextColor.RED);
     protected FileConfiguration woolbattleTranslation;
-    public List<String> languages = new LinkedList<String>(Arrays.asList(new String[]{"rus", "eng"}));
+    public List<String> languages = new LinkedList<>(Arrays.asList(new String[]{"rus", "eng"}));
 
-    public Translation(FileConfiguration fc) {
+    public Translation(FileConfiguration fc, Logger logger) {
         this.woolbattleTranslation = ((FileConfiguration) fc.getConfigurationSection("woolbattle"));
+        logger.info("woolbattle translation:\n" + woolbattleTranslation.saveToString());
     }
 
     public TextComponent getTranslation(String lang, String string) {
@@ -25,7 +27,7 @@ public class Translation {
             //TODO: нужно дробить строку на String[] по точки (что бы условный woolbattle.song.name) норм работал
             // Я наверное сам этим займусь
             TextComponent tc;
-            String s = (String) woolbattleTranslation.getMapList(string).get(0).get(lang);
+            String s = (String) woolbattleTranslation.getConfigurationSection(string).get(lang);
             tc = legacyAmpersand().deserialize(s);
             if (s.isBlank()) {
                 tc = invalidString;
