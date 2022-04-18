@@ -83,7 +83,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	ScoreboardManager manager;
 	Scoreboard board;
-	Objective fakekills = board.getObjective("fakekills");
+	Objective fakekills;
 
 	List<Player> redTeamPlayers = new ArrayList<>();
 	List<Player> yellowTeamPlayers = new ArrayList<>();
@@ -133,6 +133,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		manager = Bukkit.getScoreboardManager();
 		board = manager.getMainScoreboard();
+		fakekills = board.getObjective("fakekills");
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
