@@ -141,7 +141,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		try {
 			lang = config.getString("lang").toLowerCase(Locale.ROOT);
-			logger.info("lang string" + lang);
+			logger.info("lang string: " + lang);
 			if (lang.isBlank()) {
 				logger.warning("lang in blank");
 				lang = "rus";
@@ -175,21 +175,26 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						TextComponent woolName;
 
 						if (teamname.contains("red")) {
+							logger.info(player.getName() + "'s team: " + "red");
 							woolItem = new ItemStack(Material.RED_WOOL);
 							woolName = getByLang(lang, "redWool");
 						}
 						else if (teamname.contains("yellow")) {
+							logger.info(player.getName() + "'s team: " + "yellow");
 							woolItem = new ItemStack(Material.RED_WOOL);
-							woolName = getByLang(lang, "redWool");
+							woolName = getByLang(lang, "yellowWool");
 						}
 						else if (teamname.contains("green")) {
+							logger.info(player.getName() + "'s team: " + "green");
 							woolItem = new ItemStack(Material.LIME_WOOL);
 							woolName = getByLang(lang, "greenWool");
 						}
 						else if (teamname.contains("blue")) {
+							logger.info(player.getName() + "'s team: " + "blue");
 							woolItem = new ItemStack(Material.LIGHT_BLUE_WOOL);
 							woolName = getByLang(lang, "blueWool");
 						} else {
+							logger.warning(new StringBuilder().append("No team found for ").append(player.getName()).append("\ntags: ").append(player.getScoreboardTags()).append("\nteam name: ").append(player.getScoreboard().getPlayerTeam(player).getName()).toString());
 							player.removeScoreboardTag("ingame");
 							woolItem = new ItemStack(Material.AIR);
 							woolName = Component.empty();
@@ -2080,7 +2085,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					player1.playSound(player1.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.6F);
 					player1.playSound(player1.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.8F);
 
-					player1.sendMessage("ХАХАХАХА Я ГЕЙ");
+					player1.sendMessage(getByLang(lang, "onStartMessage"));
 				}, 3L);
 			}, 3L);
 
@@ -2184,11 +2189,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 	@Override
 	public List<TextComponent> getByLang(String lang, String string, Map<String, String> formatV, boolean notSingular) {
-		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""), Map.of("", ""), notSingular);
+		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV, notSingular);
 	}
 	@Override
 	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
-		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""));
+		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV, false).get(0);
 	}
 	public Title genTitle(@NotNull String lang, @Nullable String id, @Nullable String id2nd, int i, int k, int j) {
 		return u.createTitle(lang, id, id2nd, i, k, j);

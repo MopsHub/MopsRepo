@@ -98,7 +98,7 @@ public class Abilities {
 			color = Color.fromRGB(47, 247, 227);
 		} else {
 			colorString = "&f";
-			color = Color.fromRGB(0, 1, 0);
+			color = Color.fromRGB(42, 0, 69);
 		}
 
 		ItemStack bootsItem = new ItemStack(Material.LEATHER_BOOTS);

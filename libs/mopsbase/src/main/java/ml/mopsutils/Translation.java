@@ -17,11 +17,13 @@ public class Translation {
     public List<String> languages = new LinkedList<>(Arrays.asList("rus", "eng"));
     protected Logger logger;
     public HashMap<String, String> colors = new HashMap();
+    protected String base;
 
     public Translation(FileConfiguration fc, Logger logger, String base) {
         this.woolbattleTranslation = fc.getMapList(base);
         this.logger = logger;
-        logger.info("woolbattle translation:\n" + Arrays.toString(woolbattleTranslation.toArray()));
+        this.base = base;
+        logger.info(base + " translation:\n" + Arrays.toString(woolbattleTranslation.toArray()));
     }
 
     public List<TextComponent> getTranslation(String lang, String string, Map<String, String> formatValues, boolean notSingular) {
