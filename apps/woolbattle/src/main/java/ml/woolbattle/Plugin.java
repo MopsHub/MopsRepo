@@ -57,10 +57,12 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	int greenkills = 0;
 	int bluekills = 0;
 
-	String genAstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
-	String genBstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
-	String genCstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
-	String genDstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
+	String genAstatus = "woolbattle.generator.uncaptured";
+	String genBstatus = "woolbattle.generator.uncaptured";
+	String genCstatus = "woolbattle.generator.uncaptured";
+	String genDstatus = "woolbattle.generator.uncaptured";
+
+	boolean gensLocked = false;
 
 	List<Block> genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
 	List<Block> genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
@@ -500,7 +502,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 						}
 						fakekills.getScore(ChatColor.GOLD + " ").setScore(6);
 
-						resetGeneratorText();
+						resetGeneratorText(player);
 
 						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + genAstatus).setScore(5);
 						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + genBstatus).setScore(4);
@@ -1479,10 +1481,10 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		minutes[0] = 0;
 		minutes0[0] = 0;
 
-		genAstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
-		genBstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
-		genCstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
-		genDstatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
+		genAstatus = "woolbattle.generator.uncaptured";
+		genBstatus = "woolbattle.generator.uncaptured";
+		genCstatus = "woolbattle.generator.uncaptured";
+		genDstatus = "woolbattle.generator.uncaptured";
 
 		String nextevent = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
 		String nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
@@ -1558,7 +1560,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			}
 		}
 		player.setExp(0);
-		player.setLevel(woolcount);
+		player.setLevel(Math.min(woolcount, 512));
 	}
 
 	public ArrayList<Block> getBlox(Block start, int radius) {
@@ -1611,7 +1613,8 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 	public void genConquerChecks(List<Block> gen, List<Block> genLONG, String genLetter) {
 		if(!hardmode) {
-			String genStatus = getByLang(lang, "woolbattle.generator.uncaptured").toString();
+			String genStatus = "woolbattle.generator.uncaptured";
+
 			if (gen == genAblocks) {
 				genStatus = genAstatus;
 			}
@@ -1734,10 +1737,13 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 			}
 		}
 	}
-	public void resetGeneratorText() {
+	public void resetGeneratorText(Player player) {
 
 		List<String> genStatuses = new ArrayList<String>();
-		genStatuses.add(getByLang(lang, "woolbattle.generator.uncaptured").toString());
+
+		//тут типа надо language.getPlayer() ну вы поняли
+
+		genStatuses.add(ChatColor.GRAY + "НЕЗАХВАЧЕН");
 		genStatuses.add(ChatColor.RED + "КРАСНЫЙ");
 		genStatuses.add(ChatColor.YELLOW + "ЖЁЛТЫЙ");
 		genStatuses.add(ChatColor.GREEN + "ЗЕЛЁНЫЙ");
