@@ -152,14 +152,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 
-				if (player.getName().equalsIgnoreCase("bveshkaa")) {
-					player.setVelocity(new Vector(99999, -29999, 99999));
-					player.setVelocity(new Vector(-99999, 29999, -99999));
-					player.sendActionBar(Component.text("БЕБРА ТРАХ ТРАХ"));
-					player.kick(Component.text("конектион тротлед. плиз контакт юр ", NamedTextColor.GRAY)
-							.append(Component.text("мама", NamedTextColor.DARK_GRAY, TextDecoration.STRIKETHROUGH)
-									.append(Component.text(" интернет провидер", NamedTextColor.GRAY))));
-				}
 
 				Team team = board.getPlayerTeam(player);
 				assert team != null;
@@ -2085,6 +2077,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				Bukkit.getScheduler().runTaskLater(this, () -> {
 					player1.playSound(player1.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.6F);
 					player1.playSound(player1.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.8F);
+
+					player1.sendMessage("ХАХАХАХА Я ГЕЙ");
 				}, 3L);
 			}, 3L);
 

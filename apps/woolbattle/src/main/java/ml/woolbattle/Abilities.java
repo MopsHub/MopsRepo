@@ -85,20 +85,20 @@ public class Abilities {
 		Color color = Color.BLACK;
 
 		Map m;
-		if (team.name().contains("red")) {
+		if (team.equals(Teams.RED)) {
 			colorString = "&4";
 			color = Color.fromRGB(255, 10, 10);
 		}
-		if (team.name().contains("red")) {
+		if (team.equals(Teams.YELLOW)) {
 			colorString = "&e";
 			color = Color.fromRGB(255, 207, 36);
-			if (team.name().contains("red")) {
-				colorString = "&a";
-				color = Color.fromRGB(105, 255, 82);
-				if (team.name().contains("red")) {
-					colorString = "&9";
-					color = Color.fromRGB(47, 247, 227);
-				}
+		if (team.equals(Teams.GREEN)) {
+			colorString = "&a";
+			color = Color.fromRGB(105, 255, 82);
+		if (team.equals(Teams.BLUE)) {
+			colorString = "&9";
+			color = Color.fromRGB(47, 247, 227);
+		}
 
 				ItemStack bootsItem = new ItemStack(Material.LEATHER_BOOTS);
 				LeatherArmorMeta bootsMeta = (LeatherArmorMeta) bootsItem.getItemMeta();

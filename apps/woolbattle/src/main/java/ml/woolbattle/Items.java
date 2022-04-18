@@ -5,7 +5,8 @@ public enum Items {
 	ARROW,
 	BOW,
 	SLIME_BALL,
-	STICK,
-	STICK_MK_II,
+	PLATFORM,
+	STAFF,
+	STAFF_MK_II,
 	SHEARS
 }
