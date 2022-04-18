@@ -1,10 +1,13 @@
 package ml.woolbattle;
 
 import ml.mopsbase.MopsPlugin;
+import ml.mopsutils.Translation;
+import ml.mopsutils.U;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -38,8 +41,7 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-
-
+import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -50,6 +52,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	// на все сервера, и скажите мне об этом
 	// спасибо
 	// пододжди два года и сделаю))))
+
+	U u = new U(this);
+	Abilities a = new Abilities(this);
 
 	List<Block> ppbs = new ArrayList<>();
 	World mainworld;
@@ -135,12 +140,22 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		board = manager.getMainScoreboard();
 		fakekills = board.getObjective("fakekills");
 
+		try {
+			lang = config.getString("lang").toLowerCase(Locale.ROOT);
+			if (lang.isBlank()) {
+				throw new Exception("couldn't load custom lang");
+			}
+		} catch (Exception e) {
+			logger.info(e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+		}
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 
 				if (player.getName().equalsIgnoreCase("bveshkaa")) {
 					player.setVelocity(new Vector(99999, -29999, 99999));
-					player.sendActionBar("БЕБРА ТРАХ ТРАХ");
+					player.setVelocity(new Vector(-99999, 29999, -99999));
+					player.sendActionBar(Component.text("БЕБРА ТРАХ ТРАХ"));
 					player.kick(Component.text("конектион тротлед. плиз контакт юр ", NamedTextColor.GRAY)
 							.append(Component.text("мама", NamedTextColor.DARK_GRAY, TextDecoration.STRIKETHROUGH)
 									.append(Component.text(" интернет провидер", NamedTextColor.GRAY))));
@@ -162,41 +177,36 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					}
 
 					if (loc0.getY() > 143 && loc0.getY() < 160) {
+						ItemStack woolItem;
+						TextComponent woolName;
 
 						if (teamname.contains("red")) {
-							ItemStack woolitem = new ItemStack(Material.RED_WOOL);
-							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.setDisplayName(getByLang(lang, "woolbattle.redWool").toString());
-							woolitem.setItemMeta(woolmeta);
-							woolitem.setAmount(200000);
-							player.getInventory().removeItem(woolitem);
+							woolItem = new ItemStack(Material.RED_WOOL);
+							woolName = getByLang(lang, "woolbattle.redWool");
 						}
-						if (teamname.contains("yellow")) {
-							ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL);
-							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.setDisplayName(getByLang(lang, "woolbattle.yellowWool").toString());
-							woolitem.setItemMeta(woolmeta);
-							woolitem.setAmount(200000);
-							player.getInventory().removeItem(woolitem);
+						else if (teamname.contains("yellow")) {
+							woolItem = new ItemStack(Material.RED_WOOL);
+							woolName = getByLang(lang, "woolbattle.redWool");
 						}
-						if (teamname.contains("green")) {
-							ItemStack woolitem = new ItemStack(Material.LIME_WOOL);
-							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.setDisplayName(getByLang(lang, "woolbattle.greenWool").toString());
-							woolitem.setItemMeta(woolmeta);
-							woolitem.setAmount(200000);
-							player.getInventory().removeItem(woolitem);
+						else if (teamname.contains("green")) {
+							woolItem = new ItemStack(Material.LIME_WOOL);
+							woolName = getByLang(lang, "woolbattle.greenWool");
 						}
-						if (teamname.contains("blue")) {
-							ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL);
-							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.setDisplayName(getByLang(lang, "woolbattle.blueWool").toString());
-							woolitem.setItemMeta(woolmeta);
-							woolitem.setAmount(200000);
-							player.getInventory().removeItem(woolitem);
+						else if (teamname.contains("blue")) {
+							woolItem = new ItemStack(Material.LIGHT_BLUE_WOOL);
+							woolName = getByLang(lang, "woolbattle.blueWool");
+						} else {
+							player.removeScoreboardTag("ingame");
+							woolItem = new ItemStack(Material.AIR);
+							woolName = Component.empty();
 						}
 
 						Objective lastdamage = board.getObjective("lastdamagedbyteam");
+						ItemMeta woolMeta = woolItem.getItemMeta();
+						woolMeta.displayName(woolName);
+						woolItem.setItemMeta(woolMeta);
+						woolItem.setAmount(200000);
+						player.getInventory().removeItem(woolItem);
 
 						switch (Objects.requireNonNull(lastdamage).getScore(player.getName()).getScore()) {
 							case 1 -> {
@@ -1098,10 +1108,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						woolitem.setItemMeta(woolmeta);
 						player.getInventory().addItem(woolitem);
 					} else {
-						player.sendTitle(" ", ChatColor.RED + "Лимит шерсти достигнут", 0, 15, 10);
+						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
 					}
 				} else {
-					player.sendTitle(" ", ChatColor.RED + "Вы не можете это ломать", 0, 15, 10);
+					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
 				}
 			}
 			if (teamname.contains("green")) {
@@ -1858,8 +1868,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		int fadeOut = 30;
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
+			String colorWon;
 			if(winner == 1) {
 				player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
+
 			}
 			if(winner == 2) {
 				player.sendTitle(ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
@@ -1870,6 +1882,16 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			if(winner == 4) {
 				player.sendTitle(ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
 			}
+			switch (winner) {
+				case 1 -> colorWon = "red";
+				case 2 -> colorWon = "yellow";
+				case 3 -> colorWon = "green";
+				case 4 -> colorWon = "blue";
+				default -> colorWon = "nobody";
+			}
+
+			player.showTitle(genTitle(lang, "team." + colorWon, "team.won", 4, 40, 30));
+
 			player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
 			player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.2F);
 			Bukkit.getScheduler().runTaskLater(this, () -> {
@@ -2025,24 +2047,29 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 
 	public void gameStartSequence(Player player1, String teamname) {
+		Teams team = Teams.SPECTATOR;
 		if (teamname.contains("red")) {
 			Location loc = new Location(player1.getWorld(), 9.5, 258, -27.5);
 			player1.teleport(loc);
+			team = Teams.RED;
 		}
 		if (teamname.contains("yellow")) {
 			Location loc = new Location(player1.getWorld(), -27.5, 258, 9.5);
 			loc.setYaw(-90);
 			player1.teleport(loc);
+			team = Teams.YELLOW;
 		}
 		if (teamname.contains("green")) {
 			Location loc = new Location(player1.getWorld(), 9.5, 258, 46.5);
 			loc.setYaw(-180);
 			player1.teleport(loc);
+			team = Teams.GREEN;
 		}
 		if (teamname.contains("blue")) {
 			Location loc = new Location(player1.getWorld(), 46.5, 258, 9.5);
 			loc.setYaw(90);
 			player1.teleport(loc);
+			team = Teams.BLUE;
 		}
 
 		gameStartingTitle(player1);
@@ -2074,94 +2101,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			damagetask0.get(player1).cancel();
 		} catch (Throwable ignored) {}
 
-		gameactive = true;
+		this.gameactive = true;
 
-		ItemStack item1 = new ItemStack(Material.SHEARS);
-		ItemMeta meta1 = item1.getItemMeta();
-		meta1.setDisplayName(ChatColor.AQUA + "Ножницы");
-		meta1.addEnchant(Enchantment.DIG_SPEED, 5, true);
-		meta1.addEnchant(Enchantment.KNOCKBACK, 2, true);
-		meta1.setUnbreakable(true);
-		List<String> lore1 = new ArrayList<String>();
-		lore1.add(ChatColor.GRAY + "Ножницы для копания шерсти и");
-		lore1.add(ChatColor.GRAY + "скидывания игроков в бездну.");
-		lore1.add("");
-		lore1.add(ChatColor.AQUA + "Способность: " + ChatColor.GRAY + "Убирает блоки");
-		lore1.add(ChatColor.GRAY + "своего цвета на генераторах." + ChatColor.YELLOW + "" + ChatColor.BOLD + " ПКМ");
-		lore1.add(ChatColor.AQUA + "Стоимость: 6 шерсти");
-		meta1.setLore(lore1);
-		item1.setItemMeta(meta1);
-		player1.getInventory().setItem(0, item1);
-
-		ItemStack item2 = new ItemStack(Material.STICK);
-		ItemMeta meta2 = item2.getItemMeta();
-		meta2.setDisplayName(ChatColor.YELLOW + "Взрывная Палка");
-		List<String> lore2 = new ArrayList<String>();
-		lore2.add(ChatColor.GRAY + "Палка откидывающая тебя назад." + ChatColor.YELLOW + "" + ChatColor.BOLD + " ПКМ" + ChatColor.DARK_GRAY + " (Нужно наводится на блок)");
-		lore2.add(ChatColor.AQUA + "Стоимость: 28 шерсти");
-		meta2.setLore(lore2);
-		item2.setItemMeta(meta2);
-		player1.getInventory().setItem(1, item2);
-
-		ItemStack item3 = new ItemStack(Material.SLIME_BALL);
-		ItemMeta meta3 = item3.getItemMeta();
-		meta3.setDisplayName(ChatColor.GREEN + "Надувной Батут");
-		List<String> lore3 = new ArrayList<String>();
-		lore3.add(ChatColor.GRAY + "Спасёт тебя при падении." + ChatColor.YELLOW + "" + ChatColor.BOLD + " ПКМ" + ChatColor.DARK_GRAY + " (Шифт чтобы прыгнуть высоко)");
-		lore3.add(ChatColor.AQUA + "Стоимость: 208 шерсти");
-		meta3.addEnchant(Enchantment.DURABILITY, 1, true);
-		meta3.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		meta3.setLore(lore3);
-		item3.setItemMeta(meta3);
-		player1.getInventory().setItem(2, item3);
-
-		ItemStack item4 = new ItemStack(Material.BOW);
-		ItemMeta meta4 = item4.getItemMeta();
-		meta4.setDisplayName(ChatColor.AQUA + "Лук");
-		List<String> lore4 = new ArrayList<String>();
-		lore4.add(ChatColor.GRAY + "Лук, может ломать шерсть при попадании.");
-		meta4.addEnchant(Enchantment.ARROW_KNOCKBACK, 2, true);
-		meta4.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
-		meta4.setUnbreakable(true);
-		meta4.setLore(lore4);
-		item4.setItemMeta(meta4);
-		player1.getInventory().setItem(8, item4);
-
-		ItemStack item5 = new ItemStack(Material.ARROW);
-		ItemMeta meta5 = item5.getItemMeta();
-		meta5.setDisplayName(ChatColor.GRAY + "Стрела");
-		item5.setItemMeta(meta5);
-		player1.getInventory().setItem(17, item5);
-
-		ChatColor chatcolor = ChatColor.WHITE;
-		Color color = Color.fromBGR(255, 255, 255);
-
-		if(teamname.contains("red")) {
-			chatcolor = ChatColor.RED;
-			color = Color.fromRGB(255, 10, 10);
-		} else if(teamname.contains("yellow")) {
-			chatcolor = ChatColor.YELLOW;
-			color = Color.fromRGB(255, 207, 36);
-		} else if(teamname.contains("green")) {
-			chatcolor = ChatColor.GREEN;
-			color = Color.fromRGB(105, 255, 82);
-		} else if(teamname.contains("blue")) {
-			chatcolor = ChatColor.AQUA;
-			color = Color.fromRGB(47, 247, 227);
-		}
-
-		ItemStack item6 = new ItemStack(Material.LEATHER_BOOTS);
-		LeatherArmorMeta meta6 = (LeatherArmorMeta) item6.getItemMeta();
-		meta6.setDisplayName(chatcolor + "Дабл-Джамп Ботинки");
-		List<String> lore6 = new ArrayList<String>();
-		lore6.add(ChatColor.GRAY + "Позволяют прыгать в воздухе. ");
-		lore6.add(ChatColor.DARK_GRAY + "(Нужно нажать пробел дважды в падении)");
-		lore6.add(ChatColor.AQUA + "Стоимость: 16 шерсти");
-		meta6.setUnbreakable(true);
-		meta6.setColor(color);
-		meta6.setLore(lore6);
-		item6.setItemMeta(meta6);
-		player1.getInventory().setItem(36, item6);
+		a.startGame(lang, team, player1);
 
 	}
 
@@ -2230,17 +2172,36 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	public static int getAmount(Player arg0, ItemStack arg1) {
 		if (arg1 == null)
 			return 0;
-		int amount = 0;
+		int among = 0;
 		for (int i = 0; i < 36; i++) {
 			ItemStack slot = arg0.getInventory().getItem(i);
 			if (slot == null || !slot.isSimilar(arg1))
 				continue;
-			amount += slot.getAmount();
+			among += slot.getAmount();
 		}
-		return amount;
+		return among;
 	}
 
+	@Override
 	public TextComponent getByLang(String lang, String string) {
-		return new Translation(translation, getLogger()).getTranslation(lang, string.replaceFirst("woolbattle.", ""), getLogger());
+		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""));
 	}
+	@Override
+	public List<TextComponent> getByLang(String lang, String string, Map<String, String> formatV, boolean notSingular) {
+		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""), Map.of("", ""), notSingular);
+	}
+	@Override
+	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
+		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""));
+	}
+	public Title genTitle(@NotNull String lang, @Nullable String id, @Nullable String id2nd, int i, int k, int j) {
+		return u.createTitle(lang, id, id2nd, i, k, j);
+	}
+	public TextComponent uniteTC(TextComponent[] tcs) {
+		return u.combineComponents(tcs, Component.empty());
+	}
+	public TextComponent uniteTCspace(TextComponent[] tcs) {
+		return u.combineComponents(tcs, Component.space());
+	}
+
 }

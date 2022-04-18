@@ -30,8 +30,8 @@ woolbattle:
       rus: "&bСиняя Шерсть"
       eng: "&bBlue Wool"
   - doubleJumpBoots.name: #у дабл джамп ботинок в названии цвет зависим от команды
-      rus: "Дабл-Джамп Ботинки"
-      eng: "Double-Jump Boots"
+      rus: "${TCC}Дабл-Джамп Ботинки"
+      eng: "${TCC}Double-Jump Boots" //TCC = Team Color Code
   - doubleJumpBoots.lore:
       rus: |
         &7Позволяют прыгать в воздухе. &8(Нужно нажать пробел в падении дважды)
@@ -60,3 +60,46 @@ woolbattle:
   - scoreboardTime:
       rus: "&fВремя:"
       eng: "&fTime:"
+  - woolLimit:
+      rus: "&cЛимит шерсти достигнут"
+      eng: "&cYou've reached wool limit"
+  - cantBreak:
+      rus: "&cВы не можете это ломать"
+      eng: "&cYou can't break it"
+  - team.hasWon:
+      rus: "Победили!"
+      eng: "Won!"
+  - team.RED:
+      rus: "&lКРАСНЫЕ"
+      eng: "&lRED"
+  - team.YELLOW:
+      rus: "&lЖЁЛТЫЕ"
+      eng: "&lYELLOW"
+  - team.GREEN:
+      rus: "&lЗЕЛЁНЫЕ"
+      eng: "&lGREEN"
+  - team.BLUE:
+      rus: "&lСИНИЕ"
+      eng: "&lBLUE"
+  - team.Nobody:
+      rus: "&8Никто не"
+      eng: "Nobody"
+  - onStartMessage:
+      rus: |
+        ------------------------------------------------------
+                             WoolBattle
+        Игра началась. Копайте шерсть чтобы строится к другим
+        и использовать способности. Ваша цель - сделать N
+        убийств. Так же вы можете захыватывать генераторы,
+        это угловые острова, просто сломайте все белые блоки
+        и поставьте шерсть своего цвета. Удачи!
+        ------------------------------------------------------
+      eng: |
+        ------------------------------------------------------
+                             WoolBattle
+        Game has started! Mine wool, it is used for building
+        and abilities. Your goal is to get ${kills} first.
+        You can capture generators (corner islands) just
+        replace all white wool with wool of your color!
+        Good luck!
+        ------------------------------------------------------
