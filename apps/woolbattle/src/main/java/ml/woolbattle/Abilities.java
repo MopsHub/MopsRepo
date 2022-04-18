@@ -82,37 +82,37 @@ public class Abilities {
 		player1.getInventory().setItem(17, item5);
 
 		String colorString = "&f";
-		Color color = Color.fromBGR(255, 255, 255);
+		Color color = Color.BLACK;
 
 		Map m;
-		switch (team) {
-			case RED:
-				colorString = "&4";
-				color = Color.fromRGB(255, 10, 10);
-			case YELLOW:
-				colorString = "&e";
-				color = Color.fromRGB(255, 207, 36);
-			case GREEN:
+		if (team.name().contains("red")) {
+			colorString = "&4";
+			color = Color.fromRGB(255, 10, 10);
+		}
+		if (team.name().contains("red")) {
+			colorString = "&e";
+			color = Color.fromRGB(255, 207, 36);
+			if (team.name().contains("red")) {
 				colorString = "&a";
 				color = Color.fromRGB(105, 255, 82);
-			case BLUE:
-				colorString = "&9";
-				color = Color.fromRGB(47, 247, 227);
-			default:
-				color = Color.BLACK;
-		}
+				if (team.name().contains("red")) {
+					colorString = "&9";
+					color = Color.fromRGB(47, 247, 227);
+				}
 
-		ItemStack bootsItem = new ItemStack(Material.LEATHER_BOOTS);
-		LeatherArmorMeta bootsMeta = (LeatherArmorMeta) bootsItem.getItemMeta();
-		bootsMeta.displayName(plugin.getByLang(lang, "doubleJumpBoots.name", Map.of("TCC", colorString)));
-		List<String> bootsLore = new ArrayList<String>();
-		bootsLore.add(ChatColor.GRAY + "Позволяют прыгать в воздухе. ");
-		bootsLore.add(ChatColor.DARK_GRAY + "(Нужно нажать пробел дважды в падении)");
-		bootsLore.add(ChatColor.AQUA + "Стоимость: 16 шерсти");
-		bootsMeta.setUnbreakable(true);
-		bootsMeta.setColor(color);
-		bootsMeta.setLore(bootsLore);
-		bootsItem.setItemMeta(bootsMeta);
-		player1.getInventory().setItem(36, bootsItem);
+				ItemStack bootsItem = new ItemStack(Material.LEATHER_BOOTS);
+				LeatherArmorMeta bootsMeta = (LeatherArmorMeta) bootsItem.getItemMeta();
+				bootsMeta.displayName(plugin.getByLang(lang, "doubleJumpBoots.name", Map.of("TCC", colorString)));
+				List<String> bootsLore = new ArrayList<String>();
+				bootsLore.add(ChatColor.GRAY + "Позволяют прыгать в воздухе. ");
+				bootsLore.add(ChatColor.DARK_GRAY + "(Нужно нажать пробел дважды в падении)");
+				bootsLore.add(ChatColor.AQUA + "Стоимость: 16 шерсти");
+				bootsMeta.setUnbreakable(true);
+				bootsMeta.setColor(color);
+				bootsMeta.setLore(bootsLore);
+				bootsItem.setItemMeta(bootsMeta);
+				player1.getInventory().setItem(36, bootsItem);
+			}
+		}
 	}
 }
