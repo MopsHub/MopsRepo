@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import ml.mopsexception.configs.BlankConfigException;
-import ml.mopsexception.configs.ParsingConfigToYAMLStringException;
+import ml.mopsexception.configs.ParseCfgToYAMLException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,7 +32,7 @@ public class Config {
 	}
 
 	@NotNull
-	public String parseToString() throws ParsingConfigToYAMLStringException, BlankConfigException {
+	public String parseToString() throws ParseCfgToYAMLException, BlankConfigException {
 		ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
 		try {
 			String yml = objectMapper.writeValueAsString(this);
@@ -41,7 +41,7 @@ public class Config {
 			}
 			return yml;
 		} catch (JsonProcessingException e) {
-			throw new ParsingConfigToYAMLStringException(e);
+			throw new ParseCfgToYAMLException(e);
 		}
 	}
 

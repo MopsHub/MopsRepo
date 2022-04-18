@@ -1,102 +1,62 @@
-# Отсылки на уже существующий код (например режимы) пишем как уже есть (то есть не party а mopsparty)
-# ТУТ ВАЖНЫ ОТСТУПЫ!!!
-# продолжай называть id в таком же духе что ты уже делал
-woolbattle: #это главный элемент, называй и разделяй их так что бы нигде не было лишнего (что бы под mopsparty не был перевод для мопспвп)
-  - id: "gotKilledBy" #это вторичный элемент
-    rus: "был убит"   #это тоже вторичный элемент, который в одной группе с прошлым
-    eng: "got killed by"   #это тоже вторичный элемент, который в одной группе с прошлымы двумя
-  - id: "id"   # - перед этой штуковиной, означает что это отдельная группа
-    rus: "ру"  # это относится уже ко второй группе
-    eng: 'англиш' # ещё можно юзать и такие кавычки, я хз какая разница
-  - id: "generator.uncaptured"
+woolbattle:
+  gotKilledBy:
+    rus: "был убит"
+    eng: "got killed by"
+  generator.uncaptured:
     rus: "&7НЕЗАХВАЧЕН"
     eng: "&7UNCAPTURED"
-  - id: "generator.red"
+  generator.red:
     rus: "&cКРАСНЫЙ"
     eng: "&cRED"
-  - id: "generator.yellow"
+  generator.yellow:
     rus: "&eЖЁЛТЫЙ"
     eng: "&eYELLOW"
-  - id: "generator.green"
+  generator.green:
     rus: "&aЗЕЛЁНЫЙ"
     eng: "&aGREEN"
-  - id: "generator.blue"
+  generator.blue:
     rus: "&bСИНИЙ"
     eng: "&bBLUE"
-  - id: "generator.yellow"
-    rus: "&eЖЁЛТЫЙ"
-    eng: "&eYELLOW"
-  - id: "redWool"
+  redWool:
     rus: "&cКрасная Шерсть"
     eng: "&cRed Wool"
-  - id: "yellowWool"
+  yellowWool:
     rus: "&9Жёлтая Шерсть"
     eng: "&9Yellow Wool"
-  - id: "greenWool"
+  greenWool:
     rus: "&aЖёлтая Шерсть"
     eng: "&aGreen Wool"
-  - id: "blueWool"
+  blueWool:
     rus: "&bСиняя Шерсть"
     eng: "&bBlue Wool"
-  - id: "doubleJumpBoots.name" #у дабл джамп ботинок в названии цвет зависим от команды
+  doubleJumpBoots.name: #у дабл джамп ботинок в названии цвет зависим от команды
     rus: "Дабл-Джамп Ботинки"
     eng: "Double-Jump Boots"
-  - id: "doubleJumpBoots.lore"
+  doubleJumpBoots.lore:
     rus: |
       &7Позволяют прыгать в воздухе. &8(Нужно нажать пробел в падении дважды)
       &bСтоимость: 16 шерсти
     eng: |
       &7Lets you jump in the air. &8(Requires pressing space 2 times while falling)
       &bCost: 16 wool
-  - id: "notEnoughWool"
+  notEnoughWool:
     rus: "&cНедостаточно шерсти!"
     eng: "&cNot enough wool!"
-  - id: "event.refill1"
+  event.refill1:
     rus: "&8(Рефилл | 4:00)"
     eng: "&8(Refill | 4:00)"
-  - id: "event.refill2"
+  event.refill2:
     rus: "&8(Рефилл | 8:00)"
     eng: "&8(Refill | 8:00)"
-  - id: "event.refill3"
+  event.refill3:
     rus: "&8(Рефилл | 12:00)"
     eng: "&8(Refill | 12:00)"
-  - id: "event.hardmode"
+  event.hardmode:
     rus: "&8(&4Хардмод&8 | 20:00)"
     eng: "&8(&4Hardmode&8 | 20:00)"
-  - id: "event.deathmatch"
+  event.deathmatch:
     rus: "&8(Сражение до конца)"
     eng: "&8(Deathmatch)"
-  - id: "scoreboardTime"
+  scoreboardTime:
     rus: "&fВремя:"
     eng: "&fTime:"
-
-
-
-# Так делай цвета и коды (пока что)
-mopslobby:
-  - id: "lie"
-    rus: | #Многострочные мемы (в данном случае и строка будет многострочная, НО если вместо | поставить > то тогда итоговая строка будет лишь одной строкой)
-      Многострочный мемысики, мои любимые!
-      Был отец,
-      а потом он ушёл от меня
-      и моей мамы,
-      "пZдц", не иначе
-    eng: '&3ты же у&2мный, сам поймёшь?'
-  - id: "truth"
-    rus: "сэм педик&3&m и педофил"
-    eng: Sam are/they &ia prod gay person and also MAP, which means them get a lots of unfair hate speech. #кавычки не обязательные
-
-# Скорее всего разные первые названия я разделю по разным файлам, но пока что похуй
-mopspvps: #Вот так делаются многоуровневые мемы
-  - id: songs
-      id: "names"
-          id: "paris"
-          rus: "&7Люблю &b&mКОИ&r&c ХУИ"
-          eng: "I love paris"
-
-          ###Я НЕ ЕБУ РАБОТАЕТ ЛИ МЕМ ВЫШЕ, ЛУЧШЕ делай так:
-  - id: "songs.paris"
-    rus: "aфлоывалждфывожаa"
-    eng: "asdfadfasdfsf"
-
-

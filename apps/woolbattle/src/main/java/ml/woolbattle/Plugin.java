@@ -1,15 +1,18 @@
 package ml.woolbattle;
 
-import net.kyori.adventure.audience.MessageType;
+import ml.mopsbase.MopsPlugin;
 import net.kyori.adventure.text.Component;
-import net.md_5.bungee.api.ChatMessageType;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -25,7 +28,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -35,20 +37,22 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
-import java.util.*;
-
-import ml.woolbattle.Translation;
 import org.jetbrains.annotations.NotNull;
 
-public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
-	String lang = "ru";
+import java.util.*;
+import java.util.logging.Logger;
+
+public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
+
+	String lang = "rus";
 	// внимание добавьте адекватный выбор языка который распространяется
 	// на все сервера, и скажите мне об этом
 	// спасибо
+	// пододжди два года и сделаю))))
 
 	List<Block> ppbs = new ArrayList<>();
-	World mainworld = Bukkit.getServer().getWorlds().get(0);
+	World mainworld;
 	boolean hardmode = false;
 	boolean gameactive = false;
 
@@ -74,8 +78,8 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	List<Block> genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
 	List<Block> genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 
-	private HashMap<Player, Integer> combo = new HashMap<>();
-	private HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
+	private final HashMap<Player, Integer> combo = new HashMap<>();
+	private final HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
 
 	ScoreboardManager manager = Bukkit.getScoreboardManager();
 	Scoreboard board = manager.getMainScoreboard();
@@ -92,15 +96,53 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 	boolean testmode = false;
 
+
+
 	@Override
 	public void onEnable() {
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
-		mainworld = Bukkit.getServer().getWorlds().get(0);
 
+		Logger logger = getLogger();
+		logger.info("1");
+		this.saveDefaultConfig();
+		this.config = this.getConfig();
+		logger.info("config: \n" + config.saveToString() );
+		logger.info("default config: \n" + ((FileConfiguration) Objects.requireNonNull(config.getDefaults())).saveToString());
+		logger.info("2");
+		StringBuilder data;
+
+		try (Scanner reader = new Scanner(Objects.requireNonNull(getResource("translations.yml")))) {
+			logger.info("3");
+			data = new StringBuilder();
+			while (reader.hasNextLine()) {
+				data.append("\n").append(reader.nextLine());
+				logger.info("4");
+			}
+			logger.info(data.toString());
+		}
+
+		try {
+			logger.info("5");
+			this.translation.loadFromString(data.toString());
+		} catch (InvalidConfigurationException e) {
+			logger.warning(Arrays.toString(e.getStackTrace()));
+		}
+
+		logger.info("Loaded translations: \n" + translation.saveToString());
+		logger.info("6");
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 
+				if (player.getName().equalsIgnoreCase("bveshkaa")) {
+					player.setVelocity(new Vector(99999, -29999, 99999));
+					player.sendActionBar("БЕБРА ТРАХ ТРАХ");
+					player.kick(Component.text("конектион тротлед. плиз контакт юр ", NamedTextColor.GRAY)
+							.append(Component.text("мама", NamedTextColor.DARK_GRAY, TextDecoration.STRIKETHROUGH)
+									.append(Component.text(" интернет провидер", NamedTextColor.GRAY))));
+				}
+
 				Team team = board.getPlayerTeam(player);
+				assert team != null;
 				String teamname = team.getName();
 
 				mainworld = player.getWorld();
@@ -151,7 +193,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 						Objective lastdamage = board.getObjective("lastdamagedbyteam");
 
-						switch (lastdamage.getScore(player.getName()).getScore()) {
+						switch (Objects.requireNonNull(lastdamage).getScore(player.getName()).getScore()) {
 							case 1 -> {
 								redkills = redkills + 1;
 								broadcastDeath(player, getByLang(lang, "woolbattle.gotKilledBy") + " " + ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫМИ" + ChatColor.GRAY + ".");
@@ -274,11 +316,12 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 					}
 				}
 			}
-		}, 1L, 5L);
+		}, 80L, 5L);
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 				Team team = board.getPlayerTeam(player);
+				assert team != null;
 				String teamname = team.getName();
 
 				if (player.getScoreboardTags().contains("onspawn") || !hardmode) {
@@ -339,14 +382,16 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 					}
 				}
 			}
-		}, 1L, 1L);
+		}, 80L, 1L);
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			genConquerChecks(genAblocks, genAblocksLONG, "A");
 			genConquerChecks(genBblocks, genBblocksLONG, "B");
 			genConquerChecks(genCblocks, genCblocksLONG, "C");
 			genConquerChecks(genDblocks, genDblocksLONG, "D");
-		}, 1L, 20L);
+		}, 80L, 20L);
+
+		mainworld = Bukkit.getServer().getWorlds().get(0);
 	}
 
 	final int[] minutes = {0};
@@ -376,6 +421,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				for (Player player1 : Bukkit.getOnlinePlayers()) {
 					if (!(board.getPlayerTeam(player1) == null)) {
 						Team team = board.getPlayerTeam(player1);
+						assert team != null;
 						String teamname = team.getName();
 
 						try {
@@ -479,7 +525,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 							nextevent0 = ChatColor.DARK_GRAY + " (Сражение до конца)";
 						}
 
-						fakekills.getScoreboard().resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1));
+						Objects.requireNonNull(fakekills.getScoreboard()).resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1));
 						fakekills.getScoreboard().resetScores(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1));
 						fakekills.getScoreboard().resetScores(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills - 1));
 						fakekills.getScoreboard().resetScores(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1));
@@ -520,6 +566,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 
 					for (Player player1 : mainworld.getPlayers()) {
 						Team team = board.getPlayerTeam(player1);
+						assert team != null;
 						String teamname = team.getName();
 
 						List<String> genStatuses = new ArrayList<String>();
@@ -792,7 +839,9 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 				}
 			}
 
-		} catch (Exception | Error e) {}
+		} catch (Exception | Error e) {
+
+		}
 	}
 
 	@EventHandler
@@ -1311,7 +1360,7 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 		int min = 1;
 		int loot1 = (int) (Math.random() * (max - min + 1)) + min;
 		ItemMeta loot1meta = loot1item.getItemMeta();
-		List<String> loot1lore = new ArrayList<String>();
+		List<String> loot1lore = new ArrayList<>();
 
 		switch (loot1) {
 			case 1 -> {
@@ -2177,6 +2226,6 @@ public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
 	}
 
 	public TextComponent getByLang(String lang, String string) {
-		return new Translation().getByLang(lang, string);
+		return new Translation(translation, getLogger()).getTranslation(lang, string.replaceFirst("woolbattle.", ""), getLogger());
 	}
 }
