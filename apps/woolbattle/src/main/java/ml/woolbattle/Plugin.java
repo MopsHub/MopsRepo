@@ -2039,29 +2039,28 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 
 	public void gameStartSequence(Player player1, String teamname) {
-		Teams team = Teams.SPECTATOR;
+		Teams team;
 		if (teamname.contains("red")) {
 			Location loc = new Location(player1.getWorld(), 9.5, 258, -27.5);
 			player1.teleport(loc);
 			team = Teams.RED;
-		}
-		if (teamname.contains("yellow")) {
+		} else if (teamname.contains("yellow")) {
 			Location loc = new Location(player1.getWorld(), -27.5, 258, 9.5);
 			loc.setYaw(-90);
 			player1.teleport(loc);
 			team = Teams.YELLOW;
-		}
-		if (teamname.contains("green")) {
+		} else if (teamname.contains("green")) {
 			Location loc = new Location(player1.getWorld(), 9.5, 258, 46.5);
 			loc.setYaw(-180);
 			player1.teleport(loc);
 			team = Teams.GREEN;
-		}
-		if (teamname.contains("blue")) {
+		} else if (teamname.contains("blue")) {
 			Location loc = new Location(player1.getWorld(), 46.5, 258, 9.5);
 			loc.setYaw(90);
 			player1.teleport(loc);
 			team = Teams.BLUE;
+		} else {
+			team = Teams.SPECTATOR;
 		}
 
 		gameStartingTitle(player1);
