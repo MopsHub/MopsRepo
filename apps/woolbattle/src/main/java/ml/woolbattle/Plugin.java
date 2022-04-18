@@ -81,8 +81,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	private final HashMap<Player, Integer> combo = new HashMap<>();
 	private final HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
 
-	ScoreboardManager manager = Bukkit.getScoreboardManager();
-	Scoreboard board = manager.getMainScoreboard();
+	ScoreboardManager manager;
+	Scoreboard board;
 	Objective fakekills = board.getObjective("fakekills");
 
 	List<Player> redTeamPlayers = new ArrayList<>();
@@ -130,6 +130,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		logger.info("Loaded translations: \n" + translation.saveToString());
 		logger.info("6");
+
+		manager = Bukkit.getScoreboardManager();
+		board = manager.getMainScoreboard();
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
