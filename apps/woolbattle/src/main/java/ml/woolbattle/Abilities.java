@@ -6,7 +6,6 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -30,7 +29,7 @@ public class Abilities {
 		meta1.addEnchant(Enchantment.DIG_SPEED, 5, true);
 		meta1.addEnchant(Enchantment.KNOCKBACK, 2, true);
 		meta1.setUnbreakable(true);
-		List<String> lore1 = new ArrayList<String>();
+		List<String> lore1 = new ArrayList<>();
 		lore1.add(ChatColor.GRAY + "Ножницы для копания шерсти и");
 		lore1.add(ChatColor.GRAY + "скидывания игроков в бездну.");
 		lore1.add("");
@@ -44,7 +43,7 @@ public class Abilities {
 		ItemStack item2 = new ItemStack(Material.STICK);
 		ItemMeta meta2 = item2.getItemMeta();
 		meta2.setDisplayName(ChatColor.YELLOW + "Взрывная Палка");
-		List<String> lore2 = new ArrayList<String>();
+		List<String> lore2 = new ArrayList<>();
 		lore2.add(ChatColor.GRAY + "Палка откидывающая тебя назад." + ChatColor.YELLOW + "" + ChatColor.BOLD + " ПКМ" + ChatColor.DARK_GRAY + " (Нужно наводится на блок)");
 		lore2.add(ChatColor.AQUA + "Стоимость: 28 шерсти");
 		meta2.setLore(lore2);
@@ -54,7 +53,7 @@ public class Abilities {
 		ItemStack item3 = new ItemStack(Material.SLIME_BALL);
 		ItemMeta meta3 = item3.getItemMeta();
 		meta3.setDisplayName(ChatColor.GREEN + "Надувной Батут");
-		List<String> lore3 = new ArrayList<String>();
+		List<String> lore3 = new ArrayList<>();
 		lore3.add(ChatColor.GRAY + "Спасёт тебя при падении." + ChatColor.YELLOW + "" + ChatColor.BOLD + " ПКМ" + ChatColor.DARK_GRAY + " (Шифт чтобы прыгнуть высоко)");
 		lore3.add(ChatColor.AQUA + "Стоимость: 208 шерсти");
 		meta3.addEnchant(Enchantment.DURABILITY, 1, true);
@@ -66,7 +65,7 @@ public class Abilities {
 		ItemStack item4 = new ItemStack(Material.BOW);
 		ItemMeta meta4 = item4.getItemMeta();
 		meta4.setDisplayName(ChatColor.AQUA + "Лук");
-		List<String> lore4 = new ArrayList<String>();
+		List<String> lore4 = new ArrayList<>();
 		lore4.add(ChatColor.GRAY + "Лук, может ломать шерсть при попадании.");
 		meta4.addEnchant(Enchantment.ARROW_KNOCKBACK, 2, true);
 		meta4.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
@@ -81,38 +80,40 @@ public class Abilities {
 		item5.setItemMeta(meta5);
 		player1.getInventory().setItem(17, item5);
 
-		String colorString = "&f";
-		Color color = Color.BLACK;
+		String colorString ;
+		Color color;
 
-		Map m;
+//		Map m;
 		if (team.equals(Teams.RED)) {
 			colorString = "&4";
 			color = Color.fromRGB(255, 10, 10);
-		}
-		if (team.equals(Teams.YELLOW)) {
+		} else if (team.equals(Teams.YELLOW)) {
 			colorString = "&e";
 			color = Color.fromRGB(255, 207, 36);
-		if (team.equals(Teams.GREEN)) {
+		} else if (team.equals(Teams.GREEN)) {
 			colorString = "&a";
 			color = Color.fromRGB(105, 255, 82);
-		if (team.equals(Teams.BLUE)) {
+		} else if (team.equals(Teams.BLUE)) {
 			colorString = "&9";
 			color = Color.fromRGB(47, 247, 227);
+		} else {
+			colorString = "&f";
+			color = Color.fromRGB(0, 1, 0);
 		}
 
-				ItemStack bootsItem = new ItemStack(Material.LEATHER_BOOTS);
-				LeatherArmorMeta bootsMeta = (LeatherArmorMeta) bootsItem.getItemMeta();
-				bootsMeta.displayName(plugin.getByLang(lang, "doubleJumpBoots.name", Map.of("TCC", colorString)));
-				List<String> bootsLore = new ArrayList<String>();
-				bootsLore.add(ChatColor.GRAY + "Позволяют прыгать в воздухе. ");
-				bootsLore.add(ChatColor.DARK_GRAY + "(Нужно нажать пробел дважды в падении)");
-				bootsLore.add(ChatColor.AQUA + "Стоимость: 16 шерсти");
-				bootsMeta.setUnbreakable(true);
-				bootsMeta.setColor(color);
-				bootsMeta.setLore(bootsLore);
-				bootsItem.setItemMeta(bootsMeta);
-				player1.getInventory().setItem(36, bootsItem);
-			}
-		}
+		ItemStack bootsItem = new ItemStack(Material.LEATHER_BOOTS);
+		LeatherArmorMeta bootsMeta = (LeatherArmorMeta) bootsItem.getItemMeta();
+		bootsMeta.displayName(plugin.getByLang(lang, "doubleJumpBoots.name", Map.of("TCC", colorString)));
+		List<String> bootsLore = new ArrayList<>();
+		bootsLore.add(ChatColor.GRAY + "Позволяют прыгать в воздухе. ");
+		bootsLore.add(ChatColor.DARK_GRAY + "(Нужно нажать пробел дважды в падении)");
+		bootsLore.add(ChatColor.AQUA + "Стоимость: 16 шерсти");
+		bootsMeta.setUnbreakable(true);
+		bootsMeta.setColor(color);
+		bootsMeta.setLore(bootsLore);
+		bootsItem.setItemMeta(bootsMeta);
+		player1.getInventory().setItem(36, bootsItem);
+
+
 	}
 }

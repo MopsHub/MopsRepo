@@ -66,7 +66,7 @@ woolbattle:
   - cantBreak:
       rus: "&cВы не можете это ломать"
       eng: "&cYou can't break it"
-  - team.hasWon:
+  - team.won:
       rus: "Победили!"
       eng: "Won!"
   - team.RED:

@@ -5,8 +5,6 @@ import ml.mopsutils.Translation;
 import ml.mopsutils.U;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -42,6 +40,7 @@ import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -142,7 +141,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		try {
 			lang = config.getString("lang").toLowerCase(Locale.ROOT);
+			logger.info("lang string" + lang);
 			if (lang.isBlank()) {
+				logger.warning("lang in blank");
+				lang = "rus";
 				throw new Exception("couldn't load custom lang");
 			}
 		} catch (Exception e) {
@@ -174,19 +176,19 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 						if (teamname.contains("red")) {
 							woolItem = new ItemStack(Material.RED_WOOL);
-							woolName = getByLang(lang, "woolbattle.redWool");
+							woolName = getByLang(lang, "redWool");
 						}
 						else if (teamname.contains("yellow")) {
 							woolItem = new ItemStack(Material.RED_WOOL);
-							woolName = getByLang(lang, "woolbattle.redWool");
+							woolName = getByLang(lang, "redWool");
 						}
 						else if (teamname.contains("green")) {
 							woolItem = new ItemStack(Material.LIME_WOOL);
-							woolName = getByLang(lang, "woolbattle.greenWool");
+							woolName = getByLang(lang, "greenWool");
 						}
 						else if (teamname.contains("blue")) {
 							woolItem = new ItemStack(Material.LIGHT_BLUE_WOOL);
-							woolName = getByLang(lang, "woolbattle.blueWool");
+							woolName = getByLang(lang, "blueWool");
 						} else {
 							player.removeScoreboardTag("ingame");
 							woolItem = new ItemStack(Material.AIR);
@@ -194,6 +196,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						}
 
 						Objective lastdamage = board.getObjective("lastdamagedbyteam");
+
 						ItemMeta woolMeta = woolItem.getItemMeta();
 						woolMeta.displayName(woolName);
 						woolItem.setItemMeta(woolMeta);
@@ -586,7 +589,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						assert team != null;
 						String teamname = team.getName();
 
-						List<String> genStatuses = new ArrayList<String>();
+						List<String> genStatuses = new ArrayList<>();
 						genStatuses.add(genAstatus);
 						genStatuses.add(genBstatus);
 						genStatuses.add(genCstatus);
@@ -692,7 +695,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				} catch (IndexOutOfBoundsException error) {
 					testmode = !testmode;
 				}
-				player.sendMessage("testmode был изменён на " + String.valueOf(testmode));
+				player.sendMessage("testmode был изменён на " + testmode);
 				return true;
 			}
 			if (commandName.equals("cubicstuff")) {
@@ -1085,10 +1088,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						woolitem.setItemMeta(woolmeta);
 						player.getInventory().addItem(woolitem);
 					} else {
-						player.sendTitle(" ", ChatColor.RED + "Лимит шерсти достигнут", 0, 15, 10);
+						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
 					}
 				} else {
-					player.sendTitle(" ", ChatColor.RED + "Вы не можете это ломать", 0, 15, 10);
+					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
 				}
 			}
 			if (teamname.contains("yellow")) {
@@ -1130,10 +1133,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						woolitem.setItemMeta(woolmeta);
 						player.getInventory().addItem(woolitem);
 					} else {
-						player.sendTitle(" ", ChatColor.RED + "Лимит шерсти достигнут", 0, 15, 10);
+						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
 					}
 				} else {
-					player.sendTitle(" ", ChatColor.RED + "Вы не можете это ломать", 0, 15, 10);
+					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
 				}
 			}
 		}
@@ -1170,7 +1173,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						height = Math.max(height, 170);
 						loc.setY(height);
 
-						List<Block> blocclist = new ArrayList<Block>();
+						List<Block> blocclist = new ArrayList<>();
 						Arrays.stream(HorizontalFaces).map(loc.getBlock()::getRelative).forEach(blocclist::add);
 
 						for (Block blocc : blocclist) {
@@ -1213,7 +1216,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							mat = Material.LIGHT_BLUE_WOOL;
 						}
 
-						List<Block> blocclist = new ArrayList<Block>();
+						List<Block> blocclist = new ArrayList<>();
 						Arrays.stream(HorizontalFaces).map(loc.getBlock()::getRelative).forEach(blocclist::add);
 
 						for (Block blocc : blocclist) {
@@ -1570,7 +1573,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						lootstand.setMarker(false);
 
 						List<Entity> nearbyEntities = lootstand.getNearbyEntities(5, 5, 5);
-						List<EntityType> nearbyEntityTypes = new ArrayList<EntityType>();
+						List<EntityType> nearbyEntityTypes = new ArrayList<>();
 						for(Entity entity0 : nearbyEntities) {
 							nearbyEntityTypes.add(entity0.getType());
 						}
@@ -1630,7 +1633,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 
 	public ArrayList<Block> getBlox(Block start, int radius) {
-		ArrayList<Block> blocks = new ArrayList<Block>();
+		ArrayList<Block> blocks = new ArrayList<>();
 		for (double x = start.getLocation().getX() - radius; x <= start.getLocation().getX() + radius; x++) {
 			for (double y = start.getLocation().getY() - radius; y <= start.getLocation().getY() + radius; y++) {
 				for (double z = start.getLocation().getZ() - radius; z <= start.getLocation().getZ() + radius; z++) {
@@ -1855,34 +1858,34 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	public void winningBroadcast(int winner) {
 
-		int fadeIn = 5;
-		int hold = 40;
-		int fadeOut = 30;
+//		int fadeIn = 5;
+//		int hold = 40;
+//		int fadeOut = 30;
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			String colorWon;
-			if(winner == 1) {
-				player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
-
-			}
-			if(winner == 2) {
-				player.sendTitle(ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
-			}
-			if(winner == 3) {
-				player.sendTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "ЗЕЛЁНЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
-			}
-			if(winner == 4) {
-				player.sendTitle(ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
-			}
+//			if(winner == 1) {
+//				player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
+//
+//			}
+//			if(winner == 2) {
+//				player.sendTitle(ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
+//			}
+//			if(winner == 3) {
+//				player.sendTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "ЗЕЛЁНЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
+//			}
+//			if(winner == 4) {
+//				player.sendTitle(ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
+//			}
 			switch (winner) {
-				case 1 -> colorWon = "red";
-				case 2 -> colorWon = "yellow";
-				case 3 -> colorWon = "green";
-				case 4 -> colorWon = "blue";
-				default -> colorWon = "nobody";
+				case 1 -> colorWon = "RED";
+				case 2 -> colorWon = "YELLOW";
+				case 3 -> colorWon = "GREEN";
+				case 4 -> colorWon = "BLUE";
+				default -> colorWon = "Nobody";
 			}
 
-			player.showTitle(genTitle(lang, "team." + colorWon, "team.won", 4, 40, 30));
+			player.showTitle(genTitle(lang, "team." + colorWon, "team.won", 5, 40, 30));
 
 			player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
 			player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.2F);
@@ -1979,10 +1982,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 
 	public void recountTeamMembers() {
-		List<Player> redTeamPlayers0 = new ArrayList<Player>();
-		List<Player> yellowTeamPlayers0 = new ArrayList<Player>();
-		List<Player> greenTeamPlayers0 = new ArrayList<Player>();
-		List<Player> blueTeamPlayers0 = new ArrayList<Player>();
+		List<Player> redTeamPlayers0 = new ArrayList<>();
+		List<Player> yellowTeamPlayers0 = new ArrayList<>();
+		List<Player> greenTeamPlayers0 = new ArrayList<>();
+		List<Player> blueTeamPlayers0 = new ArrayList<>();
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			Team team = board.getPlayerTeam(player);
