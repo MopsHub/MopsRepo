@@ -68,15 +68,15 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	boolean gensLocked = false;
 
-	List<Block> genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
-	List<Block> genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
-	List<Block> genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
-	List<Block> genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
+	List<Block> genAblocks;
+	List<Block> genBblocks;
+	List<Block> genCblocks;
+	List<Block> genDblocks;
 
-	List<Block> genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
-	List<Block> genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
-	List<Block> genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
-	List<Block> genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
+	List<Block> genAblocksLONG;
+	List<Block> genBblocksLONG;
+	List<Block> genCblocksLONG;
+	List<Block> genDblocksLONG;
 
 	private final HashMap<Player, Integer> combo = new HashMap<>();
 	private final HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
@@ -130,6 +130,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		logger.info("Loaded translations: \n" + translation.saveToString());
 		logger.info("6");
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 
@@ -392,6 +393,16 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		}, 80L, 20L);
 
 		mainworld = Bukkit.getServer().getWorlds().get(0);
+
+		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
+		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
+		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
+		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
+
+		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
+		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
+		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
+		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 	}
 
 	final int[] minutes = {0};
