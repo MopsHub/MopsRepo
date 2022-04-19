@@ -283,8 +283,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					}
 				}
 
-				requiredKills = (int) (Math.round(4 * (Bukkit.getOnlinePlayers().size() * 0.7)));
-
 				recountTeamMembers();
 
 				if(redkills >= requiredKills || (!redTeamPlayers.isEmpty() && yellowTeamPlayers.isEmpty() && greenTeamPlayers.isEmpty() && blueTeamPlayers.isEmpty() && gameactive && !testmode)) {
@@ -2059,10 +2057,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		}
 
 		gameStartingTitle(player1);
-		String sKills = String.valueOf((int) (Math.round(4 * (Bukkit.getOnlinePlayers().size() * 0.7))));
+		requiredKills = (int) (Math.round(4 * (Bukkit.getOnlinePlayers().size() * 0.7)));
 
 		Bukkit.getScheduler().runTaskLater(this, () -> {
-			player1.sendTitle(ChatColor.WHITE + "Нужно сделать", ChatColor.WHITE + sKills + " киллов.", 1, 40, 25);
+			player1.sendTitle(ChatColor.WHITE + "Нужно сделать", ChatColor.WHITE + String.valueOf(requiredKills) + " киллов.", 1, 40, 25);
 
 			player1.playSound(player1.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
 			player1.playSound(player1.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.2F);
@@ -2073,7 +2071,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					player1.playSound(player1.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.6F);
 					player1.playSound(player1.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.8F);
 
-					player1.sendMessage(getByLang(lang, "onStartMessage", Map.of("kills", sKills)));
+					player1.sendMessage(getByLang(lang, "onStartMessage", Map.of("kills", String.valueOf(requiredKills))));
 				}, 3L);
 			}, 3L);
 
