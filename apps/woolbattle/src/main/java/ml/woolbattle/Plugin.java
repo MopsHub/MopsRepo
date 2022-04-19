@@ -125,12 +125,12 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			logger.info(data.toString());
 		}
 
-		try {
-			logger.info("5");
-			this.translation.loadFromString(data.toString());
-		} catch (InvalidConfigurationException e) {
-			logger.warning(Arrays.toString(e.getStackTrace()));
-		}
+//		try {
+//			logger.info("5");
+//			this.translation.loadFromString(data.toString());
+//		} catch (InvalidConfigurationException e) {
+//			logger.warning(Arrays.toString(e.getStackTrace()));
+//		}
 
 		logger.info("Loaded translations: \n" + translation.saveToString());
 		logger.info("6");
@@ -2162,7 +2162,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			if (player.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
 				ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL);
 				ItemMeta woolmeta = woolitem.getItemMeta();
-				woolmeta.displayName(getByLang(lang, "woolbattle.blueWool"));
+				woolmeta.displayName(getByLang(lang, "blueWool"));
 				woolitem.setItemMeta(woolmeta);
 				woolitem.setAmount(getAmount(player, woolitem)-512);
 				player.getInventory().removeItem(woolitem);
@@ -2188,15 +2188,12 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""));
 	}
 	@Override
-	public List<TextComponent> getByLang(String lang, String string, Map<String, String> formatV, boolean notSingular) {
-		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV, notSingular);
-	}
-	@Override
 	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
-		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV, false).get(0);
+		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV);
+
 	}
-	public Title genTitle(@NotNull String lang, @Nullable String id, @Nullable String id2nd, int i, int k, int j) {
-		return u.createTitle(lang, id, id2nd, i, k, j);
+	public Title genTitle(@NotNull String lang, @Nullable String id, @Nullable String id2nd, int i, int j, int k) {
+		return u.createTitle(lang, id, id2nd, i, j, k);
 	}
 	public TextComponent uniteTC(TextComponent[] tcs) {
 		return u.combineComponents(tcs, Component.empty());

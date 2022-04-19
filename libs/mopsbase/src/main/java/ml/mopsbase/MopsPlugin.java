@@ -20,9 +20,6 @@ public class MopsPlugin extends JavaPlugin {
 	public TextComponent getByLang(String lang, String string) {
 		return new Translation(translation, getLogger(), "mopsgeneral").getTranslation(lang, string.replaceFirst("mopsgeneral.", ""));
 	}
-	public List<TextComponent> getByLang(String lang, String string, Map<String, String> formatV, boolean notSingular) {
-		return new Translation(translation, getLogger(), "mopsgeneral").getTranslation(lang, string.replaceFirst("mopsgeneral.", ""), Map.of("", ""), notSingular);
-	}
 	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
 		return new Translation(translation, getLogger(), "mopsgeneral").getTranslation(lang, string.replaceFirst("mopsgeneral.", ""));
 	}

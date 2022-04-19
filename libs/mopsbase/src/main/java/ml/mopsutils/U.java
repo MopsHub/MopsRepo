@@ -28,10 +28,10 @@ public class U {
 		return fc;
 	}
 
-	public Title createTitle(@NotNull String lang, @Nullable String id, @Nullable String id2nd, int i, int k, int j) {
+	public Title createTitle(@NotNull String lang, @Nullable String id, @Nullable String id2nd, int i, int j, int k) {
 		TextComponent c1;
-		assert id != null;
-		if (id2nd != null ? id2nd.isBlank() : false) {
+
+		if (id2nd != null && id2nd.isBlank()) {
 			c1 = Component.empty();
 		} else {
 			try {
@@ -43,7 +43,7 @@ public class U {
 		}
 
 		TextComponent c2;
-		if (id2nd != null ? id2nd.isBlank() : false) {
+		if (id2nd != null && id2nd.isBlank()) {
 			c2 = Component.empty();
 		} else {
 			try {
@@ -56,8 +56,6 @@ public class U {
 
 		final Title.Times times = Title.Times.times(ticks(i), ticks(k), ticks(j));
 
-		final Title title = Title.title(c1, c2, times);
-
-		return title;
+		return Title.title(c1, c2, times);
 	}
 }

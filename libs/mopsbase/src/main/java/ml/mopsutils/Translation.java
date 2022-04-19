@@ -16,18 +16,18 @@ public class Translation {
     protected List<Map<?, ?>> woolbattleTranslation;
     public List<String> languages = new LinkedList<>(Arrays.asList("rus", "eng"));
     protected Logger logger;
-    public HashMap<String, String> colors = new HashMap();
+    public HashMap<String, String> colors = new HashMap<>();
     protected String base;
 
     public Translation(FileConfiguration fc, Logger logger, String base) {
-        this.woolbattleTranslation = fc.getMapList(base);
+        this.woolbattleTranslation = fc.getMapList("woolbattle");
         this.logger = logger;
         this.base = base;
         logger.info(base + " translation:\n" + Arrays.toString(woolbattleTranslation.toArray()));
     }
 
-    public List<TextComponent> getTranslation(String lang, String string, Map<String, String> formatValues, boolean notSingular) {
-        LinkedList<TextComponent> tc = new LinkedList<>();
+    public TextComponent getTranslation(String lang, String string, Map<String, String> formatValues) {
+        TextComponent tc;
         if (languages.contains(lang.toLowerCase(Locale.ROOT))) {
             String s = "";
 
@@ -45,33 +45,23 @@ public class Translation {
             }
 
             if (s.isBlank()) {
-                tc.add(invalidString);
+                tc = invalidString;
                 logger.warning("invalid string");
             } else {
                 for (String K : formatValues.keySet()) {
-                    s = s.replaceAll(K, formatValues.get(K));
+                    s = s.replaceAll(K, "{" + formatValues.get(K) + "}");
                 }
-                if (notSingular) {
-                    String[] ses = s.split("\n");
-                    for (String sus : ses) {
-                        tc.add(legacyAmpersand().deserialize(sus));
-                    }
-                }
-                else {
-                    tc.add(legacyAmpersand().deserialize(s));
-                }
+                    tc = (legacyAmpersand().deserialize(s));
+
             }
             return tc;
         }
 
-        logger.warning("invalidlanguage: " + lang);
-        LinkedList aaa = new LinkedList<>();
-        aaa.add(invalidLanguage);
-        return aaa;
+        return invalidLanguage;
 
     }
 
     public TextComponent getTranslation(String lang, String string) {
-        return getTranslation(lang, string, colors, false).get(0);
+        return getTranslation(lang, string, colors);
     }
 }
