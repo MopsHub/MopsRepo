@@ -84,25 +84,32 @@ public class Abilities {
 		Color color;
 
 //		Map m;
-		if (team.equals(Teams.RED)) {
+		switch (team) {
+			case RED :
 			colorString = "&4";
 			color = Color.fromRGB(255, 10, 10);
-		} else if (team.equals(Teams.YELLOW)) {
+			break;
+			case YELLOW :
 			colorString = "&e";
 			color = Color.fromRGB(255, 207, 36);
-		} else if (team.equals(Teams.GREEN)) {
+			break;
+			case GREEN :
 			colorString = "&a";
 			color = Color.fromRGB(105, 255, 82);
-		} else if (team.equals(Teams.BLUE)) {
-			colorString = "&9";
+			break;
+			case BLUE :
+			colorString = "&b";
 			color = Color.fromRGB(47, 247, 227);
-		} else {
-			colorString = "&f";
-			color = Color.fromRGB(42, 0, 69);
+			break;
+			default :
+			colorString = "&7";
+			color = Color.fromRGB(170, 170, 170);
+			break;
 		}
 
 		ItemStack bootsItem = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bootsMeta = (LeatherArmorMeta) bootsItem.getItemMeta();
+
 		bootsMeta.displayName(plugin.getByLang(lang, "doubleJumpBoots.name", Map.of("TCC", colorString)));
 		List<String> bootsLore = new ArrayList<>();
 		bootsLore.add(ChatColor.GRAY + "Позволяют прыгать в воздухе. ");
