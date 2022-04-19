@@ -12,6 +12,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -113,12 +114,12 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			logger.info(data.toString());
 		}
 
-//		try {
-//			logger.info("5");
-//			this.translation.loadFromString(data.toString());
-//		} catch (InvalidConfigurationException e) {
-//			logger.warning(Arrays.toString(e.getStackTrace()));
-//		}
+		try {
+			logger.info("5");
+			this.translation.loadFromString(data.toString());
+		} catch (InvalidConfigurationException e) {
+			logger.warning(Arrays.toString(e.getStackTrace()));
+		}
 
 		logger.info("Loaded translations: \n" + translation.saveToString());
 		logger.info("6");
@@ -139,7 +140,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			logger.info(e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
 		}
 
-		new Translation(translation, getLogger(), "woolbattle");
+		t = new Translation(translation, getLogger(), "woolbattle");
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
