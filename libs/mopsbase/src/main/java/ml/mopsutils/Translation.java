@@ -36,8 +36,7 @@ public class Translation {
             // Я наверное сам этим займусь
 
             logger.info("woolbattleTranslation: " + Arrays.toString(woolbattleTranslation.toArray()));
-            for (int i = 0; i < woolbattleTranslation.size(); i++) {
-                Map<?, ?> mp = woolbattleTranslation.get(i);
+            for (Map<?, ?> mp : woolbattleTranslation) {
                 logger.info(mp.toString());
                 if (mp.containsKey(string)) {
                     s = ((Map<?, ?>) mp.get(string)).get(lang).toString();
