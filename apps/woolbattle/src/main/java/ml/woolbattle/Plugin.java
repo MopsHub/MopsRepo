@@ -182,7 +182,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							woolItem = new ItemStack(Material.LIGHT_BLUE_WOOL);
 							woolName = getByLang(lang, "blueWool");
 						} else {
-							logger.warning(new StringBuilder().append("No team found for ").append(player.getName()).append("\ntags: ").append(player.getScoreboardTags()).append("\nteam name: ").append(player.getScoreboard().getPlayerTeam(player).getName()).toString());
+							logger.warning("No team found for " + player.getName() + "\ntags: " + player.getScoreboardTags() + "\nteam name: " + player.getScoreboard().getPlayerTeam(player).getName());
 							player.removeScoreboardTag("ingame");
 							woolItem = new ItemStack(Material.AIR);
 							woolName = Component.empty();
@@ -862,7 +862,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Player player = event.getPlayer();
 		ItemStack item = event.getItemDrop().getItemStack();
 
-		List<Material> matList = new ArrayList<Material>();
+		List<Material> matList = new ArrayList<>();
 		matList.add(Material.WHITE_WOOL);
 		matList.add(Material.RED_WOOL);
 		matList.add(Material.YELLOW_WOOL);
@@ -870,10 +870,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		matList.add(Material.LIGHT_BLUE_WOOL);
 
 		if (player.getScoreboardTags().contains("ingame")) {
-			if(matList.contains(item.getType())) {
-				event.setCancelled(false);
-			} else {
+			if (!matList.contains(item.getType())) {
 				event.setCancelled(true);
+			} else {
+				event.setCancelled(false);
 			}
 		}
 		updateLevels(player);
@@ -1801,7 +1801,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 	public void resetGeneratorText(Player player) {
 
-		List<String> genStatuses = new ArrayList<String>();
+		List<String> genStatuses = new ArrayList<>();
 
 		//тут типа надо language.getPlayer() ну вы поняли
 
