@@ -39,9 +39,9 @@ public class Translation {
             for (int i = 0; i < woolbattleTranslation.size(); i++) {
                 Map<?, ?> mp = woolbattleTranslation.get(i);
                 logger.info(mp.toString());
-                if (mp.containsKey(s)) {
-                    s = ((Map<?, ?>) mp.get(s)).get(lang).toString();
-                    logger.info(s);
+                if (mp.containsKey(string)) {
+                    s = ((Map<?, ?>) mp.get(string)).get(lang).toString();
+                    logger.info(string);
                     break;
                 }
             }

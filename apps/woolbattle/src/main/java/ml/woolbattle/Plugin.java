@@ -89,6 +89,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	boolean testmode = false;
 
+	String connectToIP = "mops.ml";
+
 
 
 	@Override
@@ -141,6 +143,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		}
 
 		t = new Translation(translation, getLogger(), "woolbattle");
+
+		this.connectToIP = config.getString("ip");
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
@@ -572,7 +576,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						fakekills.getScore(ChatColor.WHITE + "Генератор D - " + genDstatus).setScore(2);
 
 						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
-						fakekills.getScore(ChatColor.DARK_GRAY + Bukkit.getServer().getIp() + ":" + Bukkit.getPort()).setScore(0);
+						fakekills.getScore(ChatColor.DARK_GRAY + connectToIP + ":" + Bukkit.getPort()).setScore(0);
 					}
 				}, 0L, 20L), 160L);
 
