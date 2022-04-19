@@ -2,7 +2,7 @@ package ml.woolbattle;
 
 import ml.mopsbase.MopsPlugin;
 import ml.mopsutils.Translation;
-import ml.mopsutils.U;
+import ml.mopsutils.Utilities;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.title.Title;
@@ -12,7 +12,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -52,8 +51,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	// спасибо
 	// пододжди два года и сделаю))))
 
-	U u = new U(this);
+	Utilities u = new Utilities(this);
 	Abilities a = new Abilities(this);
+	Translation t;
 
 	List<Block> ppbs = new ArrayList<>();
 	World mainworld;
@@ -139,6 +139,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			logger.info(e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
 		}
 
+		new Translation(translation, getLogger(), "woolbattle");
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 
@@ -165,7 +167,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						if (teamname.contains("red")) {
 							logger.info(player.getName() + "'s team: " + "red");
 							woolItem = new ItemStack(Material.RED_WOOL);
-							woolName = getByLang(lang, "redWool");
+							woolName = getByLang(lang, "woolbattle.redWool");
 						}
 						else if (teamname.contains("yellow")) {
 							logger.info(player.getName() + "'s team: " + "yellow");
@@ -2173,11 +2175,13 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	@Override
 	public TextComponent getByLang(String lang, String string) {
-		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""));
+		getLogger().info("WoolBattle:Plugin | getByLang: \n" + lang + "\n" + string);
+		return t.getTranslation(lang, string.replaceFirst("woolbattle.", ""));
 	}
 	@Override
 	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
-		return new Translation(translation, getLogger(), "woolbattle").getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV);
+		getLogger().info("WoolBattle:Plugin | getByLang: \n" + lang + "\n" + string + "\n" + formatV.toString());
+		return t.getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV);
 
 	}
 	public Title genTitle(@NotNull String lang, @Nullable String id, @Nullable String id2nd, int i, int j, int k) {

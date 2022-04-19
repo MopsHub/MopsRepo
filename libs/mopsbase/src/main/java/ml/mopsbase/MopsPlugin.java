@@ -18,9 +18,11 @@ public class MopsPlugin extends JavaPlugin {
 	public FileConfiguration translation = new YamlConfiguration();
 
 	public TextComponent getByLang(String lang, String string) {
+		getLogger().info("MopsPlugin | getByLang: \n" + lang + "\n" + string);
 		return new Translation(translation, getLogger(), "mopsgeneral").getTranslation(lang, string.replaceFirst("mopsgeneral.", ""));
 	}
 	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
+		getLogger().info("MopsPlugin | getByLang: \n" + lang + "\n" + string + "\n" + formatV.toString());
 		return new Translation(translation, getLogger(), "mopsgeneral").getTranslation(lang, string.replaceFirst("mopsgeneral.", ""));
 	}
 

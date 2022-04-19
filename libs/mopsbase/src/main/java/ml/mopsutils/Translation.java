@@ -27,6 +27,7 @@ public class Translation {
     }
 
     public TextComponent getTranslation(String lang, String string, Map<String, String> formatValues) {
+        logger.info("Translation.getTranslation (1): " + lang + "\n" + string + "\n" + formatValues.toString());
         TextComponent tc;
         if (languages.contains(lang.toLowerCase(Locale.ROOT))) {
             String s = "";
@@ -35,10 +36,11 @@ public class Translation {
             // Я наверное сам этим займусь
 
             logger.info("woolbattleTranslation: " + Arrays.toString(woolbattleTranslation.toArray()));
-            for (Map<?, ?> mp : woolbattleTranslation) {
+            for (int i = 0; i < woolbattleTranslation.size(); i++) {
+                Map<?, ?> mp = woolbattleTranslation.get(i);
                 logger.info(mp.toString());
-                if (mp.containsKey(string)) {
-                    s = ((Map<?, ?>) mp.get(string)).get(lang).toString();
+                if (mp.containsKey(s)) {
+                    s = ((Map<?, ?>) mp.get(s)).get(lang).toString();
                     logger.info(s);
                     break;
                 }
@@ -49,7 +51,7 @@ public class Translation {
                 logger.warning("invalid string");
             } else {
                 for (String K : formatValues.keySet()) {
-                    s = s.replaceAll(K, "{" + formatValues.get(K) + "}");
+                    s = s.replaceAll("${" + K + "}", formatValues.get(K));
                 }
                     tc = (legacyAmpersand().deserialize(s));
 
@@ -62,6 +64,7 @@ public class Translation {
     }
 
     public TextComponent getTranslation(String lang, String string) {
+        logger.info("Translation.getTranslation (1): " + lang + "\n" + string + "\n" + colors);
         return getTranslation(lang, string, colors);
     }
 }

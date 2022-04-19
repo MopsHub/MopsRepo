@@ -9,10 +9,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 
-public class U {
+public class Utilities {
 	MopsPlugin pl;
 
-	public U(MopsPlugin plugin) {
+	public Utilities(MopsPlugin plugin) {
 		this.pl = plugin;
 	}
 

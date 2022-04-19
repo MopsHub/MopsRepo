@@ -30,8 +30,8 @@ woolbattle:
       rus: "&bСиняя Шерсть"
       eng: "&bBlue Wool"
   - doubleJumpBoots.name: #у дабл джамп ботинок в названии цвет зависим от команды
-      rus: "${TCC}Дабл-Джамп Ботинки"
-      eng: "${TCC}Double-Jump Boots" //TCC = Team Color Code
+      rus: "Дабл-Джамп Ботинки"
+      eng: "Double-Jump Boots"
   - doubleJumpBoots.lore:
       rus: |
         &7Позволяют прыгать в воздухе. &8(Нужно нажать пробел в падении дважды)
