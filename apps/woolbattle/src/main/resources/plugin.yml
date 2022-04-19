@@ -21,9 +21,9 @@ commands:
   refill:
     description: ""
     usage: /refill
-  clearscoreboards:
+  clearscoreboard:
     description: ""
-    usage: /clearscoreboards
+    usage: /clearscoreboard
   testmode:
     description: ""
     usage: /testmode
