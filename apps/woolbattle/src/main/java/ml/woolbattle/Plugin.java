@@ -599,7 +599,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						for (String genStatus : genStatuses) {
 							if(player1.getScoreboardTags().contains("ingame")) {
 								if (teamname.contains("red")) {
-									if (genStatus.contains("woolbattle.generators.red")) {
+									if (genStatus.contains("woolbattle.generator.red")) {
 										if (!player1.getInventory().contains(Material.RED_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.RED_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
@@ -610,7 +610,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 									}
 								}
 								if (teamname.contains("yellow")) {
-									if (genStatus.contains("woolbattle.generators.yellow")) {
+									if (genStatus.contains("woolbattle.generator.yellow")) {
 										if (!player1.getInventory().contains(Material.YELLOW_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
@@ -621,7 +621,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 									}
 								}
 								if (teamname.contains("green")) {
-									if (genStatus.contains("woolbattle.generators.green")) {
+									if (genStatus.contains("woolbattle.generator.green")) {
 										if (!player1.getInventory().contains(Material.LIME_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.LIME_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
@@ -632,7 +632,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 									}
 								}
 								if (teamname.contains("blue")) {
-									if (genStatus.contains("woolbattle.generators.blue")) {
+									if (genStatus.contains("woolbattle.generator.blue")) {
 										if (!player1.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
@@ -1119,10 +1119,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						woolitem.setItemMeta(woolmeta);
 						player.getInventory().addItem(woolitem);
 					} else {
-						player.sendTitle(" ", ChatColor.RED + "Лимит шерсти достигнут", 0, 15, 10);
+						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
 					}
 				} else {
-					player.sendTitle(" ", ChatColor.RED + "Вы не можете это ломать", 0, 15, 10);
+					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
 				}
 			}
 			if (teamname.contains("blue")) {
@@ -1714,9 +1714,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 								if (String.valueOf(blocc.getType()).contains("CONCRETE") && blocc.getType() != Material.AIR) {
 									blocc.setType(Material.RED_CONCRETE);
 								}
-								if (!genStatus.equals("woolbattle.generators.red")) {
+								if (!genStatus.equals("woolbattle.generator.red")) {
 									genBroadcast(genLetter, 1);
-									genStatus = "woolbattle.generators.red";
+									genStatus = "woolbattle.generator.red";
 								}
 							}
 							break;
@@ -1725,9 +1725,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 								if (String.valueOf(blocc.getType()).contains("CONCRETE") && blocc.getType() != Material.AIR) {
 									blocc.setType(Material.YELLOW_CONCRETE);
 								}
-								if (!genStatus.equals("woolbattle.generators.yellow")) {
+								if (!genStatus.equals("woolbattle.generator.yellow")) {
 									genBroadcast(genLetter, 2);
-									genStatus = "woolbattle.generators.yellow";
+									genStatus = "woolbattle.generator.yellow";
 								}
 							}
 							break;
@@ -1736,9 +1736,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 								if (String.valueOf(blocc.getType()).contains("CONCRETE") && blocc.getType() != Material.AIR) {
 									blocc.setType(Material.LIME_CONCRETE);
 								}
-								if (!genStatus.equals("woolbattle.generators.green")) {
+								if (!genStatus.equals("woolbattle.generator.green")) {
 									genBroadcast(genLetter, 3);
-									genStatus = "woolbattle.generators.green";
+									genStatus = "woolbattle.generator.green";
 								}
 							}
 							break;
@@ -1747,9 +1747,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 								if (String.valueOf(blocc.getType()).contains("CONCRETE") && blocc.getType() != Material.AIR) {
 									blocc.setType(Material.LIGHT_BLUE_CONCRETE);
 								}
-								if (!genStatus.equals("woolbattle.generators.blue")) {
+								if (!genStatus.equals("woolbattle.generator.blue")) {
 									genBroadcast(genLetter, 4);
-									genStatus = "woolbattle.generators.blue";
+									genStatus = "woolbattle.generator.blue";
 								}
 							}
 							break;
@@ -1813,11 +1813,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		//тут типа надо language.getPlayer() ну вы поняли
 
-		genStatuses.add("woolbattle.generators.uncaptured");
-		genStatuses.add("woolbattle.generators.red");
-		genStatuses.add("woolbattle.generators.yellow");
-		genStatuses.add("woolbattle.generators.green");
-		genStatuses.add("woolbattle.generators.blue");
+		genStatuses.add("woolbattle.generator.uncaptured");
+		genStatuses.add("woolbattle.generator.red");
+		genStatuses.add("woolbattle.generator.yellow");
+		genStatuses.add("woolbattle.generator.green");
+		genStatuses.add("woolbattle.generator.blue");
 		for(String genStatus : genStatuses) {
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus);
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus);
