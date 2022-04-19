@@ -1714,9 +1714,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 								if (String.valueOf(blocc.getType()).contains("CONCRETE") && blocc.getType() != Material.AIR) {
 									blocc.setType(Material.RED_CONCRETE);
 								}
-								if (!genStatus.equals(ChatColor.RED + "КРАСНЫЙ")) {
+								if (!genStatus.equals("woolbattle.generators.red")) {
 									genBroadcast(genLetter, 1);
-									genStatus = ChatColor.RED + "КРАСНЫЙ";
+									genStatus = "woolbattle.generators.red";
 								}
 							}
 							break;
@@ -1725,9 +1725,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 								if (String.valueOf(blocc.getType()).contains("CONCRETE") && blocc.getType() != Material.AIR) {
 									blocc.setType(Material.YELLOW_CONCRETE);
 								}
-								if (!genStatus.equals(ChatColor.YELLOW + "ЖЁЛТЫЙ")) {
+								if (!genStatus.equals("woolbattle.generators.yellow")) {
 									genBroadcast(genLetter, 2);
-									genStatus = ChatColor.YELLOW + "ЖЁЛТЫЙ";
+									genStatus = "woolbattle.generators.yellow";
 								}
 							}
 							break;
@@ -1736,9 +1736,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 								if (String.valueOf(blocc.getType()).contains("CONCRETE") && blocc.getType() != Material.AIR) {
 									blocc.setType(Material.LIME_CONCRETE);
 								}
-								if (!genStatus.equals(ChatColor.GREEN + "ЗЕЛЁНЫЙ")) {
+								if (!genStatus.equals("woolbattle.generators.green")) {
 									genBroadcast(genLetter, 3);
-									genStatus = ChatColor.GREEN + "ЗЕЛЁНЫЙ";
+									genStatus = "woolbattle.generators.green";
 								}
 							}
 							break;
@@ -1747,9 +1747,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 								if (String.valueOf(blocc.getType()).contains("CONCRETE") && blocc.getType() != Material.AIR) {
 									blocc.setType(Material.LIGHT_BLUE_CONCRETE);
 								}
-								if (!genStatus.equals(ChatColor.AQUA + "СИНИЙ")) {
+								if (!genStatus.equals("woolbattle.generators.blue")) {
 									genBroadcast(genLetter, 4);
-									genStatus = ChatColor.AQUA + "СИНИЙ";
+									genStatus = "woolbattle.generators.blue";
 								}
 							}
 							break;
@@ -1813,11 +1813,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		//тут типа надо language.getPlayer() ну вы поняли
 
-		genStatuses.add(ChatColor.GRAY + "НЕЗАХВАЧЕН");
-		genStatuses.add(ChatColor.RED + "КРАСНЫЙ");
-		genStatuses.add(ChatColor.YELLOW + "ЖЁЛТЫЙ");
-		genStatuses.add(ChatColor.GREEN + "ЗЕЛЁНЫЙ");
-		genStatuses.add(ChatColor.AQUA + "СИНИЙ");
+		genStatuses.add("woolbattle.generators.uncaptured");
+		genStatuses.add("woolbattle.generators.red");
+		genStatuses.add("woolbattle.generators.yellow");
+		genStatuses.add("woolbattle.generators.green");
+		genStatuses.add("woolbattle.generators.blue");
 		for(String genStatus : genStatuses) {
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus);
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus);

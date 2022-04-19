@@ -86,20 +86,22 @@ woolbattle:
       eng: "Nobody"
   - onStartMessage:
       rus: |
-        -----------------------------------------------------
-                             WoolBattle
-             Игра началась. Копайте шерсть чтобы строится к другим
-             и использовать способности. Ваша цель - сделать §kills§
-             убийств. Так же вы можете захыватывать генераторы,
-             это угловые острова, просто сломайте все белые блоки
-             и поставьте шерсть своего цвета. Удачи!
-        -----------------------------------------------------
+        &e----------------------------------------------------
+                             &6&lWoolBattle
+             &eИгра началась! Копайте шерсть чтобы строится к другим
+             &eи использовать способности. Ваша цель - сделать §kills§
+             &eубийств. Так же вы можете захыватывать генераторы
+             &e(угловые острова) чтобы получать пассивную шерсть,
+             &eнужно сломайте всю шерсть и заменить шерстью своего цвета!
+                              &eУдачи!
+        &e----------------------------------------------------
       eng: |
-        -----------------------------------------------------
-                             WoolBattle
-             Game has started! Mine wool, it is used for building
-             and abilities. Your goal is to get §kills§ first.
-             You can capture generators (corner islands) just
-             replace all white wool with wool of your color!
-             Good luck!
-        -----------------------------------------------------
+        &e----------------------------------------------------
+                             &6&lWoolBattle
+             &eGame has started! Mine wool, it's used for bridging
+             &eand using abilities. Your goal is to get §kills§ kills.
+             &eYou can also capture generators (corner islands) to
+             &eget passive wool, just replace all the wool with
+             &ethe wool of your color!
+                              &eGood luck!
+        &e----------------------------------------------------
