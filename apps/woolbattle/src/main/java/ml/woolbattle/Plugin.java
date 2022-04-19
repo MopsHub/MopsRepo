@@ -60,27 +60,17 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	boolean hardmode = false;
 	boolean gameactive = false;
 
-	int redkills = 0;
-	int yellowkills = 0;
-	int greenkills = 0;
-	int bluekills = 0;
+	int redkills, yellowkills, bluekills, greenkills = 0;
 
-	String genAstatus = "woolbattle.generator.uncaptured";
-	String genBstatus = "woolbattle.generator.uncaptured";
-	String genCstatus = "woolbattle.generator.uncaptured";
-	String genDstatus = "woolbattle.generator.uncaptured";
+
+	String genAstatus, genBstatus, genCstatus, genDstatus = "woolbattle.generator.uncaptured";
 
 	boolean gensLocked = false;
 
-	List<Block> genAblocks;
-	List<Block> genBblocks;
-	List<Block> genCblocks;
-	List<Block> genDblocks;
+	List<Block> genAblocks, genBblocks, genCblocks, genDblocks;
 
-	List<Block> genAblocksLONG;
-	List<Block> genBblocksLONG;
-	List<Block> genCblocksLONG;
-	List<Block> genDblocksLONG;
+
+	List<Block> genAblocksLONG, genBblocksLONG, genCblocksLONG, genDblocksLONG;
 
 	private final HashMap<Player, Integer> combo = new HashMap<>();
 	private final HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
@@ -89,10 +79,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	Scoreboard board;
 	Objective fakekills;
 
-	List<Player> redTeamPlayers = new ArrayList<>();
-	List<Player> yellowTeamPlayers = new ArrayList<>();
-	List<Player> greenTeamPlayers = new ArrayList<>();
-	List<Player> blueTeamPlayers = new ArrayList<>();
+
+	List<Player> redTeamPlayers, yellowTeamPlayers, greenTeamPlayers, blueTeamPlayers = new ArrayList<>();
 
 	int generatorTask;
 
