@@ -53,7 +53,7 @@ public class Translation {
                 for (String K : formatValues.keySet()) {
                     s = s.replaceAll("§" + K + "§", formatValues.get(K));
                 }
-                    tc = (legacyAmpersand().deserialize(s));
+                    tc = (legacyAmpersand().deserialize("&r" + s));
 
             }
             return tc;
