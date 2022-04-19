@@ -285,28 +285,28 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 				recountTeamMembers();
 
-				if(redkills >= requiredKills || (!redTeamPlayers.isEmpty() && yellowTeamPlayers.isEmpty() && greenTeamPlayers.isEmpty() && blueTeamPlayers.isEmpty() && gameactive && !testmode)) {
+				if((redkills >= requiredKills && gameactive) || (!redTeamPlayers.isEmpty() && yellowTeamPlayers.isEmpty() && greenTeamPlayers.isEmpty() && blueTeamPlayers.isEmpty() && gameactive && !testmode)) {
 					winningBroadcast(1);
 					resetEveryFuckingKillScoreboard();
 					try {
 						deathmsg.get(player).cancel(); } catch (Throwable ignored) {}
 					stopGame();
 				}
-				if(yellowkills >= requiredKills || (redTeamPlayers.isEmpty() && !yellowTeamPlayers.isEmpty() && greenTeamPlayers.isEmpty() && blueTeamPlayers.isEmpty() && gameactive && !testmode)) {
+				if((yellowkills >= requiredKills && gameactive) || (redTeamPlayers.isEmpty() && !yellowTeamPlayers.isEmpty() && greenTeamPlayers.isEmpty() && blueTeamPlayers.isEmpty() && gameactive && !testmode)) {
 					winningBroadcast(2);
 					resetEveryFuckingKillScoreboard();
 					try {
 						deathmsg.get(player).cancel(); } catch (Throwable ignored) {}
 					stopGame();
 				}
-				if(greenkills >= requiredKills || (redTeamPlayers.isEmpty() && yellowTeamPlayers.isEmpty() && !greenTeamPlayers.isEmpty() && blueTeamPlayers.isEmpty() && gameactive && !testmode)) {
+				if((greenkills >= requiredKills && gameactive) || (redTeamPlayers.isEmpty() && yellowTeamPlayers.isEmpty() && !greenTeamPlayers.isEmpty() && blueTeamPlayers.isEmpty() && gameactive && !testmode)) {
 					winningBroadcast(3);
 					resetEveryFuckingKillScoreboard();
 					try {
 						deathmsg.get(player).cancel(); } catch (Throwable ignored) {}
 					stopGame();
 				}
-				if(bluekills >= requiredKills || (redTeamPlayers.isEmpty() && yellowTeamPlayers.isEmpty() && greenTeamPlayers.isEmpty() && !blueTeamPlayers.isEmpty()  && gameactive && !testmode)) {
+				if((bluekills >= requiredKills && gameactive) || (redTeamPlayers.isEmpty() && yellowTeamPlayers.isEmpty() && greenTeamPlayers.isEmpty() && !blueTeamPlayers.isEmpty()  && gameactive && !testmode)) {
 					winningBroadcast(4);
 					resetEveryFuckingKillScoreboard();
 					try {
