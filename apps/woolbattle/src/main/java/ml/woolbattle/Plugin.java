@@ -63,6 +63,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	int redkills, yellowkills, bluekills, greenkills = 0;
 
+	int requiredKills = 0;
 
 	String genAstatus, genBstatus, genCstatus, genDstatus = "woolbattle.generator.uncaptured";
 
@@ -282,7 +283,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					}
 				}
 
-				int requiredKills = (int) (Math.round(4 * (Bukkit.getOnlinePlayers().size() * 0.7)));
+				requiredKills = (int) (Math.round(4 * (Bukkit.getOnlinePlayers().size() * 0.7)));
 
 				recountTeamMembers();
 
@@ -598,7 +599,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						for (String genStatus : genStatuses) {
 							if(player1.getScoreboardTags().contains("ingame")) {
 								if (teamname.contains("red")) {
-									if (genStatus.contains(ChatColor.RED + "КРАСНЫЙ")) {
+									if (genStatus.contains("woolbattle.generators.red")) {
 										if (!player1.getInventory().contains(Material.RED_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.RED_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
@@ -609,7 +610,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 									}
 								}
 								if (teamname.contains("yellow")) {
-									if (genStatus.contains(ChatColor.YELLOW + "ЖЁЛТЫЙ")) {
+									if (genStatus.contains("woolbattle.generators.yellow")) {
 										if (!player1.getInventory().contains(Material.YELLOW_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
@@ -620,7 +621,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 									}
 								}
 								if (teamname.contains("green")) {
-									if (genStatus.contains(ChatColor.GREEN + "ЗЕЛЁНЫЙ")) {
+									if (genStatus.contains("woolbattle.generators.green")) {
 										if (!player1.getInventory().contains(Material.LIME_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.LIME_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
@@ -631,7 +632,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 									}
 								}
 								if (teamname.contains("blue")) {
-									if (genStatus.contains(ChatColor.AQUA + "СИНИЙ")) {
+									if (genStatus.contains("woolbattle.generators.blue")) {
 										if (!player1.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
 											ItemMeta woolmeta = woolitem.getItemMeta();
@@ -1840,6 +1841,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				updateLevels(player1);
 			}
 		}
+
 		recoloringGenerators(genAblocksLONG, genAblocks);
 		recoloringGenerators(genBblocksLONG, genBblocks);
 		recoloringGenerators(genCblocksLONG, genCblocks);
@@ -1848,6 +1850,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		mainworld.getWorldBorder().setSize(200, 1);
 		hardmode = false;
 		gameactive = false;
+
+		requiredKills = 0;
 
 		try {
 			worldBorderTask.cancel();
@@ -1864,19 +1868,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			String colorWon;
-//			if(winner == 1) {
-//				player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "КРАСНЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
-//
-//			}
-//			if(winner == 2) {
-//				player.sendTitle(ChatColor.YELLOW + "" + ChatColor.BOLD + "ЖЁЛТЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
-//			}
-//			if(winner == 3) {
-//				player.sendTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "ЗЕЛЁНЫЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
-//			}
-//			if(winner == 4) {
-//				player.sendTitle(ChatColor.AQUA + "" + ChatColor.BOLD + "СИНИЕ", ChatColor.RESET + "Победили!", fadeIn, hold, fadeOut);
-//			}
+
 			switch (winner) {
 				case 1 -> colorWon = "RED";
 				case 2 -> colorWon = "YELLOW";
