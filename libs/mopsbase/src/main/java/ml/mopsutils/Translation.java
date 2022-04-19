@@ -51,7 +51,7 @@ public class Translation {
                 logger.warning("invalid string");
             } else {
                 for (String K : formatValues.keySet()) {
-                    s = s.replaceAll("${" + K + "}", formatValues.get(K));
+                    s = s.replaceAll("§" + K + "§", formatValues.get(K));
                 }
                     tc = (legacyAmpersand().deserialize(s));
 
