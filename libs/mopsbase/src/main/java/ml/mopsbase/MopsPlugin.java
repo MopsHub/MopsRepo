@@ -15,7 +15,7 @@ import java.util.concurrent.Callable;
 public class MopsPlugin extends JavaPlugin {
 	private List<GameSession> gameSessions;
 	protected FileConfiguration config;
-	public FileConfiguration translation = new YamlConfiguration();
+	public final FileConfiguration translation = new YamlConfiguration();
 
 	public TextComponent getByLang(String lang, String string) {
 		getLogger().info("MopsPlugin | getByLang: \n" + lang + "\n" + string);

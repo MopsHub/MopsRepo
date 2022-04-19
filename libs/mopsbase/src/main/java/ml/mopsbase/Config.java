@@ -17,7 +17,7 @@ public class Config {
 	private String configsFolder;
 	private Translations translations;
 
-	class Translations {
+	static class Translations {
 		public Translations() {}
 
 		private List<String> languages;
