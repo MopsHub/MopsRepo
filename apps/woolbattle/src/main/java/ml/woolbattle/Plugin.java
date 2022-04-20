@@ -5,6 +5,8 @@ import ml.mopsutils.Translation;
 import ml.mopsutils.Utilities;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -491,7 +493,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				scoreboardTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 
 					if (gameactive) {
-						Objective fakekills = newboard.registerNewObjective("fakekills", "dummy");
+						newboard = manager.getNewScoreboard();
+						Objective fakekills = newboard.registerNewObjective("fakekills", "dummy", Component.text("WoolBattle", NamedTextColor.GOLD, TextDecoration.BOLD));
 						fakekills.setDisplaySlot(DisplaySlot.SIDEBAR);
 						fakekills.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "WoolBattle");
 
