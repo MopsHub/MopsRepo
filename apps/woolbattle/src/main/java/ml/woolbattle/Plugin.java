@@ -592,10 +592,24 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 						resetGeneratorText(player);
 
-						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + genAstatus).setScore(5);
-						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + genBstatus).setScore(4);
-						fakekills.getScore(ChatColor.WHITE + "Генератор C - " + genCstatus).setScore(3);
-						fakekills.getScore(ChatColor.WHITE + "Генератор D - " + genDstatus).setScore(2);
+
+						String Acopy = genAstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+						String Bcopy = genBstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+						String Ccopy = genCstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+						String Dcopy = genDstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+
+						if(gensLocked) {
+							Acopy = Acopy + ChatColor.GRAY + " ⚠";
+							Bcopy = Bcopy + ChatColor.GRAY + " ⚠";
+							Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
+							Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
+						}
+
+						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + Acopy).setScore(5);
+						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + Bcopy).setScore(4);
+						fakekills.getScore(ChatColor.WHITE + "Генератор C - " + Ccopy).setScore(3);
+						fakekills.getScore(ChatColor.WHITE + "Генератор D - " + Dcopy).setScore(2);
+
 
 						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
 						fakekills.getScore(ChatColor.DARK_GRAY + connectToIP + ":" + Bukkit.getPort()).setScore(0);
@@ -1003,7 +1017,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			color = ChatColor.AQUA;
 		}
 
-		if(player.getScoreboardTags().contains("ingame")) {
+		if (!player.getScoreboardTags().contains("spectator")) {
 			if (msg.startsWith("!")) {
 				for (Player players : Bukkit.getOnlinePlayers()) {
 					players.sendMessage(ChatColor.AQUA + "[!] " + color + player.getName() + ChatColor.WHITE + ": " + msg.replaceFirst("!", ""));
@@ -1012,7 +1026,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				for (OfflinePlayer players0 : team.getPlayers()) {
 					if (players0.isOnline()) {
 						Player players = players0.getPlayer();
-
 						players.sendMessage(ChatColor.DARK_GREEN + "[Команда] " + color + player.getName() + ChatColor.WHITE + ": " + color + msg);
 					}
 				}
@@ -1022,6 +1035,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				players.sendMessage(color + player.getName() + ChatColor.WHITE + ": " + msg);
 			}
 		}
+		for (Player players : Bukkit.getOnlinePlayers()) {
+			if(players.getScoreboardTags().contains("spectator")) {
+				players.sendMessage(ChatColor.GRAY + "[Зрители] " + color + player.getName() + ChatColor.WHITE + ": " + msg);
+			}
+		}
 	}
 
 	@EventHandler
@@ -1029,16 +1047,21 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Player player = event.getPlayer();
 		Block block = event.getBlock();
 
-		List<Block> genBlockList = new ArrayList<>(genAblocks);
-		genBlockList.addAll(genBblocks);
-		genBlockList.addAll(genCblocks);
-		genBlockList.addAll(genDblocks);
+		if(player.getScoreboardTags().contains("spectator")) {
+			event.setCancelled(true);
+		} else {
 
-		if (!genBlockList.contains(block)) {
-			ppbs.add(block);
+			List<Block> genBlockList = new ArrayList<>(genAblocks);
+			genBlockList.addAll(genBblocks);
+			genBlockList.addAll(genCblocks);
+			genBlockList.addAll(genDblocks);
+
+			if (!genBlockList.contains(block)) {
+				ppbs.add(block);
+			}
+
+			updateLevels(player);
 		}
-
-		updateLevels(player);
 	}
 
 	@EventHandler
@@ -1062,8 +1085,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			if (!player.getScoreboardTags().contains("canbreak") && !genBlockList.contains(block)) {
 				event.setCancelled(true);
 			}
-
-			if (player.getScoreboardTags().contains("ingame")) {
 
 				boolean materialstuff = (type == Material.WHITE_WOOL);
 
@@ -1167,7 +1188,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 			updateLevels(player);
 		}
-	}
+
 
 	@EventHandler
 	public void onPlayerInteraction(PlayerInteractEvent event) {
@@ -1525,10 +1546,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				player1.playSound(player1.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 0.8F, 2);
 			}, 50L);
 		}
-		genAstatus = genAstatus + ChatColor.GRAY + " ⚠";
-		genBstatus = genBstatus + ChatColor.GRAY + " ⚠";
-		genCstatus = genCstatus + ChatColor.GRAY + " ⚠";
-		genDstatus = genDstatus + ChatColor.GRAY + " ⚠";
+
+		gensLocked = true;
 	}
 
 	public void clearScoreboard(Player player) {
@@ -1558,12 +1577,25 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent0);
 		}
 
+
 		fakekills.getScoreboard().resetScores(ChatColor.GOLD + " ");
 
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genAstatus);
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genBstatus);
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genCstatus);
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genDstatus);
+		String Acopy = genAstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+		String Bcopy = genBstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+		String Ccopy = genCstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+		String Dcopy = genDstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+
+		if(gensLocked) {
+			Acopy = Acopy + ChatColor.GRAY + " ⚠";
+			Bcopy = Bcopy + ChatColor.GRAY + " ⚠";
+			Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
+			Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
+		}
+
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy);
 
 		Bukkit.getScheduler().cancelTask(scoreboardTask);
 
@@ -1846,10 +1878,27 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		for(String genStatus : genStatuses) {
 			Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus);
+			String Acopy = genAstatus; //ТУТ ТИПО БЕРЁТСЯ ЯЗЫК ИГРКОА
+			String Bcopy = genBstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+			String Ccopy = genCstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+			String Dcopy = genDstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy);
+
+
+			Acopy = Acopy + ChatColor.GRAY + " ⚠";
+			Bcopy = Bcopy + ChatColor.GRAY + " ⚠";
+			Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
+			Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
+
+
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy);
 
 			player.setScoreboard(fakekills.getScoreboard());
 		}
