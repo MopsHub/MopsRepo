@@ -26,6 +26,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -65,6 +66,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	String genAstatus, genBstatus, genCstatus, genDstatus = "woolbattle.generator.uncaptured";
 
 	boolean gensLocked = false;
+
+	HashMap<Player, PlayerInventory> spectatorInventory = new HashMap<>();
 
 	List<Block> genAblocks, genBblocks, genCblocks, genDblocks;
 
@@ -218,7 +221,15 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						}
 
 						if(!hardmode) {
-							player.setGameMode(GameMode.SPECTATOR);
+							if(!player.getScoreboardTags().contains("spectator")) {
+								spectatorInventory.put(player, player.getInventory());
+								player.getInventory().clear();
+							}
+							player.addScoreboardTag("spectator");
+							player.hidePlayer(player);
+							player.setAllowFlight(true);
+							player.setFlying(true);
+
 							Location mid = new Location(player.getWorld(), 9, 270, 9);
 							player.teleport(mid);
 							lastdamage.getScore(player.getName()).setScore(0);
@@ -255,6 +266,19 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 											loc.setYaw(90);
 											player.teleport(loc);
 										}
+										player.showPlayer(player);
+										player.setAllowFlight(false);
+										player.setFlying(false);
+										player.removeScoreboardTag("spectator");
+
+										try {
+											for(int n = 0; n < 36; ++n) {
+												ItemStack stack = spectatorInventory.get(player).getItem(n);
+												if(stack == null) continue;
+												player.getInventory().setItem(n, stack);
+											}
+										} catch (Throwable ignored) {}
+
 										player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 2);
 
 									}, 20L));
@@ -331,7 +355,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 7, 100, true, false));
 					player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 7, 100, true, false));
 				} else if(hardmode) {
-					player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20, 0, true, false));
+					player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 60, 1, true, false));
 				}
 
 				if (player.getScoreboardTags().contains("onspawn")) {
@@ -368,19 +392,21 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				item6.setItemMeta(meta6);
 
 				if (player.getScoreboardTags().contains("ingame")) {
-					if (player.isOnGround() && !player.getAllowFlight()) {
-						player.setAllowFlight(true);
-					}
-					if (player.isFlying() && player.getGameMode().equals(GameMode.SURVIVAL)) {
-						player.setFlying(false);
+					if (!player.getScoreboardTags().contains("spectator")) {
+						if (player.isOnGround() && !player.getAllowFlight()) {
+							player.setAllowFlight(true);
+						}
+						if (player.isFlying() && player.getGameMode().equals(GameMode.SURVIVAL)) {
+							player.setFlying(false);
 
-						boolean hasItems = woolRemove(16, player, teamname);
+							boolean hasItems = woolRemove(16, player, teamname);
 
-						if (hasItems) {
-							player.setVelocity((player.getEyeLocation().getDirection().multiply(0.9)).add(new Vector(0, 0.45, 0)));
-							player.setAllowFlight(false);
-						} else {
-							player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
+							if (hasItems) {
+								player.setVelocity((player.getEyeLocation().getDirection().multiply(0.9)).add(new Vector(0, 0.45, 0)));
+								player.setAllowFlight(false);
+							} else {
+								player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
+							}
 						}
 					}
 				}
@@ -1024,118 +1050,123 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		Team team = mainboard.getPlayerTeam(player);
 		String teamname = team.getName();
 
-		List<Block> genBlockList = new ArrayList<>(genAblocks);
-		genBlockList.addAll(genBblocks);
-		genBlockList.addAll(genCblocks);
-		genBlockList.addAll(genDblocks);
-
-		if (!player.getScoreboardTags().contains("canbreak") && !genBlockList.contains(block)) {
+		if(player.getScoreboardTags().contains("spectator")) {
 			event.setCancelled(true);
-		}
+		} else {
 
-		if (player.getScoreboardTags().contains("ingame")) {
+			List<Block> genBlockList = new ArrayList<>(genAblocks);
+			genBlockList.addAll(genBblocks);
+			genBlockList.addAll(genCblocks);
+			genBlockList.addAll(genDblocks);
 
-			boolean materialstuff = (type == Material.WHITE_WOOL);
-
-			if (teamname.contains("red")) {
-				materialstuff = (type == Material.WHITE_WOOL || type == Material.RED_WOOL);
-			}
-			if (teamname.contains("yellow")) {
-				materialstuff = (type == Material.WHITE_WOOL || type == Material.YELLOW_WOOL);
-			}
-			if (teamname.contains("green")) {
-				materialstuff = (type == Material.WHITE_WOOL || type == Material.LIME_WOOL);
-			}
-			if (teamname.contains("blue")) {
-				materialstuff = (type == Material.WHITE_WOOL || type == Material.LIGHT_BLUE_WOOL);
-			}
-
-			if(!hardmode) {
-				if (genBlockList.contains(block)) {
-					if (block.getType() != Material.WHITE_CONCRETE && block.getType() != Material.RED_CONCRETE && block.getType() != Material.YELLOW_CONCRETE && block.getType() != Material.LIME_CONCRETE && block.getType() != Material.LIGHT_BLUE_CONCRETE) {
-						if (!((teamname.contains("red") && block.getType() == Material.RED_WOOL) || (teamname.contains("yellow") && block.getType() == Material.YELLOW_WOOL) || (teamname.contains("green") && block.getType() == Material.LIME_WOOL) || (teamname.contains("blue") && block.getType() == Material.LIGHT_BLUE_WOOL))) {
-							event.setCancelled(true);
-							block.setType(Material.AIR);
-
-							materialstuff = (type == Material.WHITE_WOOL || type == Material.RED_WOOL || type == Material.YELLOW_WOOL || type == Material.LIME_WOOL || type == Material.LIGHT_BLUE_WOOL);
-
-						} else {
-							event.setCancelled(true);
-						}
-					} else {
-						event.setCancelled(true);
-					}
-				}
-			} else {
+			if (!player.getScoreboardTags().contains("canbreak") && !genBlockList.contains(block)) {
 				event.setCancelled(true);
 			}
 
-			if (teamname.contains("red")) {
-				if (materialstuff || ppbs.contains(block)) {
-					if (!player.getInventory().contains(Material.RED_WOOL, 512)) {
-						ItemStack woolitem = new ItemStack(Material.RED_WOOL, 1);
-						ItemMeta woolmeta = woolitem.getItemMeta();
-						woolmeta.displayName(getByLang(lang, "woolbattle.redWool"));
-						woolitem.setItemMeta(woolmeta);
-						player.getInventory().addItem(woolitem);
-					} else {
-						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
-					}
-				} else {
-					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
-				}
-			}
-			if (teamname.contains("yellow")) {
-				if (materialstuff || ppbs.contains(block)) {
-					if (!player.getInventory().contains(Material.YELLOW_WOOL, 512)) {
-						ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, 1);
-						ItemMeta woolmeta = woolitem.getItemMeta();
-						woolmeta.displayName(getByLang(lang, "woolbattle.yellowWool"));
-						woolitem.setItemMeta(woolmeta);
-						player.getInventory().addItem(woolitem);
-					} else {
-						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
-					}
-				} else {
-					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
-				}
-			}
-			if (teamname.contains("green")) {
-				if (materialstuff || ppbs.contains(block)) {
-					if (!player.getInventory().contains(Material.LIME_WOOL, 512)) {
-						ItemStack woolitem = new ItemStack(Material.LIME_WOOL, 1);
-						ItemMeta woolmeta = woolitem.getItemMeta();
-						woolmeta.displayName(getByLang(lang, "woolbattle.greenWool"));
-						woolitem.setItemMeta(woolmeta);
-						player.getInventory().addItem(woolitem);
-					} else {
-						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
-					}
-				} else {
-					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
-				}
-			}
-			if (teamname.contains("blue")) {
-				if (materialstuff || ppbs.contains(block)) {
-					if (!player.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
-						ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
-						ItemMeta woolmeta = woolitem.getItemMeta();
-						woolmeta.displayName(getByLang(lang, "woolbattle.blueWool"));
-						woolitem.setItemMeta(woolmeta);
-						player.getInventory().addItem(woolitem);
-					} else {
-						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
-					}
-				} else {
-					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
-				}
-			}
-		}
-		if (ppbs.contains(block)) {
-			block.setType(Material.AIR);
-		}
+			if (player.getScoreboardTags().contains("ingame")) {
 
-		updateLevels(player);
+				boolean materialstuff = (type == Material.WHITE_WOOL);
+
+				if (teamname.contains("red")) {
+					materialstuff = (type == Material.WHITE_WOOL || type == Material.RED_WOOL);
+				}
+				if (teamname.contains("yellow")) {
+					materialstuff = (type == Material.WHITE_WOOL || type == Material.YELLOW_WOOL);
+				}
+				if (teamname.contains("green")) {
+					materialstuff = (type == Material.WHITE_WOOL || type == Material.LIME_WOOL);
+				}
+				if (teamname.contains("blue")) {
+					materialstuff = (type == Material.WHITE_WOOL || type == Material.LIGHT_BLUE_WOOL);
+				}
+
+				if (!hardmode) {
+					if (genBlockList.contains(block)) {
+						if (block.getType() != Material.WHITE_CONCRETE && block.getType() != Material.RED_CONCRETE && block.getType() != Material.YELLOW_CONCRETE && block.getType() != Material.LIME_CONCRETE && block.getType() != Material.LIGHT_BLUE_CONCRETE) {
+							if (!((teamname.contains("red") && block.getType() == Material.RED_WOOL) || (teamname.contains("yellow") && block.getType() == Material.YELLOW_WOOL) || (teamname.contains("green") && block.getType() == Material.LIME_WOOL) || (teamname.contains("blue") && block.getType() == Material.LIGHT_BLUE_WOOL))) {
+								event.setCancelled(true);
+								block.setType(Material.AIR);
+
+								materialstuff = (type == Material.WHITE_WOOL || type == Material.RED_WOOL || type == Material.YELLOW_WOOL || type == Material.LIME_WOOL || type == Material.LIGHT_BLUE_WOOL);
+
+							} else {
+								event.setCancelled(true);
+							}
+						} else {
+							event.setCancelled(true);
+						}
+					}
+				} else {
+					event.setCancelled(true);
+				}
+
+				if (teamname.contains("red")) {
+					if (materialstuff || ppbs.contains(block)) {
+						if (!player.getInventory().contains(Material.RED_WOOL, 512)) {
+							ItemStack woolitem = new ItemStack(Material.RED_WOOL, 1);
+							ItemMeta woolmeta = woolitem.getItemMeta();
+							woolmeta.displayName(getByLang(lang, "woolbattle.redWool"));
+							woolitem.setItemMeta(woolmeta);
+							player.getInventory().addItem(woolitem);
+						} else {
+							player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
+						}
+					} else {
+						player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
+					}
+				}
+				if (teamname.contains("yellow")) {
+					if (materialstuff || ppbs.contains(block)) {
+						if (!player.getInventory().contains(Material.YELLOW_WOOL, 512)) {
+							ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, 1);
+							ItemMeta woolmeta = woolitem.getItemMeta();
+							woolmeta.displayName(getByLang(lang, "woolbattle.yellowWool"));
+							woolitem.setItemMeta(woolmeta);
+							player.getInventory().addItem(woolitem);
+						} else {
+							player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
+						}
+					} else {
+						player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
+					}
+				}
+				if (teamname.contains("green")) {
+					if (materialstuff || ppbs.contains(block)) {
+						if (!player.getInventory().contains(Material.LIME_WOOL, 512)) {
+							ItemStack woolitem = new ItemStack(Material.LIME_WOOL, 1);
+							ItemMeta woolmeta = woolitem.getItemMeta();
+							woolmeta.displayName(getByLang(lang, "woolbattle.greenWool"));
+							woolitem.setItemMeta(woolmeta);
+							player.getInventory().addItem(woolitem);
+						} else {
+							player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
+						}
+					} else {
+						player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
+					}
+				}
+				if (teamname.contains("blue")) {
+					if (materialstuff || ppbs.contains(block)) {
+						if (!player.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
+							ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
+							ItemMeta woolmeta = woolitem.getItemMeta();
+							woolmeta.displayName(getByLang(lang, "woolbattle.blueWool"));
+							woolitem.setItemMeta(woolmeta);
+							player.getInventory().addItem(woolitem);
+						} else {
+							player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
+						}
+					} else {
+						player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
+					}
+				}
+			}
+			if (ppbs.contains(block)) {
+				block.setType(Material.AIR);
+			}
+
+			updateLevels(player);
+		}
 	}
 
 	@EventHandler
