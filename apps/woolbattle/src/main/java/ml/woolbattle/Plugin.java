@@ -78,9 +78,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	private final HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
 
 
-	ScoreboardManager manager = Bukkit.getScoreboardManager();
-	Scoreboard mainboard = manager.getMainScoreboard();
-	Scoreboard newboard = manager.getNewScoreboard();
+	ScoreboardManager manager;
+	Scoreboard mainboard;
+	Scoreboard newboard;
 
 
 	List<Player> redTeamPlayers, yellowTeamPlayers, greenTeamPlayers, blueTeamPlayers = new ArrayList<>();
@@ -421,6 +421,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		}, 80L, 20L);
 
 		mainworld = Bukkit.getServer().getWorlds().get(0);
+		manager = Bukkit.getScoreboardManager();
+		mainboard = manager.getMainScoreboard();
+		newboard = manager.getNewScoreboard();
 
 		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
 		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
