@@ -5,5 +5,5 @@ public enum Teams {
 	YELLOW,
 	GREEN,
 	BLUE,
-	SPECTATOR //на будущие
+	SPECTATOR; //на будущие
 }
