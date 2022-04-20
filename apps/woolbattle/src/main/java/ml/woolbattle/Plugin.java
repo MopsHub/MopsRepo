@@ -1929,7 +1929,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		hardmode = false;
 		gameactive = false;
 
-		requiredKills = 0;
+		requiredKills = 3;
 
 		try {
 			worldBorderTask.cancel();
