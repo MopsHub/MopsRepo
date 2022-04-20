@@ -50,9 +50,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	// спасибо
 	// пододжди два года и сделаю))))
 
-	Utilities u = new Utilities(this);
-	Abilities a = new Abilities(this);
-	Translation t;
+	Utilities utilities = new Utilities(this);
+	Abilities abilities = new Abilities(this);
+	Translation translation0;
 
 	List<Block> ppbs = new ArrayList<>();
 	World mainworld;
@@ -140,7 +140,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			logger.info(e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
 		}
 
-		t = new Translation(translation, getLogger(), "woolbattle");
+		translation0 = new Translation(translation, getLogger(), "woolbattle");
 
 		this.connectToIP = config.getString("ip");
 
@@ -2176,7 +2176,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		this.gameactive = true;
 
-		a.startGame(lang, team, player1);
+		abilities.startGame(lang, team, player1);
 
 	}
 
@@ -2258,22 +2258,22 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	@Override
 	public TextComponent getByLang(String lang, String string) {
 		getLogger().info("WoolBattle:Plugin | getByLang: \n" + lang + "\n" + string);
-		return t.getTranslation(lang, string.replaceFirst("woolbattle.", ""));
+		return translation0.getTranslation(lang, string.replaceFirst("woolbattle.", ""));
 	}
 	@Override
 	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
 		getLogger().info("WoolBattle:Plugin | getByLang: \n" + lang + "\n" + string + "\n" + formatV.toString());
-		return t.getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV);
+		return translation0.getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV);
 
 	}
 	public Title genTitle(@NotNull String lang, @Nullable String id, @Nullable String id2nd, int i, int j, int k) {
-		return u.createTitle(lang, id, id2nd, i, j, k);
+		return utilities.createTitle(lang, id, id2nd, i, j, k);
 	}
 	public TextComponent uniteTC(TextComponent[] tcs) {
-		return u.combineComponents(tcs, Component.empty());
+		return utilities.combineComponents(tcs, Component.empty());
 	}
 	public TextComponent uniteTCspace(TextComponent[] tcs) {
-		return u.combineComponents(tcs, Component.space());
+		return utilities.combineComponents(tcs, Component.space());
 	}
 
 }
