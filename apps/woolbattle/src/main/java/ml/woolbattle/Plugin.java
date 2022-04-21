@@ -28,6 +28,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -79,6 +80,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	private final HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
 
 
+	ScoreboardManager manager;
+	Scoreboard mainboard;
+	Scoreboard newboard;
 
 
 	List<Player> redTeamPlayers, yellowTeamPlayers, greenTeamPlayers, blueTeamPlayers = new ArrayList<>();
@@ -91,11 +95,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	String connectToIP = "mops.ml";
 
-	ScoreboardManager manager;
-	Scoreboard mainboard;
-	Scoreboard newboard;
 
-	
 
 	@Override
 	public void onEnable() {
@@ -146,14 +146,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		this.connectToIP = config.getString("ip");
 
-		mainworld = Bukkit.getServer().getWorlds().get(0);
-		manager = Bukkit.getScoreboardManager();
-		mainboard = manager.getMainScoreboard();
-		newboard = manager.getNewScoreboard();
-		loadGenLocation();
-		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
+
 
 				Team team = mainboard.getPlayerTeam(player);
 				assert team != null;
@@ -176,22 +171,22 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 						if (teamname.contains("red")) {
 							logger.info(player.getName() + "'s team: " + "red");
-							woolItem = new ItemStack(Material.RED_WOOL, 1296);
+							woolItem = new ItemStack(Material.RED_WOOL);
 							woolName = getByLang(lang, "woolbattle.redWool");
 						}
 						else if (teamname.contains("yellow")) {
 							logger.info(player.getName() + "'s team: " + "yellow");
-							woolItem = new ItemStack(Material.RED_WOOL, 1296);
+							woolItem = new ItemStack(Material.RED_WOOL);
 							woolName = getByLang(lang, "yellowWool");
 						}
 						else if (teamname.contains("green")) {
 							logger.info(player.getName() + "'s team: " + "green");
-							woolItem = new ItemStack(Material.LIME_WOOL, 1296);
+							woolItem = new ItemStack(Material.LIME_WOOL);
 							woolName = getByLang(lang, "greenWool");
 						}
 						else if (teamname.contains("blue")) {
 							logger.info(player.getName() + "'s team: " + "blue");
-							woolItem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1296);
+							woolItem = new ItemStack(Material.LIGHT_BLUE_WOOL);
 							woolName = getByLang(lang, "blueWool");
 						} else {
 							logger.warning("No team found for " + player.getName() + "\ntags: " + player.getScoreboardTags() + "\nteam name: " + player.getScoreboard().getPlayerTeam(player).getName());
@@ -205,6 +200,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						ItemMeta woolMeta = woolItem.getItemMeta();
 						woolMeta.displayName(woolName);
 						woolItem.setItemMeta(woolMeta);
+						woolItem.setAmount(200000);
+						player.getInventory().removeItem(woolItem);
 
 						switch (Objects.requireNonNull(lastdamage).getScore(player.getName()).getScore()) {
 							case 1 -> {
@@ -231,7 +228,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							if(!player.getScoreboardTags().contains("spectator")) {
 								savedInventory = player.getInventory().getContents();
 								player.getInventory().clear();
-								player.getInventory().remove(woolItem);
 							}
 
 							ItemStack[] finalSavedInventory = savedInventory;
@@ -427,6 +423,21 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			genConquerChecks(genCblocks, genCblocksLONG, "C");
 			genConquerChecks(genDblocks, genDblocksLONG, "D");
 		}, 80L, 20L);
+
+		mainworld = Bukkit.getServer().getWorlds().get(0);
+		manager = Bukkit.getScoreboardManager();
+		mainboard = manager.getMainScoreboard();
+		newboard = manager.getNewScoreboard();
+
+		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
+		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
+		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
+		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
+
+		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
+		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
+		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
+		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 	}
 
 	final int[] minutes = {0};
@@ -600,6 +611,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
 							Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
 						}
+
 						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + Acopy).setScore(5);
 						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + Bcopy).setScore(4);
 						fakekills.getScore(ChatColor.WHITE + "Генератор C - " + Ccopy).setScore(3);
@@ -2245,26 +2257,14 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	public static int getAmount(Player arg0, ItemStack arg1) {
 		if (arg1 == null)
 			return 0;
-		int amount = 0;
+		int among = 0;
 		for (int i = 0; i < 36; i++) {
 			ItemStack slot = arg0.getInventory().getItem(i);
 			if (slot == null || !slot.isSimilar(arg1))
 				continue;
-			amount += slot.getAmount();
+			among += slot.getAmount();
 		}
-		return amount;
-	}
-	
-	protected void loadGenLocation() {
-		this.genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
-		this.genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
-		this.genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
-		this.genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
-
-		this.genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
-		this.genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
-		this.genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
-		this.genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
+		return among;
 	}
 
 	@Override
