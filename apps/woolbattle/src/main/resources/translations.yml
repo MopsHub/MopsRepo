@@ -21,8 +21,8 @@ woolbattle:
       rus: "&cКрасная Шерсть"
       eng: "&cRed Wool"
   - yellowWool:
-      rus: "&9Жёлтая Шерсть"
-      eng: "&9Yellow Wool"
+      rus: "&eЖёлтая Шерсть"
+      eng: "&eYellow Wool"
   - greenWool:
       rus: "&aЗелёная Шерсть"
       eng: "&aGreen Wool"
