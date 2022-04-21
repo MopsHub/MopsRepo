@@ -432,10 +432,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		}, 80L, 1L);
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-			genConquerChecks(genAblocks, genAblocksLONG, "A");
-			genConquerChecks(genBblocks, genBblocksLONG, "B");
-			genConquerChecks(genCblocks, genCblocksLONG, "C");
-			genConquerChecks(genDblocks, genDblocksLONG, "D");
+			genCaptureChecks(genAblocks, genAblocksLONG, "A");
+			genCaptureChecks(genBblocks, genBblocksLONG, "B");
+			genCaptureChecks(genCblocks, genCblocksLONG, "C");
+			genCaptureChecks(genDblocks, genDblocksLONG, "D");
 		}, 80L, 20L);
 	}
 
@@ -620,8 +620,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
 						fakekills.getScore(ChatColor.DARK_GRAY + connectToIP + ":" + Bukkit.getPort()).setScore(0);
 
-						for (Player p : getServer().getOnlinePlayers()) {
-							p.setScoreboard(fakekills.getScoreboard());
+						for (Player player0 : getServer().getOnlinePlayers()) {
+							player0.setScoreboard(fakekills.getScoreboard());
 						}
 
 					}
@@ -758,7 +758,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			return true;
 		}
 		if (commandName.equals("spawn") || commandName.equals("lobby") || commandName.equals("l") || commandName.equals("hub")) {
-			teleportToSpawn(player);
+
+			//ТУТ ДОЛЖНО ВЫКИДЫВАТЬ ИЗ ИГРЫ КОФИЙ ТЫ ПОНЯЛ?
+
 			player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 0.4F, 1.5F);
 			return true;
 		}
@@ -1747,7 +1749,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 
 
-	public void genConquerChecks(List<Block> gen, List<Block> genLONG, String genLetter) {
+	public void genCaptureChecks(List<Block> gen, List<Block> genLONG, String genLetter) {
 		if(!hardmode) {
 			String genStatus = "woolbattle.generator.uncaptured";
 
@@ -1875,30 +1877,32 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 	public void resetGeneratorText(Player player) {
 
-		List<TextComponent> genStatuses = new ArrayList<>();
+		List<String> genStatuses = new ArrayList<>();
 
 		//тут типа надо language.getPlayer() ну вы поняли
 
-		genStatuses.add(Component.text("woolbattle.generator.uncaptured"));
-		genStatuses.add(Component.text("woolbattle.generator.red"));
-		genStatuses.add(Component.text("woolbattle.generator.yellow"));
-		genStatuses.add(Component.text("woolbattle.generator.green"));
-		genStatuses.add(Component.text("woolbattle.generator.blue"));
+		genStatuses.add("woolbattle.generator.uncaptured");
+		genStatuses.add("woolbattle.generator.red");
+		genStatuses.add("woolbattle.generator.yellow");
+		genStatuses.add("woolbattle.generator.green");
+		genStatuses.add("woolbattle.generator.blue");
 
-		for(TextComponent genStatus : genStatuses) {
+		for(String genStatus : genStatuses) {
+			TextComponent genStatus0 = getByLang(lang, genStatus);
+
 			Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0);
 
-			genStatus.append(Component.text(" ⚠", NamedTextColor.GRAY));
+			genStatus0.append(Component.text(" ⚠", NamedTextColor.GRAY));
 
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0);
 
 			player.setScoreboard(fakekills.getScoreboard());
 		}
@@ -1941,10 +1945,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 
 	public void winningBroadcast(int winner) {
-
-//		int fadeIn = 5;
-//		int hold = 40;
-//		int fadeOut = 30;
 
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			String colorWon;
@@ -1991,20 +1991,18 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		player.setScoreboard(fakekills.getScoreboard());
 	}
 
-	public void teleportToSpawn(Player player) {
-		player.teleport(new Location(player.getWorld(), 9, -34, 9));
-		player.getInventory().clear();
-		player.removePotionEffect(PotionEffectType.JUMP);
-		player.setGameMode(GameMode.SURVIVAL);
-		player.setHealth(player.getMaxHealth());
-
-		player.removeScoreboardTag("ingame");
-		player.addScoreboardTag("onspawn");
-	}
-
 	public void simulateHardmodeDeath(Player player) {
-		teleportToSpawn(player);
 		broadcastFinalDeath(player);
+
+		player.addScoreboardTag("spectator");
+		player.hidePlayer(player);
+		player.setAllowFlight(true);
+		player.setFlying(true);
+
+		Location mid = new Location(player.getWorld(), 9, 270, 9);
+		player.teleport(mid);
+
+		player.getInventory().clear();
 	}
 
 	public void broadcastDeath(Player dead, String deathcause) {
