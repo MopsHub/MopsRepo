@@ -32,6 +32,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.material.Wool;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -69,7 +70,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	boolean gensLocked = false;
 
-	HashMap<Player, ItemStack[]> savedInventory = new HashMap<>();
+	HashMap<Player, PlayerInventory> spectatorInventory = new HashMap<>();
 
 	List<Block> genAblocks, genBblocks, genCblocks, genDblocks;
 
@@ -145,6 +146,12 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		translator = new Translation(translation, getLogger(), "woolbattle");
 
 		this.connectToIP = config.getString("ip");
+
+		mainworld = Bukkit.getServer().getWorlds().get(0);
+		manager = Bukkit.getScoreboardManager();
+		mainboard = manager.getMainScoreboard();
+		newboard = manager.getNewScoreboard();
+		loadGenLocation();
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
@@ -223,15 +230,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						}
 
 						if(!hardmode) {
-							ItemStack[] savedInventory = new ItemStack[0];
-
 							if(!player.getScoreboardTags().contains("spectator")) {
-								savedInventory = player.getInventory().getContents();
+								spectatorInventory.put(player, player.getInventory());
 								player.getInventory().clear();
 							}
-
-							ItemStack[] finalSavedInventory = savedInventory;
-
 							player.addScoreboardTag("spectator");
 							player.hidePlayer(player);
 							player.setAllowFlight(true);
@@ -278,10 +280,13 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 										player.setFlying(false);
 										player.removeScoreboardTag("spectator");
 
-
-										player.getInventory().setContents(finalSavedInventory);
-										player.updateInventory();
-
+										try {
+											for(int n = 0; n < 36; ++n) {
+												ItemStack stack = spectatorInventory.get(player).getItem(n);
+												if(stack == null) continue;
+												player.getInventory().setItem(n, stack);
+											}
+										} catch (Throwable ignored) {}
 
 										player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 2);
 
@@ -348,6 +353,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				}
 			}
 		}, 80L, 5L);
+
+
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
@@ -424,20 +431,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			genConquerChecks(genDblocks, genDblocksLONG, "D");
 		}, 80L, 20L);
 
-		mainworld = Bukkit.getServer().getWorlds().get(0);
-		manager = Bukkit.getScoreboardManager();
-		mainboard = manager.getMainScoreboard();
-		newboard = manager.getNewScoreboard();
-
-		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
-		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
-		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
-		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
-
-		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
-		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
-		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
-		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 	}
 
 	final int[] minutes = {0};
@@ -620,7 +613,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
 						fakekills.getScore(ChatColor.DARK_GRAY + connectToIP + ":" + Bukkit.getPort()).setScore(0);
-
 						for (Player p : getServer().getOnlinePlayers()) {
 							if (p.getScoreboardTags().contains("ingame")) {
 								p.setScoreboard(fakekills.getScoreboard());
@@ -1894,7 +1886,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			String Bcopy = genBstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
 			String Ccopy = genCstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
 			String Dcopy = genDstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
@@ -2266,11 +2257,23 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		}
 		return among;
 	}
+	protected void loadGenLocation() {
+		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
+		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
+		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
+		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
+
+		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
+		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
+		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
+		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
+	}
 
 	@Override
 	public TextComponent getByLang(String lang, String string) {
 		getLogger().info("WoolBattle:Plugin | getByLang: \n" + lang + "\n" + string);
-		return translator.getTranslation(lang, string.replaceFirst("woolbattle.", "")).decoration(TextDecoration.ITALIC, false);
+		TextComponent component = translator.getTranslation(lang, string.replaceFirst("woolbattle.", "")).decoration(TextDecoration.ITALIC, false);
+		return translator.getTranslation(lang, string.replaceFirst("woolbattle.", ""));
 	}
 	@Override
 	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
