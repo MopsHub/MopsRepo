@@ -80,32 +80,9 @@ public class Abilities {
 		item5.setItemMeta(meta5);
 		player1.getInventory().setItem(17, item5);
 
-		String colorString ;
-		Color color;
+		String colorString = team.getColorString;
+		Color color = team.getLeatherColor;
 
-//		Map m;
-		switch (team) {
-			case RED -> {
-				colorString = "&4";
-				color = Color.fromRGB(255, 10, 10);
-			}
-			case YELLOW -> {
-				colorString = "&e";
-				color = Color.fromRGB(255, 207, 36);
-			}
-			case GREEN -> {
-				colorString = "&a";
-				color = Color.fromRGB(105, 255, 82);
-			}
-			case BLUE -> {
-				colorString = "&b";
-				color = Color.fromRGB(47, 247, 227);
-			}
-			default -> {
-				colorString = "&7";
-				color = Color.fromRGB(170, 170, 170);
-			}
-		}
 
 		ItemStack bootsItem = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bootsMeta = (LeatherArmorMeta) bootsItem.getItemMeta();
