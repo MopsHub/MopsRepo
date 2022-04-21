@@ -147,6 +147,12 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		this.connectToIP = config.getString("ip");
 
+		mainworld = Bukkit.getServer().getWorlds().get(0);
+		manager = Bukkit.getScoreboardManager();
+		mainboard = manager.getMainScoreboard();
+		newboard = manager.getNewScoreboard();
+		loadGenLocation();
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 
@@ -348,6 +354,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			}
 		}, 80L, 5L);
 
+
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 				Team team = mainboard.getPlayerTeam(player);
@@ -423,20 +431,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			genConquerChecks(genDblocks, genDblocksLONG, "D");
 		}, 80L, 20L);
 
-		mainworld = Bukkit.getServer().getWorlds().get(0);
-		manager = Bukkit.getScoreboardManager();
-		mainboard = manager.getMainScoreboard();
-		newboard = manager.getNewScoreboard();
-
-		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
-		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
-		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
-		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
-
-		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
-		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
-		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
-		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 	}
 
 	final int[] minutes = {0};
@@ -2262,6 +2256,17 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			among += slot.getAmount();
 		}
 		return among;
+	}
+	protected void loadGenLocation() {
+		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
+		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
+		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
+		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
+
+		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
+		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
+		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
+		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 	}
 
 	@Override
