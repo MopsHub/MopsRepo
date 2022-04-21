@@ -2257,15 +2257,15 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 	
 	protected void loadGenLocation() {
-		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
-		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
-		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
-		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
+		this.genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
+		this.genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
+		this.genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
+		this.genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
 
-		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
-		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
-		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
-		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
+		this.genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
+		this.genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
+		this.genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
+		this.genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 	}
 
 	@Override
