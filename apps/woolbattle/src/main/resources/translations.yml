@@ -88,7 +88,7 @@ woolbattle:
       rus: |
         &e----------------------------------------------------
                              &6&lWoolBattle
-             &eИгра началась! Копайте шерсть чтобы строится к другим
+            &eИгра началась! Копайте шерсть чтобы строится к другим
              &eи использовать способности. Ваша цель - сделать §kills§
              &eубийств. Так же вы можете захыватывать генераторы
              &e(угловые острова) чтобы получать пассивную шерсть,
@@ -98,7 +98,7 @@ woolbattle:
       eng: |
         &e----------------------------------------------------
                              &6&lWoolBattle
-             &eGame has started! Mine wool, it's used for bridging
+            &eGame has started! Mine wool, it's used for bridging
              &eand using abilities. Your goal is to get §kills§ kills.
              &eYou can also capture generators (corner islands) to
              &eget passive wool, just replace all the wool with
