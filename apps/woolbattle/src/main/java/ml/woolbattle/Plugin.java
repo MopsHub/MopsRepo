@@ -70,7 +70,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	boolean gensLocked = false;
 
-	HashMap<Player, PlayerInventory> spectatorInventory = new HashMap<>();
+	HashMap<Player, ItemStack[]> savedInventory = new HashMap<>();
 
 	List<Block> genAblocks, genBblocks, genCblocks, genDblocks;
 
@@ -224,10 +224,15 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						}
 
 						if(!hardmode) {
+							ItemStack[] savedInventory = new ItemStack[0];
+
 							if(!player.getScoreboardTags().contains("spectator")) {
-								spectatorInventory.put(player, player.getInventory());
+								savedInventory = player.getInventory().getContents();
 								player.getInventory().clear();
 							}
+
+							ItemStack[] finalSavedInventory = savedInventory;
+
 							player.addScoreboardTag("spectator");
 							player.hidePlayer(player);
 							player.setAllowFlight(true);
@@ -274,13 +279,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 										player.setFlying(false);
 										player.removeScoreboardTag("spectator");
 
-										try {
-											for(int n = 0; n < 36; ++n) {
-												ItemStack stack = spectatorInventory.get(player).getItem(n);
-												if(stack == null) continue;
-												player.getInventory().setItem(n, stack);
-											}
-										} catch (Throwable ignored) {}
+
+										player.getInventory().setContents(finalSavedInventory);
+										player.updateInventory();
+
 
 										player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 2);
 
