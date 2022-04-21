@@ -600,7 +600,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
 							Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
 						}
-
 						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + Acopy).setScore(5);
 						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + Bcopy).setScore(4);
 						fakekills.getScore(ChatColor.WHITE + "Генератор C - " + Ccopy).setScore(3);
