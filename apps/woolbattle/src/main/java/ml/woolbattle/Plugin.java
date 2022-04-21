@@ -146,6 +146,21 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		this.connectToIP = config.getString("ip");
 
+		mainworld = Bukkit.getServer().getWorlds().get(0);
+		manager = Bukkit.getScoreboardManager();
+		mainboard = manager.getMainScoreboard();
+		newboard = manager.getNewScoreboard();
+
+		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
+		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
+		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
+		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
+
+		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
+		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
+		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
+		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 
@@ -171,22 +186,22 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 						if (teamname.contains("red")) {
 							logger.info(player.getName() + "'s team: " + "red");
-							woolItem = new ItemStack(Material.RED_WOOL);
+							woolItem = new ItemStack(Material.RED_WOOL, 1296);
 							woolName = getByLang(lang, "woolbattle.redWool");
 						}
 						else if (teamname.contains("yellow")) {
 							logger.info(player.getName() + "'s team: " + "yellow");
-							woolItem = new ItemStack(Material.RED_WOOL);
+							woolItem = new ItemStack(Material.RED_WOOL, 1296);
 							woolName = getByLang(lang, "yellowWool");
 						}
 						else if (teamname.contains("green")) {
 							logger.info(player.getName() + "'s team: " + "green");
-							woolItem = new ItemStack(Material.LIME_WOOL);
+							woolItem = new ItemStack(Material.LIME_WOOL, 1296);
 							woolName = getByLang(lang, "greenWool");
 						}
 						else if (teamname.contains("blue")) {
 							logger.info(player.getName() + "'s team: " + "blue");
-							woolItem = new ItemStack(Material.LIGHT_BLUE_WOOL);
+							woolItem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1296);
 							woolName = getByLang(lang, "blueWool");
 						} else {
 							logger.warning("No team found for " + player.getName() + "\ntags: " + player.getScoreboardTags() + "\nteam name: " + player.getScoreboard().getPlayerTeam(player).getName());
@@ -228,6 +243,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							if(!player.getScoreboardTags().contains("spectator")) {
 								savedInventory = player.getInventory().getContents();
 								player.getInventory().clear();
+								player.getInventory().remove(woolItem);
 							}
 
 							ItemStack[] finalSavedInventory = savedInventory;
@@ -423,21 +439,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			genConquerChecks(genCblocks, genCblocksLONG, "C");
 			genConquerChecks(genDblocks, genDblocksLONG, "D");
 		}, 80L, 20L);
-
-		mainworld = Bukkit.getServer().getWorlds().get(0);
-		manager = Bukkit.getScoreboardManager();
-		mainboard = manager.getMainScoreboard();
-		newboard = manager.getNewScoreboard();
-
-		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
-		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
-		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
-		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
-
-		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
-		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
-		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
-		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
 	}
 
 	final int[] minutes = {0};
@@ -621,7 +622,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
 						fakekills.getScore(ChatColor.DARK_GRAY + connectToIP + ":" + Bukkit.getPort()).setScore(0);
 
-						player.setScoreboard(fakekills.getScoreboard());
+						for (Player p : getServer().getOnlinePlayers()) {
+							p.setScoreboard(fakekills.getScoreboard());
+						}
 
 					}
 				}, 160L, 20L);
