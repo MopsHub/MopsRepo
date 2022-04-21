@@ -496,7 +496,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						newboard = manager.getNewScoreboard();
 						Objective fakekills = newboard.registerNewObjective("fakekills", "dummy", Component.text("WoolBattle", NamedTextColor.GOLD, TextDecoration.BOLD));
 						fakekills.setDisplaySlot(DisplaySlot.SIDEBAR);
-						fakekills.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "WoolBattle");
 
 						seconds[0] = seconds[0] + 1;
 
