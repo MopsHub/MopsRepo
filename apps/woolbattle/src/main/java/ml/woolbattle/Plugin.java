@@ -68,8 +68,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	boolean gensLocked = false;
 
-	HashMap<Player, ItemStack[]> savedInventory = new HashMap<>();
-
 	List<Block> genAblocks, genBblocks, genCblocks, genDblocks;
 
 
@@ -370,8 +368,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					player.setAllowFlight(player.getGameMode() != GameMode.SURVIVAL);
 				}
 
-				ChatColor chatcolor = ChatColor.WHITE;
-				Color color = Color.fromBGR(255, 255, 255);
+				ChatColor chatcolor = ChatColor.GRAY;
+				Color color = Color.fromRGB(170, 170, 170);
 
 				if (teamname.contains("red")) {
 					chatcolor = ChatColor.RED;
@@ -589,16 +587,16 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						resetGeneratorText(player);
 
 
-						String Acopy = genAstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-						String Bcopy = genBstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-						String Ccopy = genCstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-						String Dcopy = genDstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+						TextComponent Acopy = getByLang(lang, genAstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+						TextComponent Bcopy = getByLang(lang, genBstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+						TextComponent Ccopy = getByLang(lang, genCstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+						TextComponent Dcopy = getByLang(lang, genDstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
 
 						if(gensLocked) {
-							Acopy = Acopy + ChatColor.GRAY + " ⚠";
-							Bcopy = Bcopy + ChatColor.GRAY + " ⚠";
-							Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
-							Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
+							Acopy = Acopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
+							Bcopy = Bcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
+							Ccopy = Ccopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
+							Dcopy = Dcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
 						}
 
 						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + Acopy).setScore(5);
@@ -1581,16 +1579,16 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		fakekills.getScoreboard().resetScores(ChatColor.GOLD + " ");
 
-		String Acopy = genAstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-		String Bcopy = genBstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-		String Ccopy = genCstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-		String Dcopy = genDstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+		TextComponent Acopy = getByLang(lang, genAstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+		TextComponent Bcopy = getByLang(lang, genBstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+		TextComponent Ccopy = getByLang(lang, genCstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+		TextComponent Dcopy = getByLang(lang, genDstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
 
 		if(gensLocked) {
-			Acopy = Acopy + ChatColor.GRAY + " ⚠";
-			Bcopy = Bcopy + ChatColor.GRAY + " ⚠";
-			Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
-			Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
+			Acopy = Acopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
+			Bcopy = Bcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
+			Ccopy = Ccopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
+			Dcopy = Dcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
 		}
 
 		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
@@ -1867,39 +1865,30 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 	public void resetGeneratorText(Player player) {
 
-		List<String> genStatuses = new ArrayList<>();
+		List<TextComponent> genStatuses = new ArrayList<>();
 
 		//тут типа надо language.getPlayer() ну вы поняли
 
-		genStatuses.add("woolbattle.generator.uncaptured");
-		genStatuses.add("woolbattle.generator.red");
-		genStatuses.add("woolbattle.generator.yellow");
-		genStatuses.add("woolbattle.generator.green");
-		genStatuses.add("woolbattle.generator.blue");
-		for(String genStatus : genStatuses) {
+		genStatuses.add(Component.text("woolbattle.generator.uncaptured"));
+		genStatuses.add(Component.text("woolbattle.generator.red"));
+		genStatuses.add(Component.text("woolbattle.generator.yellow"));
+		genStatuses.add(Component.text("woolbattle.generator.green"));
+		genStatuses.add(Component.text("woolbattle.generator.blue"));
+
+		for(TextComponent genStatus : genStatuses) {
 			Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-			String Acopy = genAstatus; //ТУТ ТИПО БЕРЁТСЯ ЯЗЫК ИГРКОА
-			String Bcopy = genBstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-			String Ccopy = genCstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-			String Dcopy = genDstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus);
 
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy);
+			genStatus.append(Component.text(" ⚠", NamedTextColor.GRAY));
 
-
-			Acopy = Acopy + ChatColor.GRAY + " ⚠";
-			Bcopy = Bcopy + ChatColor.GRAY + " ⚠";
-			Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
-			Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
-
-
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus);
 
 			player.setScoreboard(fakekills.getScoreboard());
 		}
