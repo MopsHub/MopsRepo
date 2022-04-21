@@ -619,8 +619,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
 						fakekills.getScore(ChatColor.DARK_GRAY + connectToIP + ":" + Bukkit.getPort()).setScore(0);
-
-						player.setScoreboard(fakekills.getScoreboard());
+						for (Player p : getServer().getOnlinePlayers()) {
+							if (p.getScoreboardTags().contains("ingame")) {
+								p.setScoreboard(fakekills.getScoreboard());
+							}
+						}
 
 					}
 				}, 160L, 20L);
