@@ -32,6 +32,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.material.Wool;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -1888,7 +1889,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			String Bcopy = genBstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
 			String Ccopy = genCstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
 			String Dcopy = genDstatus; //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
 			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
