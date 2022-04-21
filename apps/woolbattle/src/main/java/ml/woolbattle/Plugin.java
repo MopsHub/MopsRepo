@@ -28,6 +28,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -77,6 +78,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	private final HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
 
 
+	ScoreboardManager manager;
+	Scoreboard mainboard;
+	Scoreboard newboard;
 
 
 	List<Player> redTeamPlayers, yellowTeamPlayers, greenTeamPlayers, blueTeamPlayers = new ArrayList<>();
@@ -89,11 +93,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	String connectToIP = "mops.ml";
 
-	ScoreboardManager manager;
-	Scoreboard mainboard;
-	Scoreboard newboard;
 
-	
 
 	@Override
 	public void onEnable() {
@@ -148,10 +148,20 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		manager = Bukkit.getScoreboardManager();
 		mainboard = manager.getMainScoreboard();
 		newboard = manager.getNewScoreboard();
-		loadGenLocation();
-		
+
+		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
+		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
+		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
+		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
+
+		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
+		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
+		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
+		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
+
 
 				Team team = mainboard.getPlayerTeam(player);
 				assert team != null;
@@ -203,6 +213,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						ItemMeta woolMeta = woolItem.getItemMeta();
 						woolMeta.displayName(woolName);
 						woolItem.setItemMeta(woolMeta);
+						woolItem.setAmount(200000);
+						player.getInventory().removeItem(woolItem);
 
 						switch (Objects.requireNonNull(lastdamage).getScore(player.getName()).getScore()) {
 							case 1 -> {
@@ -609,9 +621,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						fakekills.getScore(ChatColor.DARK_GRAY + connectToIP + ":" + Bukkit.getPort()).setScore(0);
 
 						for (Player p : getServer().getOnlinePlayers()) {
-							if (p.getScoreboardTags().contains("ingame")) {
-								p.setScoreboard(fakekills.getScoreboard());
-							}
+							p.setScoreboard(fakekills.getScoreboard());
 						}
 
 					}
@@ -1085,108 +1095,108 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				event.setCancelled(true);
 			}
 
-				boolean materialstuff = (type == Material.WHITE_WOOL);
+			boolean materialstuff = (type == Material.WHITE_WOOL);
 
-				if (teamname.contains("red")) {
-					materialstuff = (type == Material.WHITE_WOOL || type == Material.RED_WOOL);
-				}
-				if (teamname.contains("yellow")) {
-					materialstuff = (type == Material.WHITE_WOOL || type == Material.YELLOW_WOOL);
-				}
-				if (teamname.contains("green")) {
-					materialstuff = (type == Material.WHITE_WOOL || type == Material.LIME_WOOL);
-				}
-				if (teamname.contains("blue")) {
-					materialstuff = (type == Material.WHITE_WOOL || type == Material.LIGHT_BLUE_WOOL);
-				}
+			if (teamname.contains("red")) {
+				materialstuff = (type == Material.WHITE_WOOL || type == Material.RED_WOOL);
+			}
+			if (teamname.contains("yellow")) {
+				materialstuff = (type == Material.WHITE_WOOL || type == Material.YELLOW_WOOL);
+			}
+			if (teamname.contains("green")) {
+				materialstuff = (type == Material.WHITE_WOOL || type == Material.LIME_WOOL);
+			}
+			if (teamname.contains("blue")) {
+				materialstuff = (type == Material.WHITE_WOOL || type == Material.LIGHT_BLUE_WOOL);
+			}
 
-				if (!hardmode) {
-					if (genBlockList.contains(block)) {
-						if (block.getType() != Material.WHITE_CONCRETE && block.getType() != Material.RED_CONCRETE && block.getType() != Material.YELLOW_CONCRETE && block.getType() != Material.LIME_CONCRETE && block.getType() != Material.LIGHT_BLUE_CONCRETE) {
-							if (!((teamname.contains("red") && block.getType() == Material.RED_WOOL) || (teamname.contains("yellow") && block.getType() == Material.YELLOW_WOOL) || (teamname.contains("green") && block.getType() == Material.LIME_WOOL) || (teamname.contains("blue") && block.getType() == Material.LIGHT_BLUE_WOOL))) {
-								event.setCancelled(true);
-								block.setType(Material.AIR);
+			if (!hardmode) {
+				if (genBlockList.contains(block)) {
+					if (block.getType() != Material.WHITE_CONCRETE && block.getType() != Material.RED_CONCRETE && block.getType() != Material.YELLOW_CONCRETE && block.getType() != Material.LIME_CONCRETE && block.getType() != Material.LIGHT_BLUE_CONCRETE) {
+						if (!((teamname.contains("red") && block.getType() == Material.RED_WOOL) || (teamname.contains("yellow") && block.getType() == Material.YELLOW_WOOL) || (teamname.contains("green") && block.getType() == Material.LIME_WOOL) || (teamname.contains("blue") && block.getType() == Material.LIGHT_BLUE_WOOL))) {
+							event.setCancelled(true);
+							block.setType(Material.AIR);
 
-								materialstuff = (type == Material.WHITE_WOOL || type == Material.RED_WOOL || type == Material.YELLOW_WOOL || type == Material.LIME_WOOL || type == Material.LIGHT_BLUE_WOOL);
+							materialstuff = (type == Material.WHITE_WOOL || type == Material.RED_WOOL || type == Material.YELLOW_WOOL || type == Material.LIME_WOOL || type == Material.LIGHT_BLUE_WOOL);
 
-							} else {
-								event.setCancelled(true);
-							}
 						} else {
 							event.setCancelled(true);
 						}
+					} else {
+						event.setCancelled(true);
+					}
+				}
+			} else {
+				event.setCancelled(true);
+			}
+
+			if (teamname.contains("red")) {
+				if (materialstuff || ppbs.contains(block)) {
+					if (!player.getInventory().contains(Material.RED_WOOL, 512)) {
+						ItemStack woolitem = new ItemStack(Material.RED_WOOL, 1);
+						ItemMeta woolmeta = woolitem.getItemMeta();
+						woolmeta.displayName(getByLang(lang, "woolbattle.redWool"));
+						woolitem.setItemMeta(woolmeta);
+						player.getInventory().addItem(woolitem);
+					} else {
+						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
 					}
 				} else {
-					event.setCancelled(true);
-				}
-
-				if (teamname.contains("red")) {
-					if (materialstuff || ppbs.contains(block)) {
-						if (!player.getInventory().contains(Material.RED_WOOL, 512)) {
-							ItemStack woolitem = new ItemStack(Material.RED_WOOL, 1);
-							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.displayName(getByLang(lang, "woolbattle.redWool"));
-							woolitem.setItemMeta(woolmeta);
-							player.getInventory().addItem(woolitem);
-						} else {
-							player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
-						}
-					} else {
-						player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
-					}
-				}
-				if (teamname.contains("yellow")) {
-					if (materialstuff || ppbs.contains(block)) {
-						if (!player.getInventory().contains(Material.YELLOW_WOOL, 512)) {
-							ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, 1);
-							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.displayName(getByLang(lang, "woolbattle.yellowWool"));
-							woolitem.setItemMeta(woolmeta);
-							player.getInventory().addItem(woolitem);
-						} else {
-							player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
-						}
-					} else {
-						player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
-					}
-				}
-				if (teamname.contains("green")) {
-					if (materialstuff || ppbs.contains(block)) {
-						if (!player.getInventory().contains(Material.LIME_WOOL, 512)) {
-							ItemStack woolitem = new ItemStack(Material.LIME_WOOL, 1);
-							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.displayName(getByLang(lang, "woolbattle.greenWool"));
-							woolitem.setItemMeta(woolmeta);
-							player.getInventory().addItem(woolitem);
-						} else {
-							player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
-						}
-					} else {
-						player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
-					}
-				}
-				if (teamname.contains("blue")) {
-					if (materialstuff || ppbs.contains(block)) {
-						if (!player.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
-							ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
-							ItemMeta woolmeta = woolitem.getItemMeta();
-							woolmeta.displayName(getByLang(lang, "woolbattle.blueWool"));
-							woolitem.setItemMeta(woolmeta);
-							player.getInventory().addItem(woolitem);
-						} else {
-							player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
-						}
-					} else {
-						player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
-					}
+					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
 				}
 			}
-			if (ppbs.contains(block)) {
-				block.setType(Material.AIR);
+			if (teamname.contains("yellow")) {
+				if (materialstuff || ppbs.contains(block)) {
+					if (!player.getInventory().contains(Material.YELLOW_WOOL, 512)) {
+						ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, 1);
+						ItemMeta woolmeta = woolitem.getItemMeta();
+						woolmeta.displayName(getByLang(lang, "woolbattle.yellowWool"));
+						woolitem.setItemMeta(woolmeta);
+						player.getInventory().addItem(woolitem);
+					} else {
+						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
+					}
+				} else {
+					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
+				}
 			}
-
-			updateLevels(player);
+			if (teamname.contains("green")) {
+				if (materialstuff || ppbs.contains(block)) {
+					if (!player.getInventory().contains(Material.LIME_WOOL, 512)) {
+						ItemStack woolitem = new ItemStack(Material.LIME_WOOL, 1);
+						ItemMeta woolmeta = woolitem.getItemMeta();
+						woolmeta.displayName(getByLang(lang, "woolbattle.greenWool"));
+						woolitem.setItemMeta(woolmeta);
+						player.getInventory().addItem(woolitem);
+					} else {
+						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
+					}
+				} else {
+					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
+				}
+			}
+			if (teamname.contains("blue")) {
+				if (materialstuff || ppbs.contains(block)) {
+					if (!player.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
+						ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
+						ItemMeta woolmeta = woolitem.getItemMeta();
+						woolmeta.displayName(getByLang(lang, "woolbattle.blueWool"));
+						woolitem.setItemMeta(woolmeta);
+						player.getInventory().addItem(woolitem);
+					} else {
+						player.showTitle(genTitle(lang, null, "woolLimit", 0, 15, 10));
+					}
+				} else {
+					player.showTitle(genTitle(lang, null, "cantBreak", 0, 15, 10));
+				}
+			}
 		}
+		if (ppbs.contains(block)) {
+			block.setType(Material.AIR);
+		}
+
+		updateLevels(player);
+	}
 
 
 	@EventHandler
@@ -2235,26 +2245,14 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	public static int getAmount(Player arg0, ItemStack arg1) {
 		if (arg1 == null)
 			return 0;
-		int amount = 0;
+		int among = 0;
 		for (int i = 0; i < 36; i++) {
 			ItemStack slot = arg0.getInventory().getItem(i);
 			if (slot == null || !slot.isSimilar(arg1))
 				continue;
-			amount += slot.getAmount();
+			among += slot.getAmount();
 		}
-		return amount;
-	}
-	
-	protected void loadGenLocation() {
-		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
-		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
-		genCblocks = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 2);
-		genDblocks = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 2);
-
-		genAblocksLONG = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 3);
-		genBblocksLONG = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 3);
-		genCblocksLONG = getBlox(new Location(mainworld, -28, 254, 46).getBlock(), 3);
-		genDblocksLONG = getBlox(new Location(mainworld, 46, 254, 46).getBlock(), 3);
+		return among;
 	}
 
 	@Override
