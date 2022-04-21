@@ -28,7 +28,6 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -80,9 +79,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	private final HashMap<Player, BukkitTask> deathmsg = new HashMap<>();
 
 
-	ScoreboardManager manager;
-	Scoreboard mainboard;
-	Scoreboard newboard;
 
 
 	List<Player> redTeamPlayers, yellowTeamPlayers, greenTeamPlayers, blueTeamPlayers = new ArrayList<>();
@@ -94,6 +90,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	boolean testmode = false;
 
 	String connectToIP = "mops.ml";
+
+	ScoreboardManager manager;
+	Scoreboard mainboard;
+	Scoreboard newboard;
 
 	
 
@@ -145,7 +145,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		translator = new Translation(translation, getLogger(), "woolbattle");
 
 		this.connectToIP = config.getString("ip");
-		
+
 		mainworld = Bukkit.getServer().getWorlds().get(0);
 		manager = Bukkit.getScoreboardManager();
 		mainboard = manager.getMainScoreboard();
