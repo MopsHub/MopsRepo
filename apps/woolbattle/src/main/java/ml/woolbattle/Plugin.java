@@ -2266,8 +2266,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	@Override
 	public TextComponent getByLang(String lang, String string) {
 		getLogger().info("WoolBattle:Plugin | getByLang: \n" + lang + "\n" + string);
-		TextComponent component = translator.getTranslation(lang, string.replaceFirst("woolbattle.", "")).decoration(TextDecoration.ITALIC, false);
-		return translator.getTranslation(lang, string.replaceFirst("woolbattle.", ""));
+		return translator.getTranslation(lang, string.replaceFirst("woolbattle.", "")).decoration(TextDecoration.ITALIC, false);
 	}
 	@Override
 	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
