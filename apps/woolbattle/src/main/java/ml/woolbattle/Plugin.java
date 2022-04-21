@@ -6,7 +6,6 @@ import ml.mopsutils.Utilities;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
@@ -643,6 +642,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						genStatuses.add(genDstatus);
 
 						for (String genStatus : genStatuses) {
+							if (genStatus == null || genStatus.isBlank()) {
+								genStatus = "woolbattle.generator.uncaptured";
+							}
+
 							if(player1.getScoreboardTags().contains("ingame")) {
 								if (teamname.contains("red")) {
 									if (genStatus.contains("woolbattle.generator.red")) {
@@ -654,8 +657,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 											player1.getInventory().addItem(woolitem);
 										}
 									}
-								}
-								if (teamname.contains("yellow")) {
+								} else if (teamname.contains("yellow")) {
 									if (genStatus.contains("woolbattle.generator.yellow")) {
 										if (!player1.getInventory().contains(Material.YELLOW_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.YELLOW_WOOL, 1);
@@ -665,8 +667,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 											player1.getInventory().addItem(woolitem);
 										}
 									}
-								}
-								if (teamname.contains("green")) {
+								} else if (teamname.contains("green")) {
 									if (genStatus.contains("woolbattle.generator.green")) {
 										if (!player1.getInventory().contains(Material.LIME_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.LIME_WOOL, 1);
@@ -676,8 +677,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 											player1.getInventory().addItem(woolitem);
 										}
 									}
-								}
-								if (teamname.contains("blue")) {
+								} else if (teamname.contains("blue")) {
 									if (genStatus.contains("woolbattle.generator.blue")) {
 										if (!player1.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512)) {
 											ItemStack woolitem = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
