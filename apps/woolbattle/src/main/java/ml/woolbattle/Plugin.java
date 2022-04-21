@@ -6,6 +6,7 @@ import ml.mopsutils.Utilities;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
@@ -2263,12 +2264,13 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	@Override
 	public TextComponent getByLang(String lang, String string) {
 		getLogger().info("WoolBattle:Plugin | getByLang: \n" + lang + "\n" + string);
+		TextComponent component = translator.getTranslation(lang, string.replaceFirst("woolbattle.", "")).decoration(TextDecoration.ITALIC, false);
 		return translator.getTranslation(lang, string.replaceFirst("woolbattle.", ""));
 	}
 	@Override
 	public TextComponent getByLang(String lang, String string, Map<String, String> formatV) {
 		getLogger().info("WoolBattle:Plugin | getByLang: \n" + lang + "\n" + string + "\n" + formatV.toString());
-		return translator.getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV);
+		return translator.getTranslation(lang, string.replaceFirst("woolbattle.", ""), formatV).decoration(TextDecoration.ITALIC, false);
 
 	}
 	public Title genTitle(@NotNull String lang, @Nullable String id, @Nullable String id2nd, int i, int j, int k) {
