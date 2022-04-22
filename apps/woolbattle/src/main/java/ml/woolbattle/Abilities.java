@@ -18,11 +18,9 @@ import java.util.Map;
 import ml.woolbattle.Plugin;
 
 public class Abilities {
-	MopsPlugin plugin;
+	Plugin plugin;
 
-	Plugin woolplugin;
-
-	public Abilities(MopsPlugin pl) {
+	public Abilities(Plugin pl) {
 	this.plugin = pl;
 	}
 
@@ -44,7 +42,7 @@ public class Abilities {
 		item1.setItemMeta(meta1);
 		player1.getInventory().setItem(0, item1);
 
-		woolplugin.shears.add(item1);
+		plugin.shears.add(item1);
 
 		ItemStack item2 = new ItemStack(Material.STICK);
 		ItemMeta meta2 = item2.getItemMeta();
@@ -56,7 +54,7 @@ public class Abilities {
 		item2.setItemMeta(meta2);
 		player1.getInventory().setItem(1, item2);
 
-		woolplugin.explosiveSticks.add(item2);
+		plugin.explosiveSticks.add(item2);
 
 		ItemStack item3 = new ItemStack(Material.SLIME_BALL);
 		ItemMeta meta3 = item3.getItemMeta();
@@ -70,7 +68,7 @@ public class Abilities {
 		item3.setItemMeta(meta3);
 		player1.getInventory().setItem(2, item3);
 
-		woolplugin.slimeballs.add(item3);
+		plugin.slimeballs.add(item3);
 
 		ItemStack item4 = new ItemStack(Material.BOW);
 		ItemMeta meta4 = item4.getItemMeta();
