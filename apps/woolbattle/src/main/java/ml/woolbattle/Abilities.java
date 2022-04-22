@@ -20,7 +20,7 @@ import ml.woolbattle.Plugin;
 public class Abilities {
 	MopsPlugin plugin;
 
-	Plugin woolplugin = new Plugin();
+	Plugin woolplugin;
 
 	public Abilities(MopsPlugin pl) {
 	this.plugin = pl;
