@@ -39,6 +39,34 @@ woolbattle:
       eng: |
         &7Lets you jump in the air. &8(Requires double tapping space)
         &bCost: 16 wool
+  - explosionStaff.name:
+      rus: "&eВзрывная Палка"
+      eng: "&eExplosion Staff"
+  - explosionStaff.lore:
+      rus: |
+        &7Палка, откидывающая тебя назад. &e&lПКМ &r&8(Нужно наводится на блок)
+        &bСтоимость: 40 шерсти
+      eng: |
+        &7Stick, that throws you back. &e&lRIGHT CLICK &r&8(Aim on a block)
+        &bCost: 40 wool
+  - shears.name:
+      rus: "&bНожницы"
+      eng: "&bShears"
+  - shears.lore:
+      rus: |
+        &7Ножницы для копания шерсти и
+        &7скидывания игроков в бездну.
+        &r
+        &bСпособность: &7Убирает блоки
+        &7своего цвета на генераторах. &e&lПКМ
+        &bСтоимость: 6 шерсти за блок
+      eng: |
+        &7Shears for mining wool and
+        &7knocking people in the void.
+        &r
+        &bAbility: &7Removes blocks of
+        &7your color on generators. &e&lRIGHT CLICK
+        &bCost: 6 wool pet block
   - notEnoughWool:
       rus: "&cНедостаточно шерсти!"
       eng: "&cNot enough wool!"

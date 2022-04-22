@@ -15,8 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import ml.woolbattle.Plugin;
+
 public class Abilities {
 	MopsPlugin plugin;
+
+	Plugin woolplugin = new Plugin();
 
 	public Abilities(MopsPlugin pl) {
 	this.plugin = pl;
@@ -25,7 +29,7 @@ public class Abilities {
 	public void startGame(String lang, Teams team, Player player1) {
 		ItemStack item1 = new ItemStack(Material.SHEARS);
 		ItemMeta meta1 = item1.getItemMeta();
-		meta1.setDisplayName(ChatColor.AQUA + "Ножницы");
+		meta1.displayName(plugin.getByLang(lang, "shears.name"));
 		meta1.addEnchant(Enchantment.DIG_SPEED, 5, true);
 		meta1.addEnchant(Enchantment.KNOCKBACK, 2, true);
 		meta1.setUnbreakable(true);
@@ -40,15 +44,19 @@ public class Abilities {
 		item1.setItemMeta(meta1);
 		player1.getInventory().setItem(0, item1);
 
+		woolplugin.shears.add(item1);
+
 		ItemStack item2 = new ItemStack(Material.STICK);
 		ItemMeta meta2 = item2.getItemMeta();
-		meta2.setDisplayName(ChatColor.YELLOW + "Взрывная Палка");
+		meta2.displayName(plugin.getByLang(lang, "explosionStaff.name"));
 		List<String> lore2 = new ArrayList<>();
 		lore2.add(ChatColor.GRAY + "Палка откидывающая тебя назад." + ChatColor.YELLOW + "" + ChatColor.BOLD + " ПКМ" + ChatColor.DARK_GRAY + " (Нужно наводится на блок)");
 		lore2.add(ChatColor.AQUA + "Стоимость: 28 шерсти");
 		meta2.setLore(lore2);
 		item2.setItemMeta(meta2);
 		player1.getInventory().setItem(1, item2);
+
+		woolplugin.explosiveSticks.add(item2);
 
 		ItemStack item3 = new ItemStack(Material.SLIME_BALL);
 		ItemMeta meta3 = item3.getItemMeta();
@@ -61,6 +69,8 @@ public class Abilities {
 		meta3.setLore(lore3);
 		item3.setItemMeta(meta3);
 		player1.getInventory().setItem(2, item3);
+
+		woolplugin.slimeballs.add(item3);
 
 		ItemStack item4 = new ItemStack(Material.BOW);
 		ItemMeta meta4 = item4.getItemMeta();
@@ -98,6 +108,7 @@ public class Abilities {
 		bootsItem.setItemMeta(bootsMeta);
 		player1.getInventory().setItem(36, bootsItem);
 
+		woolplugin.doubleJumpBoots.add(bootsItem);
 
 	}
 }

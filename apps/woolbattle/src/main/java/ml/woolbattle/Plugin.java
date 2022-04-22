@@ -93,6 +93,12 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	String connectToIP = "mops.ml";
 
+	List<ItemStack> explosiveSticks = new ArrayList<>();
+	List<ItemStack> explosiveSticksMK2 = new ArrayList<>();
+	List<ItemStack> platforms = new ArrayList<>();
+	List<ItemStack> slimeballs = new ArrayList<>();
+	List<ItemStack> doubleJumpBoots = new ArrayList<>();
+	List<ItemStack> shears = new ArrayList<>();
 
 
 	@Override
@@ -310,13 +316,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						simulateHardmodeDeath(player);
 						player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_DEATH, 0.8F, 1);
 					}
-				} else if (player.getScoreboardTags().contains("onspawn")) {
-					if (player.getLocation().add(0, -2, 0).getBlock().getType().equals(Material.STRIPPED_WARPED_HYPHAE)) {
-						player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 7, true, false));
-					}
-					if (player.getLocation().add(0, -1, 0).getBlock().getType().equals(Material.STRIPPED_WARPED_HYPHAE)) {
-						player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 7, true, false));
-					}
 				}
 
 				recountTeamMembers();
@@ -369,62 +368,28 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				assert team != null;
 				String teamname = team.getName();
 
-				if (player.getScoreboardTags().contains("onspawn") || !hardmode) {
+				if (!hardmode) {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 7, 100, true, false));
 					player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 7, 100, true, false));
 				} else if(hardmode) {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 60, 1, true, false));
 				}
 
-				if (player.getScoreboardTags().contains("onspawn")) {
-					player.setAllowFlight(player.getGameMode() != GameMode.SURVIVAL);
-				}
 
-				ChatColor chatcolor = ChatColor.GRAY;
-				Color color = Color.fromRGB(170, 170, 170);
+				if(doubleJumpBoots.contains(player.getInventory().getBoots())) {
+					if (player.isOnGround() && !player.getAllowFlight()) {
+						player.setAllowFlight(true);
+					}
+					if (player.isFlying() && player.getGameMode().equals(GameMode.SURVIVAL)) {
+						player.setFlying(false);
 
-				if (teamname.contains("red")) {
-					chatcolor = ChatColor.RED;
-					color = Color.fromRGB(255, 10, 10);
-				} else if (teamname.contains("yellow")) {
-					chatcolor = ChatColor.YELLOW;
-					color = Color.fromRGB(255, 207, 36);
-				} else if (teamname.contains("green")) {
-					chatcolor = ChatColor.GREEN;
-					color = Color.fromRGB(105, 255, 82);
-				} else if (teamname.contains("blue")) {
-					chatcolor = ChatColor.AQUA;
-					color = Color.fromRGB(47, 247, 227);
-				}
+						boolean hasItems = woolRemove(16, player, teamname);
 
-				ItemStack item6 = new ItemStack(Material.LEATHER_BOOTS);
-				LeatherArmorMeta meta6 = (LeatherArmorMeta) item6.getItemMeta();
-				meta6.setDisplayName(chatcolor + "Дабл-Джамп Ботинки");
-				List<String> lore6 = new ArrayList<>();
-				lore6.add(ChatColor.GRAY + "Позволяют прыгать в воздухе. ");
-				lore6.add(ChatColor.DARK_GRAY + "(Нужно нажать пробел дважды в падении)");
-				lore6.add(ChatColor.AQUA + "Стоимость: 16 шерсти");
-				meta6.setUnbreakable(true);
-				meta6.setColor(color);
-				meta6.setLore(lore6);
-				item6.setItemMeta(meta6);
-
-				if (player.getScoreboardTags().contains("ingame")) {
-					if (!player.getScoreboardTags().contains("spectator")) {
-						if (player.isOnGround() && !player.getAllowFlight()) {
-							player.setAllowFlight(true);
-						}
-						if (player.isFlying() && player.getGameMode().equals(GameMode.SURVIVAL)) {
-							player.setFlying(false);
-
-							boolean hasItems = woolRemove(16, player, teamname);
-
-							if (hasItems) {
-								player.setVelocity((player.getEyeLocation().getDirection().multiply(0.9)).add(new Vector(0, 0.45, 0)));
-								player.setAllowFlight(false);
-							} else {
-								player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
-							}
+						if (hasItems) {
+							player.setVelocity((player.getEyeLocation().getDirection().multiply(0.9)).add(new Vector(0, 0.45, 0)));
+							player.setAllowFlight(false);
+						} else {
+							player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 						}
 					}
 				}
@@ -492,6 +457,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				lootGenerator();
 
 				scoreboardTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+					for (Player player1 : getServer().getOnlinePlayers()) {
 
 					if (gameactive) {
 						newboard = manager.getNewScoreboard();
@@ -620,8 +586,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
 						fakekills.getScore(ChatColor.DARK_GRAY + connectToIP + ":" + Bukkit.getPort()).setScore(0);
 
-						for (Player player0 : getServer().getOnlinePlayers()) {
-							player0.setScoreboard(fakekills.getScoreboard());
+
+							player1.setScoreboard(fakekills.getScoreboard());
 						}
 
 					}
@@ -1206,8 +1172,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		try {
 			Player player = event.getPlayer();
 			ItemStack item = Objects.requireNonNull(event.getItem());
-			ItemMeta meta = Objects.requireNonNull(item.getItemMeta());
-			String displayname = Objects.requireNonNull(meta.getDisplayName());
+
 			if (event.getAction() == Action.RIGHT_CLICK_AIR) {
 
 				try {
@@ -1215,7 +1180,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 				} catch (Throwable ignored) {}
 
-				if (displayname.equals(ChatColor.GREEN + "Надувной Батут")) {
+				if (slimeballs.contains(item)) {
 					Team team = mainboard.getPlayerTeam(player);
 					String teamname = team.getName();
 
@@ -1243,7 +1208,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 					}
 				}
-				if (displayname.equals(ChatColor.RED + "Платформа!")) {
+				if (platforms.contains(item)) {
 					Team team = mainboard.getPlayerTeam(player);
 					String teamname = team.getName();
 
@@ -1287,7 +1252,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				}
 			}
 			if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-				if (displayname.equals(ChatColor.YELLOW + "Взрывная Палка")) {
+				if (explosiveSticks.contains(item)) {
 					Team team = mainboard.getPlayerTeam(player);
 					String teamname = team.getName();
 
@@ -1314,7 +1279,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					} else {
 						player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 					}
-				} else if (displayname.equals(ChatColor.YELLOW + "Взрывная Палка (T2)")) {
+				} else if (explosiveSticksMK2.contains(item)) {
 					Team team = mainboard.getPlayerTeam(player);
 					String teamname = team.getName();
 
@@ -1342,7 +1307,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					} else {
 						player.sendActionBar(Component.text(ChatColor.RED + "Недостаточно шерсти!"));
 					}
-				} else if(displayname.equals(ChatColor.AQUA + "Ножницы")) {
+				} else if(shears.contains(item)) {
 					Block block = event.getClickedBlock();
 					if(genAblocks.contains(block) || genBblocks.contains(block) || genCblocks.contains(block) || genDblocks.contains(block)) {
 						Team team = mainboard.getPlayerTeam(player);
@@ -1491,6 +1456,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				loot1meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
+
+				platforms.add(loot1item);
 			}
 			case 7 -> {
 				loot1item.setType(Material.ENDER_PEARL);
@@ -1530,6 +1497,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				loot1meta.setLore(loot1lore);
 				loot1item.setItemMeta(loot1meta);
 				loot1item.setAmount(1);
+
+				explosiveSticksMK2.add(loot1item);
 			}
 		}
 		return loot1item;
@@ -1942,6 +1911,13 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		for (Player player1 : Bukkit.getOnlinePlayers()) {
 			clearScoreboard(player1);
 		}
+
+		shears.clear();
+		explosiveSticks.clear();
+		platforms.clear();
+		explosiveSticksMK2.clear();
+		slimeballs.clear();
+		doubleJumpBoots.clear();
 	}
 
 	public void winningBroadcast(int winner) {
