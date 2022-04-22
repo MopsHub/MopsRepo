@@ -106,7 +106,7 @@ public class Abilities {
 		bootsItem.setItemMeta(bootsMeta);
 		player1.getInventory().setItem(36, bootsItem);
 
-		woolplugin.doubleJumpBoots.add(bootsItem);
+		plugin.doubleJumpBoots.add(bootsItem);
 
 	}
 }
