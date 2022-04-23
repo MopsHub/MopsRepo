@@ -98,20 +98,20 @@ woolbattle:
       rus: "Победили!"
       eng: "Won!"
   - team.RED:
-      rus: "&lКРАСНЫЕ"
-      eng: "&lRED"
+      rus: "&c&lКРАСНЫЕ"
+      eng: "&c&lRED"
   - team.YELLOW:
-      rus: "&lЖЁЛТЫЕ"
-      eng: "&lYELLOW"
+      rus: "&e&lЖЁЛТЫЕ"
+      eng: "&e&lYELLOW"
   - team.GREEN:
-      rus: "&lЗЕЛЁНЫЕ"
-      eng: "&lGREEN"
+      rus: "&a&lЗЕЛЁНЫЕ"
+      eng: "&a&lGREEN"
   - team.BLUE:
-      rus: "&lСИНИЕ"
-      eng: "&lBLUE"
+      rus: "&b&lСИНИЕ"
+      eng: "&b&lBLUE"
   - team.Nobody:
-      rus: "&8Никто не"
-      eng: "Nobody"
+      rus: "&7Никто не"
+      eng: "&7Nobody"
   - onStartMessage:
       rus: |
         &e----------------------------------------------------

@@ -597,7 +597,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						}
 
 					}
-				}, 160L, 20L);
+				}, 0L, 20L);
 
 				Bukkit.getScheduler().cancelTask(generatorTask);
 
