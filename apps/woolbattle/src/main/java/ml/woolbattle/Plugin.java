@@ -466,7 +466,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					for (Player player1 : getServer().getOnlinePlayers()) {
 
 					if (gameactive) {
-
+						newboard = manager.getNewScoreboard();
 						Objective fakekills = newboard.registerNewObjective("fakekills", "dummy", Component.text("WoolBattle", NamedTextColor.GOLD, TextDecoration.BOLD));
 						fakekills.setDisplaySlot(DisplaySlot.SIDEBAR);
 
