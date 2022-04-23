@@ -582,10 +582,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							Dcopy = Dcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
 						}
 
-						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + Acopy).setScore(5);
-						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + Bcopy).setScore(4);
-						fakekills.getScore(ChatColor.WHITE + "Генератор C - " + Ccopy).setScore(3);
-						fakekills.getScore(ChatColor.WHITE + "Генератор D - " + Dcopy).setScore(2);
+						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + Acopy.content()).setScore(5);
+						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + Bcopy.content()).setScore(4);
+						fakekills.getScore(ChatColor.WHITE + "Генератор C - " + Ccopy.content()).setScore(3);
+						fakekills.getScore(ChatColor.WHITE + "Генератор D - " + Dcopy.content()).setScore(2);
 
 
 						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
@@ -1577,10 +1577,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			Dcopy = Dcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
 		}
 
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy);
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy.content());
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy.content());
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy.content());
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy.content());
 
 		Bukkit.getScheduler().cancelTask(scoreboardTask);
 
@@ -1866,17 +1866,17 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 			Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0.content());
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0.content());
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0.content());
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0.content());
 
 			genStatus0.append(Component.text(" ⚠", NamedTextColor.GRAY));
 
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0);
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0.content());
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0.content());
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0.content());
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0.content());
 
 			player.setScoreboard(fakekills.getScoreboard());
 		}
