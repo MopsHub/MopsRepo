@@ -83,7 +83,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	ScoreboardManager manager;
 	Scoreboard mainboard;
-	private final HashMap<Player, Scoreboard> newboard0 = new HashMap<>();
+	Scoreboard newboard;
 
 
 	List<Player> redTeamPlayers, yellowTeamPlayers, greenTeamPlayers, blueTeamPlayers = new ArrayList<>();
@@ -103,6 +103,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	List<ItemStack> doubleJumpBoots = new ArrayList<>();
 	List<ItemStack> shears = new ArrayList<>();
 
+	HashMap<Player, Objective> fakekills0 = new HashMap<>();
 
 	@Override
 	public void onEnable() {
@@ -156,6 +157,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		mainworld = Bukkit.getServer().getWorlds().get(0);
 		manager = Bukkit.getScoreboardManager();
 		mainboard = manager.getMainScoreboard();
+		newboard = manager.getNewScoreboard();
 
 		genAblocks = getBlox(new Location(mainworld, 46, 254, -28).getBlock(), 2);
 		genBblocks = getBlox(new Location(mainworld, -28, 254, -28).getBlock(), 2);
@@ -464,11 +466,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					for (Player player1 : getServer().getOnlinePlayers()) {
 
 					if (gameactive) {
-						newboard0.putIfAbsent(player, manager.getNewScoreboard());
-						Scoreboard newboard = newboard0.get(player1);
+						fakekills0.putIfAbsent(player1, newboard.registerNewObjective("fakekills", "dummy", Component.text("WoolBattle", NamedTextColor.GOLD, TextDecoration.BOLD)));
+						fakekills0.get(player1).setDisplaySlot(DisplaySlot.SIDEBAR);
 
-						Objective fakekills = newboard.registerNewObjective("fakekills", "dummy", Component.text("WoolBattle", NamedTextColor.GOLD, TextDecoration.BOLD));
-						fakekills.setDisplaySlot(DisplaySlot.SIDEBAR);
+						Objective fakekills = fakekills0.get(player1);
 
 						seconds[0] = seconds[0] + 1;
 
@@ -597,7 +598,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						}
 
 					}
-				}, 160L, 20L);
+				}, 0L, 20L);
 
 				Bukkit.getScheduler().cancelTask(generatorTask);
 
