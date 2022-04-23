@@ -65,8 +65,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	int requiredKills = 0;
 
-	String genAstatus, genBstatus, genCstatus, genDstatus = "woolbattle.generator.uncaptured";
-
 	boolean gensLocked = false;
 
 	List<Block> genAblocks, genBblocks, genCblocks, genDblocks;
@@ -100,6 +98,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	List<ItemStack> doubleJumpBoots = new ArrayList<>();
 	List<ItemStack> shears = new ArrayList<>();
 
+	String genAstatus, genBstatus, genCstatus, genDstatus = "woolbattle.generator.uncaptured";
 
 	@Override
 	public void onEnable() {
