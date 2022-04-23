@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -103,7 +104,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	List<ItemStack> doubleJumpBoots = new ArrayList<>();
 	List<ItemStack> shears = new ArrayList<>();
 
-	HashMap<Player, Objective> fakekills0 = new HashMap<>();
 
 	@Override
 	public void onEnable() {
@@ -466,10 +466,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					for (Player player1 : getServer().getOnlinePlayers()) {
 
 					if (gameactive) {
-						fakekills0.putIfAbsent(player1, newboard.registerNewObjective("fakekills", "dummy", Component.text("WoolBattle", NamedTextColor.GOLD, TextDecoration.BOLD)));
-						fakekills0.get(player1).setDisplaySlot(DisplaySlot.SIDEBAR);
-
-						Objective fakekills = fakekills0.get(player1);
+						newboard = manager.getNewScoreboard();
+						Objective fakekills = newboard.registerNewObjective("fakekills", "dummy", Component.text("WoolBattle", NamedTextColor.GOLD, TextDecoration.BOLD));
+						fakekills.setDisplaySlot(DisplaySlot.SIDEBAR);
 
 						seconds[0] = seconds[0] + 1;
 
@@ -572,22 +571,22 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						resetGeneratorText(player);
 
 
-						TextComponent Acopy = getByLang(lang, genAstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-						TextComponent Bcopy = getByLang(lang, genBstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-						TextComponent Ccopy = getByLang(lang, genCstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-						TextComponent Dcopy = getByLang(lang, genDstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+						String Acopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genAstatus));
+						String Bcopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genBstatus));
+						String Ccopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genCstatus));
+						String Dcopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genDstatus));
 
 						if(gensLocked) {
-							Acopy = Acopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
-							Bcopy = Bcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
-							Ccopy = Ccopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
-							Dcopy = Dcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
+							Acopy = Acopy + ChatColor.GRAY + " ⚠";
+							Bcopy = Bcopy + ChatColor.GRAY + " ⚠";
+							Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
+							Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
 						}
 
-						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + Acopy.toString()).setScore(5);
-						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + Bcopy.toString()).setScore(4);
-						fakekills.getScore(ChatColor.WHITE + "Генератор C - " + Ccopy.toString()).setScore(3);
-						fakekills.getScore(ChatColor.WHITE + "Генератор D - " + Dcopy.toString()).setScore(2);
+						fakekills.getScore(ChatColor.WHITE + "Генератор A - " + Acopy).setScore(5);
+						fakekills.getScore(ChatColor.WHITE + "Генератор B - " + Bcopy).setScore(4);
+						fakekills.getScore(ChatColor.WHITE + "Генератор C - " + Ccopy).setScore(3);
+						fakekills.getScore(ChatColor.WHITE + "Генератор D - " + Dcopy).setScore(2);
 
 
 						fakekills.getScore(ChatColor.YELLOW + " ").setScore(1);
@@ -598,7 +597,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						}
 
 					}
-				}, 0L, 20L);
+				}, 160L, 20L);
 
 				Bukkit.getScheduler().cancelTask(generatorTask);
 
@@ -1567,22 +1566,22 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		fakekills.getScoreboard().resetScores(ChatColor.GOLD + " ");
 
-		TextComponent Acopy = getByLang(lang, genAstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-		TextComponent Bcopy = getByLang(lang, genBstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-		TextComponent Ccopy = getByLang(lang, genCstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
-		TextComponent Dcopy = getByLang(lang, genDstatus); //ТУТ ТИПО ТОЖЕ БЕРЁТСЯ ЯЗЫК ИГРКОА
+		String Acopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genAstatus));
+		String Bcopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genBstatus));
+		String Ccopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genCstatus));
+		String Dcopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genDstatus));
 
 		if(gensLocked) {
-			Acopy = Acopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
-			Bcopy = Bcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
-			Ccopy = Ccopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
-			Dcopy = Dcopy.append(Component.text(" ⚠", NamedTextColor.GRAY));
+			Acopy = Acopy + ChatColor.GRAY + " ⚠";
+			Bcopy = Bcopy + ChatColor.GRAY + " ⚠";
+			Ccopy = Ccopy + ChatColor.GRAY + " ⚠";
+			Dcopy = Dcopy + ChatColor.GRAY + " ⚠";
 		}
 
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy.toString());
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy.toString());
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy.toString());
-		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy.toString());
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + Acopy);
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
+		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy);
 
 		Bukkit.getScheduler().cancelTask(scoreboardTask);
 
@@ -1864,21 +1863,21 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		genStatuses.add("woolbattle.generator.blue");
 
 		for(String genStatus : genStatuses) {
-			TextComponent genStatus0 = getByLang(lang, genStatus);
+			String genStatus0 = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genStatus));
 
 			Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0.toString());
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0.toString());
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0.toString());
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0.toString());
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0);
 
-			genStatus0.append(Component.text(" ⚠", NamedTextColor.GRAY));
+			genStatus0 = genStatus0 + ChatColor.GRAY + " ⚠";
 
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0.toString());
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0.toString());
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0.toString());
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0.toString());
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор A - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + genStatus0);
+			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + genStatus0);
 
 			player.setScoreboard(fakekills.getScoreboard());
 		}
