@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -29,9 +28,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -571,10 +568,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						resetGeneratorText(player);
 
 
-						String Acopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genAstatus));
-						String Bcopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genBstatus));
-						String Ccopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genCstatus));
-						String Dcopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genDstatus));
+						String Acopy = getGeneratorChatColor(genAstatus) + getByLang(lang, genAstatus).content();
+						String Bcopy = getGeneratorChatColor(genBstatus) + getByLang(lang, genBstatus).content();
+						String Ccopy = getGeneratorChatColor(genCstatus) + getByLang(lang, genCstatus).content();
+						String Dcopy = getGeneratorChatColor(genDstatus) + getByLang(lang, genDstatus).content();
 
 						if(gensLocked) {
 							Acopy = Acopy + ChatColor.GRAY + " ⚠";
@@ -1566,10 +1563,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		fakekills.getScoreboard().resetScores(ChatColor.GOLD + " ");
 
-		String Acopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genAstatus));
-		String Bcopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genBstatus));
-		String Ccopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genCstatus));
-		String Dcopy = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genDstatus));
+		String Acopy = getGeneratorChatColor(genAstatus) + getByLang(lang, genAstatus).content();
+		String Bcopy = getGeneratorChatColor(genBstatus) + getByLang(lang, genBstatus).content();
+		String Ccopy = getGeneratorChatColor(genCstatus) + getByLang(lang, genCstatus).content();
+		String Dcopy = getGeneratorChatColor(genDstatus) + getByLang(lang, genDstatus).content();
 
 		if(gensLocked) {
 			Acopy = Acopy + ChatColor.GRAY + " ⚠";
@@ -1863,7 +1860,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		genStatuses.add("woolbattle.generator.blue");
 
 		for(String genStatus : genStatuses) {
-			String genStatus0 = PlainTextComponentSerializer.plainText().serialize(getByLang(lang, genStatus));
+			String genStatus0 = getGeneratorChatColor(genStatus) + getByLang(lang, genStatus).content();
 
 			Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
@@ -2233,6 +2230,30 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			among += slot.getAmount();
 		}
 		return among;
+	}
+
+	public ChatColor getGeneratorChatColor(String string) {
+		ChatColor color = ChatColor.DARK_GRAY;
+
+		switch (string) {
+			case ("woolbattle.generator.uncaptured") :
+				color = ChatColor.GRAY;
+				break;
+			case ("woolbattle.generator.red") :
+				color = ChatColor.RED;
+				break;
+			case ("woolbattle.generator.yellow") :
+				color = ChatColor.YELLOW;
+				break;
+			case ("woolbattle.generator.green") :
+				color = ChatColor.GREEN;
+				break;
+			case ("woolbattle.generator.blue") :
+				color = ChatColor.AQUA;
+				break;
+		}
+
+		return color;
 	}
 
 	@Override
