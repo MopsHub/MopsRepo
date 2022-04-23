@@ -362,6 +362,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			}
 		}, 80L, 5L);
 
+		// зщазщвазпшвщ
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 				Team team = mainboard.getPlayerTeam(player);
