@@ -30,15 +30,6 @@ commands:
   cubicstuff:
     description: ""
     usage: /cubicstuff
-  spawn:
+  addkills:
     description: ""
-    usage: /spawn
-  hub:
-    description: ""
-    usage: /hub
-  lobby:
-    description: ""
-    usage: /lobby
-  l:
-    description: ""
-    usage: /l
+    usage: /addkills

@@ -717,6 +717,40 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				player.sendMessage("testmode был изменён на " + testmode);
 				return true;
 			}
+			if(commandName.equals("addkills")) {
+				try {
+					switch (args[0]) {
+						case "red":
+							redkills++;
+							break;
+						case "yellow":
+							yellowkills++;
+							break;
+						case "green":
+							greenkills++;
+							break;
+						case "blue":
+							bluekills++;
+							break;
+					}
+				} catch (ArrayIndexOutOfBoundsException error) {
+					String teamname = mainboard.getPlayerTeam(player).getName();
+					switch (teamname) {
+						case "red":
+							redkills++;
+							break;
+						case "yellow":
+							yellowkills++;
+							break;
+						case "green":
+							greenkills++;
+							break;
+						case "blue":
+							bluekills++;
+							break;
+					}
+				}
+			}
 			if (commandName.equals("cubicstuff")) {
 				int radius = Integer.parseInt(args[0]);
 				Material material = Material.valueOf(args[1]);
