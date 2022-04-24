@@ -552,10 +552,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						String greenyourteam = "";
 						String blueyourteam = "";
 
-						if(teamname.contains("red")) { redyourteam = you; player1.sendMessage("вау чел ты в красной команде");}
-						if(teamname.contains("yellow")) { yellowyourteam = you; }
-						if(teamname.contains("green")) { greenyourteam = you; }
-						if(teamname.contains("blue")) { blueyourteam = you; }
+						if(teamname.contains("red")) { redyourteam = redyourteam + you;}
+						if(teamname.contains("yellow")) { yellowyourteam = yellowyourteam + you; }
+						if(teamname.contains("green")) { greenyourteam = greenyourteam + you; }
+						if(teamname.contains("blue")) { blueyourteam = blueyourteam + you; }
 
 
 						fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1) + redyourteam);
