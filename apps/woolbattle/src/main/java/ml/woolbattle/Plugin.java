@@ -569,10 +569,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
 						}
 
-						fakekills.getScore(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + redkills + redyourteam).setScore(12);
-						fakekills.getScore(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills + yellowyourteam).setScore(11);
-						fakekills.getScore(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills + greenyourteam).setScore(10);
-						fakekills.getScore(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills + blueyourteam).setScore(9);
+						fakekills.getScore(getStringByLang(lang, "kills.red") + ChatColor.WHITE + ": " + ChatColor.RED + redkills + redyourteam).setScore(12);
+						fakekills.getScore(getStringByLang(lang, "kills.yellow") + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills + yellowyourteam).setScore(11);
+						fakekills.getScore(getStringByLang(lang, "kills.green") + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills + greenyourteam).setScore(10);
+						fakekills.getScore(getStringByLang(lang, "kills.blue") + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills + blueyourteam).setScore(9);
 
 
 						fakekills.getScore(ChatColor.RED + " ").setScore(8);
@@ -586,10 +586,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						resetGeneratorText(player);
 
 
-						String Acopy = getGeneratorChatColor(genAstatus) + getByLang(lang, genAstatus).content();
-						String Bcopy = getGeneratorChatColor(genBstatus) + getByLang(lang, genBstatus).content();
-						String Ccopy = getGeneratorChatColor(genCstatus) + getByLang(lang, genCstatus).content();
-						String Dcopy = getGeneratorChatColor(genDstatus) + getByLang(lang, genDstatus).content();
+						String Acopy = getStringByLang(lang, genAstatus);
+						String Bcopy = getStringByLang(lang, genBstatus);
+						String Ccopy = getStringByLang(lang, genCstatus);
+						String Dcopy = getStringByLang(lang, genDstatus);
 
 						if(gensLocked) {
 							Acopy = Acopy + ChatColor.GRAY + " ⚠";
@@ -1596,23 +1596,23 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	public void clearScoreboard(Player player) {
 		Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-		String rawyou = getByLang(lang, "kills.you").content();
-		String you = " " + ChatColor.GRAY + rawyou;
+		String you = getStringByLang(lang, "kills.you");
 
-		String redyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("red")) { redyourteam = you; }
-		String yellowyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("yellow")) { yellowyourteam = you; }
-		String greenyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("green")) { greenyourteam = you; }
-		String blueyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("blue")) { blueyourteam = you; }
+		String redyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("red")) { redyourteam = " " + you; }
+		String yellowyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("yellow")) { yellowyourteam = " " + you; }
+		String greenyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("green")) { greenyourteam = " " + you; }
+		String blueyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("blue")) { blueyourteam = " " + you; }
+		String comma = ChatColor.WHITE + ": ";
 
-		fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills) + redyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills) + yellowyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills) + greenyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills) + blueyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + comma + ChatColor.RED + (redkills) + redyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + comma + ChatColor.YELLOW + (yellowkills) + yellowyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + comma + ChatColor.GREEN + (greenkills) + greenyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + comma + ChatColor.AQUA + (bluekills) + blueyourteam);
 
-		fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills-1) + redyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills-1) + yellowyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills-1) + greenyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills-1) + blueyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + comma + ChatColor.RED + (redkills-1) + redyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + comma + ChatColor.YELLOW + (yellowkills-1) + yellowyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + comma + ChatColor.GREEN + (greenkills-1) + greenyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + comma + ChatColor.AQUA + (bluekills-1) + blueyourteam);
 
 
 		fakekills.getScoreboard().resetScores(ChatColor.RED + " ");
@@ -1632,10 +1632,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		fakekills.getScoreboard().resetScores(ChatColor.GOLD + " ");
 
-		String Acopy = getGeneratorChatColor(genAstatus) + getByLang(lang, genAstatus).content();
-		String Bcopy = getGeneratorChatColor(genBstatus) + getByLang(lang, genBstatus).content();
-		String Ccopy = getGeneratorChatColor(genCstatus) + getByLang(lang, genCstatus).content();
-		String Dcopy = getGeneratorChatColor(genDstatus) + getByLang(lang, genDstatus).content();
+		String Acopy = getStringByLang(lang, genAstatus);
+		String Bcopy = getStringByLang(lang, genBstatus);
+		String Ccopy = getStringByLang(lang, genCstatus);
+		String Dcopy = getStringByLang(lang, genDstatus);
 
 		if(gensLocked) {
 			Acopy = Acopy + ChatColor.GRAY + " ⚠";
@@ -1929,7 +1929,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		genStatuses.add("woolbattle.generator.blue");
 
 		for(String genStatus : genStatuses) {
-			String genStatus0 = getGeneratorChatColor(genStatus) + getByLang(lang, genStatus).content();
+			String genStatus0 = getStringByLang(lang, genStatus);
 
 			Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
@@ -2023,25 +2023,25 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	public void resetEveryFuckingKillScoreboard(Player player) {
 		Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-		String rawyou = getByLang(lang, "kills.you").content();
-		String you = " " + ChatColor.GRAY + rawyou;
+		String you = " " + getStringByLang(lang, "kills.you");
 
 		String redyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("red")) { redyourteam = you; }
 		String yellowyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("yellow")) { yellowyourteam = you;}
 		String greenyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("green")) { greenyourteam = you;; }
 		String blueyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("blue")) { blueyourteam = you;; }
+		String comma = ChatColor.WHITE + ": ";
 
-		fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + redkills + redyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills-1) + redyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + comma + ChatColor.RED + redkills + redyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + comma + ChatColor.RED + (redkills-1) + redyourteam);
 		redkills = 0;
-		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills + yellowyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills-1) + yellowyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + comma + ChatColor.YELLOW + yellowkills + yellowyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + comma + ChatColor.YELLOW + (yellowkills-1) + yellowyourteam);
 		yellowkills = 0;
-		fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills + greenyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills-1) + greenyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + comma + ChatColor.GREEN + greenkills + greenyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + comma + ChatColor.GREEN + (greenkills-1) + greenyourteam);
 		greenkills = 0;
-		fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills + blueyourteam);
-		fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills-1) + blueyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + comma + ChatColor.AQUA + bluekills + blueyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + comma + ChatColor.AQUA + (bluekills-1) + blueyourteam);
 		bluekills = 0;
 
 		player.setScoreboard(fakekills.getScoreboard());
