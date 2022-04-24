@@ -545,7 +545,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							nextevent0 = ChatColor.DARK_GRAY + " (Сражение до конца)";
 						}
 
-						String you = LegacyComponentSerializer.legacyAmpersand().serialize(getByLang(lang, "kills.you"));
+						String you = LegacyComponentSerializer.legacyAmpersand().serialize(getByLang(lang, "kills.you")).replaceAll("&", "§");
 						Team playerteam = Objects.requireNonNull(mainboard.getPlayerTeam(player1));
 						String teamname = playerteam.getName();
 
