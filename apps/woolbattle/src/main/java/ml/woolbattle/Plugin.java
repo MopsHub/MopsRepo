@@ -39,6 +39,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Console;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -122,7 +123,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				data.append("\n").append(reader.nextLine());
 				logger.info("4");
 			}
-			logger.info(data.toString());
+		//	logger.info(data.toString());
 		}
 
 		try {
@@ -460,7 +461,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				lootGenerator();
 
 				scoreboardTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-					for (Player player1 : getServer().getOnlinePlayers()) {
+					for (Player player1 : Bukkit.getServer().getOnlinePlayers()) {
 
 					if (gameactive) {
 						newboard = manager.getNewScoreboard();
@@ -546,10 +547,15 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						Team playerteam = Objects.requireNonNull(mainboard.getPlayerTeam(player1));
 						String teamname = playerteam.getName();
 
-						String redyourteam = ""; if(teamname.contains("red")) { redyourteam = you; }
-						String yellowyourteam = ""; if(teamname.contains("yellow")) { yellowyourteam = you; }
-						String greenyourteam = ""; if(teamname.contains("green")) { greenyourteam = you; }
-						String blueyourteam = ""; if(teamname.contains("blue")) { blueyourteam = you; }
+						String redyourteam = "";
+						String yellowyourteam = "";
+						String greenyourteam = "";
+						String blueyourteam = "";
+
+						if(teamname.contains("red")) { redyourteam = you; player1.sendMessage("вау чел ты в красной команде");}
+						if(teamname.contains("yellow")) { yellowyourteam = you; }
+						if(teamname.contains("green")) { greenyourteam = you; }
+						if(teamname.contains("blue")) { blueyourteam = you; }
 
 
 						fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1) + redyourteam);
