@@ -543,11 +543,13 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						}
 
 						String you = ChatColor.GRAY + getByLang(lang, "kills.you").content();
+						Team playerteam = Objects.requireNonNull(mainboard.getPlayerTeam(player1));
+						String teamname = playerteam.getName();
 
-						String redyourteam = ""; if(mainboard.getPlayerTeam(player1).getName().contains("red")) { redyourteam = you; }
-						String yellowyourteam = ""; if(mainboard.getPlayerTeam(player1).getName().contains("yellow")) { yellowyourteam = you; }
-						String greenyourteam = ""; if(mainboard.getPlayerTeam(player1).getName().contains("green")) { greenyourteam = you; }
-						String blueyourteam = ""; if(mainboard.getPlayerTeam(player1).getName().contains("blue")) { blueyourteam = you; }
+						String redyourteam = ""; if(teamname.contains("red")) { redyourteam = you; }
+						String yellowyourteam = ""; if(teamname.contains("yellow")) { yellowyourteam = you; }
+						String greenyourteam = ""; if(teamname.contains("green")) { greenyourteam = you; }
+						String blueyourteam = ""; if(teamname.contains("blue")) { blueyourteam = you; }
 
 
 						fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1) + redyourteam);
@@ -750,6 +752,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							break;
 					}
 				}
+				return true;
 			}
 			if (commandName.equals("cubicstuff")) {
 				int radius = Integer.parseInt(args[0]);
