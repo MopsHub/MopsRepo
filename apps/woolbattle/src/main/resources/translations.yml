@@ -96,7 +96,7 @@ woolbattle:
       eng: "&cYou can't break it"
   - team.won:
       rus: "Победили!"
-      eng: "Won!"
+      eng: "Has Won!"
   - team.RED:
       rus: "&c&lКРАСНЫЕ"
       eng: "&c&lRED"
@@ -110,8 +110,23 @@ woolbattle:
       rus: "&b&lСИНИЕ"
       eng: "&b&lBLUE"
   - team.Nobody:
-      rus: "&7Никто не"
-      eng: "&7Nobody"
+      rus: "&7&lНИКТО НЕ"
+      eng: "&7&lNOBODY"
+  - kills.red:
+      rus: "&cУбито красной командой"
+      eng: "&cKilled by red"
+  - kills.yellow:
+      rus: "&eУбито жёлтой командой"
+      eng: "&eKilled by yellow"
+  - kills.green:
+      rus: "&aУбито зелёной командой"
+      eng: "&aKilled by green"
+  - kills.blue:
+      rus: "&aУбито синей командой"
+      eng: "&aKilled by blue"
+  - kills.you:
+      rus: " &7(ВЫ)"
+      eng: " &7(YOU)"
   - onStartMessage:
       rus: |
         &e----------------------------------------------------

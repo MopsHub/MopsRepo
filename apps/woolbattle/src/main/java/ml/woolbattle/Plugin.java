@@ -542,10 +542,18 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							nextevent0 = ChatColor.DARK_GRAY + " (Сражение до конца)";
 						}
 
-						Objects.requireNonNull(fakekills.getScoreboard()).resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1));
-						fakekills.getScoreboard().resetScores(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1));
-						fakekills.getScoreboard().resetScores(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills - 1));
-						fakekills.getScoreboard().resetScores(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1));
+						String you = ChatColor.GRAY + getByLang(lang, "kills.you").content();
+
+						String redyourteam = ""; if(mainboard.getPlayerTeam(player1).getName().contains("red")) { redyourteam = you; }
+						String yellowyourteam = ""; if(mainboard.getPlayerTeam(player1).getName().contains("yellow")) { yellowyourteam = you; }
+						String greenyourteam = ""; if(mainboard.getPlayerTeam(player1).getName().contains("green")) { greenyourteam = you; }
+						String blueyourteam = ""; if(mainboard.getPlayerTeam(player1).getName().contains("blue")) { blueyourteam = you; }
+
+
+						fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1) + redyourteam);
+						fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1) + yellowyourteam);
+						fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills - 1) + greenyourteam);
+						fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1) + blueyourteam);
 
 						if (seconds0[0] < 10) {
 							fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
@@ -553,10 +561,12 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
 						}
 
-						fakekills.getScore(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + redkills).setScore(12);
-						fakekills.getScore(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills).setScore(11);
-						fakekills.getScore(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills).setScore(10);
-						fakekills.getScore(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills).setScore(9);
+						fakekills.getScore(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + redkills + redyourteam).setScore(12);
+						fakekills.getScore(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills + yellowyourteam).setScore(11);
+						fakekills.getScore(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills + greenyourteam).setScore(10);
+						fakekills.getScore(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills + blueyourteam).setScore(9);
+
+
 						fakekills.getScore(ChatColor.RED + " ").setScore(8);
 						if (seconds[0] < 10) {
 							fakekills.getScore(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent).setScore(7);
@@ -1536,15 +1546,23 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	public void clearScoreboard(Player player) {
 		Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-		fakekills.getScoreboard().resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + redkills);
-		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills);
-		fakekills.getScoreboard().resetScores(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills);
-		fakekills.getScoreboard().resetScores(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills);
+		String you = ChatColor.GRAY + getByLang(lang, "kills.you").content();
 
-		fakekills.getScoreboard().resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + (redkills-1));
-		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills-1));
-		fakekills.getScoreboard().resetScores(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills-1));
-		fakekills.getScoreboard().resetScores(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills-1));
+		String redyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("red")) { redyourteam = you; }
+		String yellowyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("yellow")) { yellowyourteam = you; }
+		String greenyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("green")) { greenyourteam = you; }
+		String blueyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("blue")) { blueyourteam = you; }
+
+		fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills) + redyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills) + yellowyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills) + greenyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills) + blueyourteam);
+
+		fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills-1) + redyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills-1) + yellowyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills-1) + greenyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills-1) + blueyourteam);
+
 
 		fakekills.getScoreboard().resetScores(ChatColor.RED + " ");
 
@@ -1954,17 +1972,24 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	public void resetEveryFuckingKillScoreboard(Player player) {
 		Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-		fakekills.getScoreboard().resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + redkills);
-		fakekills.getScoreboard().resetScores(ChatColor.RED + "Убито красной командой" + ChatColor.WHITE + ": " + ChatColor.RED + (redkills-1));
+		String you = ChatColor.GRAY + getByLang(lang, "kills.you").content();
+
+		String redyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("red")) { redyourteam = you; }
+		String yellowyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("yellow")) { yellowyourteam = you;}
+		String greenyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("green")) { greenyourteam = you;; }
+		String blueyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("blue")) { blueyourteam = you;; }
+
+		fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + redkills + redyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills-1) + redyourteam);
 		redkills = 0;
-		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills);
-		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + "Убито жёлтой командой" + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills-1));
+		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills + yellowyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills-1) + yellowyourteam);
 		yellowkills = 0;
-		fakekills.getScoreboard().resetScores(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills);
-		fakekills.getScoreboard().resetScores(ChatColor.GREEN + "Убито зелёной командой" + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills-1));
+		fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills + greenyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills-1) + greenyourteam);
 		greenkills = 0;
-		fakekills.getScoreboard().resetScores(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills);
-		fakekills.getScoreboard().resetScores(ChatColor.AQUA + "Убито синей командой" + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills-1));
+		fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills + blueyourteam);
+		fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills-1) + blueyourteam);
 		bluekills = 0;
 
 		player.setScoreboard(fakekills.getScoreboard());
