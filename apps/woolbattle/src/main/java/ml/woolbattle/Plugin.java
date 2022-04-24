@@ -7,6 +7,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.*;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -543,8 +545,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							nextevent0 = ChatColor.DARK_GRAY + " (Сражение до конца)";
 						}
 
-						String rawyou = getByLang(lang, "kills.you").content();
-						String you = " " + ChatColor.GRAY + rawyou;
+						String you = LegacyComponentSerializer.legacyAmpersand().serialize(getByLang(lang, "kills.you"));
 						Team playerteam = Objects.requireNonNull(mainboard.getPlayerTeam(player1));
 						String teamname = playerteam.getName();
 
