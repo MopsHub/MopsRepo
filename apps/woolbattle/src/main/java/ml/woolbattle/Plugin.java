@@ -543,7 +543,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							nextevent0 = ChatColor.DARK_GRAY + " (Сражение до конца)";
 						}
 
-						String you = ChatColor.GRAY + getByLang(lang, "kills.you").content();
+						String rawyou = getByLang(lang, "kills.you").content();
+						String you = ChatColor.GRAY + rawyou;
 						Team playerteam = Objects.requireNonNull(mainboard.getPlayerTeam(player1));
 						String teamname = playerteam.getName();
 
@@ -556,8 +557,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						if(teamname.contains("yellow")) { yellowyourteam = yellowyourteam + you; }
 						if(teamname.contains("green")) { greenyourteam = greenyourteam + you; }
 						if(teamname.contains("blue")) { blueyourteam = blueyourteam + you; }
-
-						player1.sendMessage(you);
 
 
 						fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1) + redyourteam);

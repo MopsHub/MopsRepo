@@ -125,8 +125,8 @@ woolbattle:
       rus: "&aУбито синей командой"
       eng: "&aKilled by blue"
   - kills.you:
-      rus: " &7(ВЫ)"
-      eng: " &7(YOU)"
+      rus: "&7(ВЫ)"
+      eng: "&7(YOU)"
   - onStartMessage:
       rus: |
         &e----------------------------------------------------
