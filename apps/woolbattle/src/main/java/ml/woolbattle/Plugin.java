@@ -557,6 +557,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						if(teamname.contains("green")) { greenyourteam = greenyourteam + you; }
 						if(teamname.contains("blue")) { blueyourteam = blueyourteam + you; }
 
+						player1.sendMessage("you");
+
 
 						fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1) + redyourteam);
 						fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1) + yellowyourteam);
