@@ -8,7 +8,6 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.*;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -41,7 +40,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.Console;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -545,7 +543,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 							nextevent0 = ChatColor.DARK_GRAY + " (Сражение до конца)";
 						}
 
-						String you = LegacyComponentSerializer.legacyAmpersand().serialize(getByLang(lang, "kills.you")).replaceAll("&", "§");
+						String you = getStringByLang(lang, "kills.you");
 						Team playerteam = Objects.requireNonNull(mainboard.getPlayerTeam(player1));
 						String teamname = playerteam.getName();
 
@@ -554,16 +552,16 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						String greenyourteam = "";
 						String blueyourteam = "";
 
-						if(teamname.contains("red")) { redyourteam = redyourteam + you;}
-						if(teamname.contains("yellow")) { yellowyourteam = yellowyourteam + you; }
-						if(teamname.contains("green")) { greenyourteam = greenyourteam + you; }
-						if(teamname.contains("blue")) { blueyourteam = blueyourteam + you; }
+						if(teamname.contains("red")) { redyourteam = redyourteam + " " + you;}
+						if(teamname.contains("yellow")) { yellowyourteam = yellowyourteam + " " + you; }
+						if(teamname.contains("green")) { greenyourteam = greenyourteam + " " + you; }
+						if(teamname.contains("blue")) { blueyourteam = blueyourteam + " " + you; }
 
 
-						fakekills.getScoreboard().resetScores(ChatColor.RED + getByLang(lang, "kills.red").content() + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1) + redyourteam);
-						fakekills.getScoreboard().resetScores(ChatColor.YELLOW + getByLang(lang, "kills.yellow").content() + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1) + yellowyourteam);
-						fakekills.getScoreboard().resetScores(ChatColor.GREEN + getByLang(lang, "kills.green").content() + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills - 1) + greenyourteam);
-						fakekills.getScoreboard().resetScores(ChatColor.AQUA + getByLang(lang, "kills.blue").content() + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1) + blueyourteam);
+						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1) + redyourteam);
+						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1) + yellowyourteam);
+						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills - 1) + greenyourteam);
+						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1) + blueyourteam);
 
 						if (seconds0[0] < 10) {
 							fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
@@ -2356,4 +2354,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		return utilities.combineComponents(tcs, Component.space());
 	}
 
+	public String getStringByLang(String lang, String string, Map<String, String> formatValues) {
+		return LegacyComponentSerializer.legacyAmpersand().serialize(getByLang(lang, string, formatValues)).replaceAll("&", "§");
+	}
+	public String getStringByLang(String lang, String string) {
+		return getStringByLang(lang, string, Map.of("", ""));
+	}
 }
