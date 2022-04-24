@@ -544,7 +544,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						}
 
 						String rawyou = getByLang(lang, "kills.you").content();
-						String you = ChatColor.GRAY + rawyou;
+						String you = " " + ChatColor.GRAY + rawyou;
 						Team playerteam = Objects.requireNonNull(mainboard.getPlayerTeam(player1));
 						String teamname = playerteam.getName();
 
@@ -760,6 +760,13 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					}
 				}
 				return true;
+			}
+			if(commandName.equals("globallangchange")) {
+				if(lang == "eng") {
+					lang = "rus";
+				} else if(lang == "rus") {
+					lang = "eng";
+				}
 			}
 			if (commandName.equals("cubicstuff")) {
 				int radius = Integer.parseInt(args[0]);

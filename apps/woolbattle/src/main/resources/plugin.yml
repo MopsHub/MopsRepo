@@ -33,3 +33,6 @@ commands:
   addkills:
     description: ""
     usage: /addkills
+  globallangchange:
+    description: ""
+    usage: /globallangchange
