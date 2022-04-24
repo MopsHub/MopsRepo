@@ -1597,7 +1597,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	public void clearScoreboard(Player player) {
 		Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-		String you = ChatColor.GRAY + getByLang(lang, "kills.you").content();
+		String rawyou = getByLang(lang, "kills.you").content();
+		String you = " " + ChatColor.GRAY + rawyou;
 
 		String redyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("red")) { redyourteam = you; }
 		String yellowyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("yellow")) { yellowyourteam = you; }
@@ -2023,7 +2024,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	public void resetEveryFuckingKillScoreboard(Player player) {
 		Objective fakekills = player.getScoreboard().getObjective("fakekills");
 
-		String you = ChatColor.GRAY + getByLang(lang, "kills.you").content();
+		String rawyou = getByLang(lang, "kills.you").content();
+		String you = " " + ChatColor.GRAY + rawyou;
 
 		String redyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("red")) { redyourteam = you; }
 		String yellowyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("yellow")) { yellowyourteam = you;}
