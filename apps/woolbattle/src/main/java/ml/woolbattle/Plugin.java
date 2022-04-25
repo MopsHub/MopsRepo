@@ -564,9 +564,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1) + blueyourteam);
 
 						if (seconds0[0] < 10) {
-							fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
+							fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
 						} else {
-							fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
+							fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
 						}
 
 						fakekills.getScore(getStringByLang(lang, "kills.red") + ChatColor.WHITE + ": " + ChatColor.RED + redkills + redyourteam).setScore(12);
@@ -577,9 +577,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 						fakekills.getScore(ChatColor.RED + " ").setScore(8);
 						if (seconds[0] < 10) {
-							fakekills.getScore(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent).setScore(7);
+							fakekills.getScore(ChatColor.WHITE + getStringByLang(lang, "scoreboardTime") + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent).setScore(7);
 						} else {
-							fakekills.getScore(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent).setScore(7);
+							fakekills.getScore(ChatColor.WHITE + getStringByLang(lang, "scoreboardTime") + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent).setScore(7);
 						}
 						fakekills.getScore(ChatColor.GOLD + " ").setScore(6);
 
@@ -1618,15 +1618,15 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		fakekills.getScoreboard().resetScores(ChatColor.RED + " ");
 
 		if (seconds0[0] < 10) {
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
 		} else {
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
 		}
 
 		if (seconds[0] < 10) {
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent0);
 		} else {
-			fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Время: " + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent0);
 		}
 
 
@@ -2215,7 +2215,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				}, 3L);
 			}, 3L);
 
-		}, 51L);
+		}, 40L);
 
 		player1.playSound(player1.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 2);
 		player1.removeScoreboardTag("onspawn");
