@@ -1620,6 +1620,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		fakekills.getScoreboard().resetScores(ChatColor.RED + " ");
 
+		Bukkit.getScheduler().cancelTask(scoreboardTask);
+
 
 		fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
 		fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
@@ -1646,8 +1648,6 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор B - " + Bcopy);
 		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор C - " + Ccopy);
 		fakekills.getScoreboard().resetScores(ChatColor.WHITE + "Генератор D - " + Dcopy);
-
-		Bukkit.getScheduler().cancelTask(scoreboardTask);
 
 		actualgametime[0] = 0;
 		actualgametime0[0] = -1;
