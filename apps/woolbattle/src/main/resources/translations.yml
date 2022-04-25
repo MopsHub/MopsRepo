@@ -122,8 +122,8 @@ woolbattle:
       rus: "&aУбито зелёной командой"
       eng: "&aKilled by green"
   - kills.blue:
-      rus: "&aУбито синей командой"
-      eng: "&aKilled by blue"
+      rus: "&bУбито синей командой"
+      eng: "&bKilled by blue"
   - kills.you:
       rus: "&7(ВЫ)"
       eng: "&7(YOU)"

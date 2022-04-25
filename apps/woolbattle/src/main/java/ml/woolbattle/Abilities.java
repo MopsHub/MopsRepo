@@ -1,8 +1,6 @@
 package ml.woolbattle;
 
 import ml.mopsbase.MopsPlugin;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -33,9 +31,20 @@ public class Abilities {
 		meta1.addEnchant(Enchantment.DIG_SPEED, 5, true);
 		meta1.addEnchant(Enchantment.KNOCKBACK, 2, true);
 		meta1.setUnbreakable(true);
-		List<Component> lore1 = new ArrayList<>();
-		lore1.add(plugin.getByLang(lang, "shears.lore"));
-		meta1.lore(lore1);
+
+		//List<Component> lore1 = new ArrayList<>();
+		//lore1.add(plugin.getByLang(lang, "shears.lore"));
+		//meta1.lore(lore1);
+
+		List<String> lore1 = new ArrayList<>();
+		lore1.add(ChatColor.GRAY + "Ножницы для копания шерсти и");
+		lore1.add(ChatColor.GRAY + "скидывания игроков в бездну.");
+		lore1.add("");
+		lore1.add(ChatColor.AQUA + "Способность: " + ChatColor.GRAY + "Убирает блоки");
+		lore1.add(ChatColor.GRAY + "своего цвета на генераторах." + ChatColor.YELLOW + "" + ChatColor.BOLD + " ПКМ");
+		lore1.add(ChatColor.AQUA + "Стоимость: 6 шерсти");
+		meta1.setLore(lore1);
+
 		item1.setItemMeta(meta1);
 		player1.getInventory().setItem(0, item1);
 
