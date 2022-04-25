@@ -1620,17 +1620,12 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		fakekills.getScoreboard().resetScores(ChatColor.RED + " ");
 
-		if (seconds0[0] < 10) {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
-		} else {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
-		}
 
-		if (seconds[0] < 10) {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent);
-		} else {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent);
-		}
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
+
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent0);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent0);
 
 
 		fakekills.getScoreboard().resetScores(ChatColor.GOLD + " ");
