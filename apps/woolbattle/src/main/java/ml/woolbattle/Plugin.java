@@ -95,6 +95,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	String connectToIP = "mops.ml";
 
+	String colon = ChatColor.WHITE + ": ";
+
 	List<ItemStack> explosiveSticks = new ArrayList<>();
 	List<ItemStack> explosiveSticksMK2 = new ArrayList<>();
 	List<ItemStack> platforms = new ArrayList<>();
@@ -558,28 +560,28 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 						if(teamname.contains("blue")) { blueyourteam = blueyourteam + " " + you; }
 
 
-						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + ChatColor.WHITE + ": " + ChatColor.RED + (redkills - 1) + redyourteam);
-						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + ChatColor.WHITE + ": " + ChatColor.YELLOW + (yellowkills - 1) + yellowyourteam);
-						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + ChatColor.WHITE + ": " + ChatColor.GREEN + (greenkills - 1) + greenyourteam);
-						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + ChatColor.WHITE + ": " + ChatColor.AQUA + (bluekills - 1) + blueyourteam);
+						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + colon + ChatColor.RED + (redkills - 1) + redyourteam);
+						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + colon + ChatColor.YELLOW + (yellowkills - 1) + yellowyourteam);
+						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + colon + ChatColor.GREEN + (greenkills - 1) + greenyourteam);
+						fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + colon + ChatColor.AQUA + (bluekills - 1) + blueyourteam);
 
 						if (seconds0[0] < 10) {
-							fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + " " + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
+							fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
 						} else {
-							fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + " " + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
+							fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
 						}
 
-						fakekills.getScore(getStringByLang(lang, "kills.red") + ChatColor.WHITE + ": " + ChatColor.RED + redkills + redyourteam).setScore(12);
-						fakekills.getScore(getStringByLang(lang, "kills.yellow") + ChatColor.WHITE + ": " + ChatColor.YELLOW + yellowkills + yellowyourteam).setScore(11);
-						fakekills.getScore(getStringByLang(lang, "kills.green") + ChatColor.WHITE + ": " + ChatColor.GREEN + greenkills + greenyourteam).setScore(10);
-						fakekills.getScore(getStringByLang(lang, "kills.blue") + ChatColor.WHITE + ": " + ChatColor.AQUA + bluekills + blueyourteam).setScore(9);
+						fakekills.getScore(getStringByLang(lang, "kills.red") + colon + ChatColor.RED + redkills + redyourteam).setScore(12);
+						fakekills.getScore(getStringByLang(lang, "kills.yellow") + colon + ChatColor.YELLOW + yellowkills + yellowyourteam).setScore(11);
+						fakekills.getScore(getStringByLang(lang, "kills.green") + colon + ChatColor.GREEN + greenkills + greenyourteam).setScore(10);
+						fakekills.getScore(getStringByLang(lang, "kills.blue") + colon + ChatColor.AQUA + bluekills + blueyourteam).setScore(9);
 
 
 						fakekills.getScore(ChatColor.RED + " ").setScore(8);
 						if (seconds[0] < 10) {
-							fakekills.getScore(ChatColor.WHITE + getStringByLang(lang, "scoreboardTime") + " " + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent).setScore(7);
+							fakekills.getScore(ChatColor.WHITE + getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent).setScore(7);
 						} else {
-							fakekills.getScore(ChatColor.WHITE + getStringByLang(lang, "scoreboardTime") + " " + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent).setScore(7);
+							fakekills.getScore(ChatColor.WHITE + getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent).setScore(7);
 						}
 						fakekills.getScore(ChatColor.GOLD + " ").setScore(6);
 
@@ -1602,31 +1604,30 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		String yellowyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("yellow")) { yellowyourteam = " " + you; }
 		String greenyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("green")) { greenyourteam = " " + you; }
 		String blueyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("blue")) { blueyourteam = " " + you; }
-		String comma = ChatColor.WHITE + ": ";
 
-		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + comma + ChatColor.RED + (redkills) + redyourteam);
-		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + comma + ChatColor.YELLOW + (yellowkills) + yellowyourteam);
-		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + comma + ChatColor.GREEN + (greenkills) + greenyourteam);
-		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + comma + ChatColor.AQUA + (bluekills) + blueyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + colon + ChatColor.RED + (redkills) + redyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + colon + ChatColor.YELLOW + (yellowkills) + yellowyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + colon + ChatColor.GREEN + (greenkills) + greenyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + colon + ChatColor.AQUA + (bluekills) + blueyourteam);
 
-		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + comma + ChatColor.RED + (redkills-1) + redyourteam);
-		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + comma + ChatColor.YELLOW + (yellowkills-1) + yellowyourteam);
-		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + comma + ChatColor.GREEN + (greenkills-1) + greenyourteam);
-		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + comma + ChatColor.AQUA + (bluekills-1) + blueyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + colon + ChatColor.RED + (redkills-1) + redyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.yellow") + colon + ChatColor.YELLOW + (yellowkills-1) + yellowyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.green") + colon + ChatColor.GREEN + (greenkills-1) + greenyourteam);
+		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.blue") + colon + ChatColor.AQUA + (bluekills-1) + blueyourteam);
 
 
 		fakekills.getScoreboard().resetScores(ChatColor.RED + " ");
 
 		if (seconds0[0] < 10) {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + " " + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + "0" + seconds0[0] + nextevent0);
 		} else {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + " " + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes0[0] + ":" + seconds0[0] + nextevent0);
 		}
 
 		if (seconds[0] < 10) {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + " " + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent0);
 		} else {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + " " + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent0);
 		}
 
 
@@ -1663,8 +1664,8 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		genCstatus = "woolbattle.generator.uncaptured";
 		genDstatus = "woolbattle.generator.uncaptured";
 
-		String nextevent = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
-		String nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
+		nextevent = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
+		nextevent0 = ChatColor.DARK_GRAY + " (Рефилл | 4:00)";
 
 		player.setScoreboard(fakekills.getScoreboard());
 	}

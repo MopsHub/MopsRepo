@@ -86,8 +86,8 @@ woolbattle:
       rus: "&8(Сражение до конца)"
       eng: "&8(Deathmatch)"
   - scoreboardTime:
-      rus: "&fВремя:"
-      eng: "&fTime:"
+      rus: "&fВремя"
+      eng: "&fTime"
   - woolLimit:
       rus: "&cЛимит шерсти достигнут"
       eng: "&cYou've reached wool limit"
