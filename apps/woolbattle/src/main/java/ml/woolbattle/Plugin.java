@@ -578,11 +578,13 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 
 						fakekills.getScore(ChatColor.RED + " ").setScore(8);
+
 						if (seconds[0] < 10) {
 							fakekills.getScore(ChatColor.WHITE + getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent).setScore(7);
 						} else {
 							fakekills.getScore(ChatColor.WHITE + getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent).setScore(7);
 						}
+
 						fakekills.getScore(ChatColor.GOLD + " ").setScore(6);
 
 						resetGeneratorText(player);
@@ -1625,9 +1627,9 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		}
 
 		if (seconds[0] < 10) {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + "0" + seconds[0] + nextevent);
 		} else {
-			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent0);
+			fakekills.getScoreboard().resetScores(getStringByLang(lang, "scoreboardTime") + colon + ChatColor.YELLOW + minutes[0] + ":" + seconds[0] + nextevent);
 		}
 
 
