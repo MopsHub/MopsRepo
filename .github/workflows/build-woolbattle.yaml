@@ -24,7 +24,7 @@ jobs:
       - name: 'Install libs and build WoolBattle'
         run: mvn install --projects :mopsbase,:mopselements,:woolbattle
       - name: 'Upload .jar artefact of plugin'
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
          name: WoolBattle Plugin JAR
          path: apps/woolbattle/target/woolbattle.jar

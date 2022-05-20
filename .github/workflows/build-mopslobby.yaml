@@ -24,7 +24,7 @@ jobs:
       - name: 'Install libs and build PVP'
         run: mvn install --projects :mopsbase,:mopselements,:mopslobby
       - name: 'Upload .jar artefact of plugin'
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: MopsPVP Plugin JAR
           path: apps/mopslobby/target/mopslobby.jar
