@@ -377,7 +377,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				if (!hardmode) {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 7, 100, true, false));
 					player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 7, 100, true, false));
-				} else if(hardmode) {
+				} else {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 60, 1, true, false));
 				}
 
@@ -816,7 +816,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		}
 	}
 
-	private HashMap<Player, BukkitTask> damagetask0 = new HashMap<>();
+	private final HashMap<Player, BukkitTask> damagetask0 = new HashMap<>();
 
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
@@ -934,9 +934,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 				}
 			}
 
-		} catch (Exception | Error e) {
-
-		}
+		} catch (Exception | Error ignored) { }
 	}
 
 	@EventHandler
