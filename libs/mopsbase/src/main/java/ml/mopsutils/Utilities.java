@@ -23,7 +23,7 @@ public class Utilities {
 	public TextComponent combineComponents(TextComponent[] tcs, TextComponent separator) {
 		TextComponent fc = Component.empty();
 		for (TextComponent tc : tcs) {
-			fc.append(fc).append(separator);
+			fc.append(tc).append(separator);
 		}
 		return fc;
 	}
