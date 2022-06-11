@@ -51,11 +51,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	// спасибо
 	// пододжди два года и сделаю))))
 
-	Utilities utilities = new Utilities(this);
-	Abilities abilities = new Abilities(this);
+	 final Utilities utilities = new Utilities(this);
+	final Abilities abilities = new Abilities(this);
 	Translation translator;
 
-	List<Block> ppbs = new ArrayList<>();
+	final List<Block> ppbs = new ArrayList<>();
 	World mainworld;
 	boolean hardmode = false;
 	boolean gameactive = false;
@@ -95,10 +95,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 	String connectToIP = "mops.ml";
 
-	String colon = ChatColor.WHITE + ": ";
+	final String colon = ChatColor.WHITE + ": ";
 
-	List<ItemStack> explosiveSticks = new ArrayList<>();
-	List<ItemStack> explosiveSticksMK2 = new ArrayList<>();
+	final List<ItemStack> explosiveSticks = new ArrayList<>();
+	 final List<ItemStack> explosiveSticksMK2 = new ArrayList<>();
 	List<ItemStack> platforms = new ArrayList<>();
 	List<ItemStack> slimeballs = new ArrayList<>();
 	List<ItemStack> doubleJumpBoots = new ArrayList<>();
@@ -732,42 +732,26 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 			if(commandName.equals("addkills")) {
 				try {
 					switch (args[0]) {
-						case "red":
-							redkills++;
-							break;
-						case "yellow":
-							yellowkills++;
-							break;
-						case "green":
-							greenkills++;
-							break;
-						case "blue":
-							bluekills++;
-							break;
+						case "red" -> redkills++;
+						case "yellow" -> yellowkills++;
+						case "green" -> greenkills++;
+						case "blue" -> bluekills++;
 					}
 				} catch (ArrayIndexOutOfBoundsException error) {
 					String teamname = mainboard.getPlayerTeam(player).getName();
 					switch (teamname) {
-						case "red":
-							redkills++;
-							break;
-						case "yellow":
-							yellowkills++;
-							break;
-						case "green":
-							greenkills++;
-							break;
-						case "blue":
-							bluekills++;
-							break;
+						case "red" -> redkills++;
+						case "yellow" -> yellowkills++;
+						case "green" -> greenkills++;
+						case "blue" -> bluekills++;
 					}
 				}
 				return true;
 			}
 			if(commandName.equals("globallangchange")) {
-				if(lang == "eng") {
+				if(lang.equals("eng")) {
 					lang = "rus";
-				} else if(lang == "rus") {
+				} else if(lang.equals("rus")) {
 					lang = "eng";
 				}
 			}
@@ -1404,7 +1388,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 					}
 				}
 			}
-		} catch (Exception | Error exception) {
+		} catch (Exception | Error ignored) {
 		}
 
 
@@ -2023,8 +2007,10 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		String redyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("red")) { redyourteam = you; }
 		String yellowyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("yellow")) { yellowyourteam = you;}
-		String greenyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("green")) { greenyourteam = you;; }
-		String blueyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("blue")) { blueyourteam = you;; }
+		String greenyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("green")) { greenyourteam = you;
+		}
+		String blueyourteam = ""; if(mainboard.getPlayerTeam(player).getName().contains("blue")) { blueyourteam = you;
+		}
 		String comma = ChatColor.WHITE + ": ";
 
 		fakekills.getScoreboard().resetScores(getStringByLang(lang, "kills.red") + comma + ChatColor.RED + redkills + redyourteam);
@@ -2306,26 +2292,15 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	}
 
 	public ChatColor getGeneratorChatColor(String string) {
-		ChatColor color = ChatColor.DARK_GRAY;
-
-		switch (string) {
-			case ("woolbattle.generator.uncaptured") :
-				color = ChatColor.GRAY;
-				break;
-			case ("woolbattle.generator.red") :
-				color = ChatColor.RED;
-				break;
-			case ("woolbattle.generator.yellow") :
-				color = ChatColor.YELLOW;
-				break;
-			case ("woolbattle.generator.green") :
-				color = ChatColor.GREEN;
-				break;
-			case ("woolbattle.generator.blue") :
-				color = ChatColor.AQUA;
-				break;
-		}
-
+		ChatColor color = switch (string) {
+			case ("woolbattle.generator.uncaptured") -> ChatColor.GRAY;
+			case ("woolbattle.generator.red") -> ChatColor.RED;
+			case ("woolbattle.generator.yellow") -> ChatColor.YELLOW;
+			case ("woolbattle.generator.green") -> ChatColor.GREEN;
+			case ("woolbattle.generator.blue") -> ChatColor.AQUA;
+			default -> ChatColor.DARK_GRAY;
+		};
+		
 		return color;
 	}
 

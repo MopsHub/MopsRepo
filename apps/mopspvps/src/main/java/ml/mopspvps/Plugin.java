@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.net.http.WebSocket.Listener;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -55,7 +56,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		try {
 			this.translation.loadFromString(data);
 		} catch (InvalidConfigurationException e) {
-			logger.warning(String.valueOf(e.getStackTrace()));
+			logger.warning(Arrays.toString(e.getStackTrace()));
 		}
 
 		logger.info("Loaded translations: \n" + translation.saveToString());

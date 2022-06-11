@@ -17,7 +17,7 @@ public class Utilities {
 	}
 
 	public Duration ticks(int ticks) {
-		return Duration.ofMillis(ticks * 50);
+		return Duration.ofMillis(ticks * 50L);
 	}
 
 	public TextComponent combineComponents(TextComponent[] tcs, TextComponent separator) {

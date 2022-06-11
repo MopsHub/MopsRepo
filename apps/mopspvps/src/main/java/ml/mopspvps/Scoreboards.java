@@ -14,7 +14,7 @@ public class Scoreboards {
 	public void createScoreboard(Player player) {
 		ScoreboardManager manager = Dependencies.getManager();
 		Scoreboard board = Dependencies.getBoard();
-		Set<String> tags = player.getScoreboardTags();
+		var tags = player.getScoreboardTags();
 
 		if(tags.contains("desert") || tags.contains("plains") || tags.contains("water") || tags.contains("forest")) {
 			try {

@@ -18,7 +18,7 @@ import java.util.Map;
 import ml.woolbattle.Plugin;
 
 public class Abilities {
-	Plugin plugin;
+	final Plugin plugin;
 
 	public Abilities(Plugin pl) {
 	this.plugin = pl;
