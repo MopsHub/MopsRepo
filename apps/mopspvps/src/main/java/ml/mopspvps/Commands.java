@@ -16,6 +16,8 @@ public class Commands {
 	public boolean commandsExecutor(CommandSender sender, Command command, String label, String[] args) {
 		if (new AdminUtils().commandsExecutor(sender, command, label, args)) {
 			return true;
-		} else return new PlayerEssentials().commandsExecutor(sender, command, label, args);
+		} else {
+			return new PlayerEssentials().commandsExecutor(sender, command, label, args);
+		}
 	}
 }
