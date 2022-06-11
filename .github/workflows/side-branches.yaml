@@ -32,11 +32,7 @@ jobs:
           cp libs/mopsbase/target/*.jar staging
           cp libs/mopselements/target/*.jar staging
       - name: 'Upload .jar artefact of plugin'
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: Mops Plugins .jar
           path: staging/
-      - name: Lint Code Base
-        uses: docker://github/super-linter:v2.1.0
-        env:
-          VALIDATE_ALL_CODEBASE: false
