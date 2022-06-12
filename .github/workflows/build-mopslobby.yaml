@@ -20,9 +20,9 @@ jobs:
         with:
           java-version: '18'
           distribution: 'zulu'
-          cache: maven
+          cache: 'gradle'
       - name: 'Install libs and build PVP'
-        run: mvn install --projects :mopsbase,:mopselements,:mopslobby
+        run: ./gradlew build --no-daemon
       - name: 'Upload .jar artefact of plugin'
         uses: actions/upload-artifact@v3.1.0
         with:
