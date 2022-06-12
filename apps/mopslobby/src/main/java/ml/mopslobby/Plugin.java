@@ -1,6 +1,5 @@
 package ml.mopslobby;
 
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
