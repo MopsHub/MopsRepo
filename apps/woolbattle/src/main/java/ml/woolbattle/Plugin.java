@@ -98,11 +98,11 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 	final String colon = ChatColor.WHITE + ": ";
 
 	final List<ItemStack> explosiveSticks = new ArrayList<>();
-	 final List<ItemStack> explosiveSticksMK2 = new ArrayList<>();
-	List<ItemStack> platforms = new ArrayList<>();
-	List<ItemStack> slimeballs = new ArrayList<>();
-	List<ItemStack> doubleJumpBoots = new ArrayList<>();
-	List<ItemStack> shears = new ArrayList<>();
+	final List<ItemStack> explosiveSticksMK2 = new ArrayList<>();
+	final List<ItemStack> platforms = new ArrayList<>();
+	final List<ItemStack> slimeballs = new ArrayList<>();
+	final List<ItemStack> doubleJumpBoots = new ArrayList<>();
+	final List<ItemStack> shears = new ArrayList<>();
 
 
 	@Override
@@ -954,11 +954,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 
 		if((teamname.contains("red") && type == Material.RED_WOOL) || (teamname.contains("yellow") && type == Material.YELLOW_WOOL) ||
 				(teamname.contains("green") && type == Material.LIME_WOOL) || (teamname.contains("blue") && type == Material.LIGHT_BLUE_WOOL)) {
-			if (!(player.getInventory().contains(Material.RED_WOOL, 512) || player.getInventory().contains(Material.YELLOW_WOOL, 512) || player.getInventory().contains(Material.LIME_WOOL, 512) || player.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512))) {
-				event.setCancelled(false);
-			} else {
-				event.setCancelled(true);
-			}
+			event.setCancelled(player.getInventory().contains(Material.RED_WOOL, 512) || player.getInventory().contains(Material.YELLOW_WOOL, 512) || player.getInventory().contains(Material.LIME_WOOL, 512) || player.getInventory().contains(Material.LIGHT_BLUE_WOOL, 512));
 		} else {
 			event.setCancelled(true);
 		}
