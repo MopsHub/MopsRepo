@@ -1,6 +1,5 @@
 package ml.mopslobby;
 
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -10,7 +9,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-
 public class Plugin extends JavaPlugin implements Listener, CommandExecutor {
     @Override
     public void onEnable() {
