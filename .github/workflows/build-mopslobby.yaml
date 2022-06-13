@@ -29,5 +29,5 @@ jobs:
           arguments: build
       - uses: actions/upload-artifact@v3
         with:
-          name: MopsPVP Plugin JAR
+          name: MopsLobby Plugin JAR
           path: apps/mopslobby/build/libs/mopslobby-1.0-SNAPSHOT.jar
