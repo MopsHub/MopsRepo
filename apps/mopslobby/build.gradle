@@ -6,6 +6,10 @@ plugins {
     id 'ml.monorepo.java-conventions'
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation project(':mopsbase')
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
