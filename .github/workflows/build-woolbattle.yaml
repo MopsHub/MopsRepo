@@ -29,5 +29,5 @@ jobs:
           arguments: build
       - uses: actions/upload-artifact@v3
         with:
-          name: MopsPVP Plugin JAR
+          name: WoolBattle Plugin JAR
           path: apps/woolbattle/build/libs/woolbattle-1.0-SNAPSHOT.jar
