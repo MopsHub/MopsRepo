@@ -934,11 +934,7 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		matList.add(Material.LIGHT_BLUE_WOOL);
 
 		if (player.getScoreboardTags().contains("ingame")) {
-			if (!matList.contains(item.getType())) {
-				event.setCancelled(true);
-			} else {
-				event.setCancelled(false);
-			}
+			event.setCancelled(!matList.contains(item.getType()));
 		}
 		updateLevels(player);
 	}

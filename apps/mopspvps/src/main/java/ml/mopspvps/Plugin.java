@@ -10,7 +10,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -44,17 +43,17 @@ public class Plugin extends MopsPlugin implements Listener, CommandExecutor {
 		logger.info("config: \n" + config.saveToString() );
 		logger.info("default config: \n" + ((FileConfiguration) Objects.requireNonNull(config.getDefaults())).saveToString());
 
-		String data;
+		StringBuilder data;
 
 		try (Scanner reader = new Scanner(getResource("translations.yml"))) {
-			data = "";
+			data = new StringBuilder();
 			while (reader.hasNextLine()) {
-				data = data + "\n" + reader.nextLine();
+				data.append("\n").append(reader.nextLine());
 			}
 		}
 
 		try {
-			this.translation.loadFromString(data);
+			this.translation.loadFromString(data.toString());
 		} catch (InvalidConfigurationException e) {
 			logger.warning(Arrays.toString(e.getStackTrace()));
 		}
