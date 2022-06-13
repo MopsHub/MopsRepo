@@ -7,9 +7,12 @@ plugins {
 }
 
 dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3'
     compileOnly 'org.purpurmc.purpur:purpur-api:1.19-R0.1-SNAPSHOT'
 }
+
+sourceCompatibility = 17
 
 description = 'Mops :: Libs :: Mops Base'

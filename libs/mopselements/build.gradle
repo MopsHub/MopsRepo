@@ -6,4 +6,6 @@ plugins {
     id 'ml.monorepo.java-conventions'
 }
 
+sourceCompatibility = 17
+
 description = 'mopselements'

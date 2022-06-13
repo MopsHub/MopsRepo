@@ -11,4 +11,6 @@ dependencies {
     compileOnly 'org.purpurmc.purpur:purpur-api:1.19-R0.1-SNAPSHOT'
 }
 
+sourceCompatibility = 17
+
 description = 'Mops :: Apps [AKA Plugins] :: WoolBattle'
